@@ -27,6 +27,7 @@ const register = async (req, res) => {
       name,
       email,
       password: hashedPassword,
+      image,
     });
     if (user) {
       res.status(201).json({
@@ -34,6 +35,7 @@ const register = async (req, res) => {
         name: user.name,
         email: user.email,
         token: generateToken(user._id),
+        image,
       });
     } else {
       res.status(400).json({ message: "invalid user" });
@@ -55,6 +57,7 @@ const login = async (req, res) => {
         name: user.name,
         email: user.email,
         token: generateToken(user._id),
+        image,
       });
     } else {
       res.status(400).json({ message: "Unauthorized access" });

@@ -12,6 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/products", productRoutes);
+app.use("/auth", authRoutes);
 
 
 const port = process.env.PORT | 5000;
