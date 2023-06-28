@@ -290,3 +290,5 @@ const products = [
     qty: 18,
   },
 ];
+
+module.exports = products;
