@@ -18,11 +18,11 @@ const productSchema = new mongoose.Schema(
       required: true,
     },
     mainImageUrl: {
-      type: imageSchema,
+      type: String,
       required: true,
     },
     extraImages: {
-      type: [imageSchema],
+      type: [String],
       default: [],
     },
     price: {
