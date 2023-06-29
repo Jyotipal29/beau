@@ -4,13 +4,15 @@ import { AiOutlineHeart } from "react-icons/ai";
 const ProductItem = (item) => {
   return (
     <div className="  flex flex-col m-2 justify-center items-center   py-2 cursor-pointer shadow-md rounded-md relative px-2">
-      <Link to={`/product/${item._id}`}>
-        <img
-          src={item.mainImageUrl}
-          alt="product"
-          className="w-60 h-60 object-cover object-top"
-        />
-      </Link>
+      <div className="w-60 h-80">
+        <Link to={`/product/${item._id}`}>
+          <img
+            src={item.mainImageUrl}
+            alt="product"
+            className="w-full h-full object-cover object-top"
+          />
+        </Link>
+      </div>
 
       <h1>{item.title}</h1>
       <p>{item.price}</p>
