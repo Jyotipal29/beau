@@ -5,6 +5,7 @@ import {
   XMarkIcon,
   ShoppingCartIcon,
 } from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
 
 const user = {
   name: "Tom Cook",
@@ -13,8 +14,8 @@ const user = {
     "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
 };
 const navigation = [
-  { name: "Home", href: "#", current: true },
-  { name: "Products", href: "#", current: false },
+  { name: "Home", href: "/", current: true },
+  { name: "Products", href: "/", current: false },
   { name: "login", href: "/login", current: false },
   { name: "Contacts", href: "#", current: false },
 ];
@@ -72,10 +73,12 @@ const Navbar = ({ children }) => {
                         type="button"
                         className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                       >
-                        <ShoppingCartIcon
-                          className="h-6 w-6"
-                          aria-hidden="true"
-                        />
+                        <Link to="/cart">
+                          <ShoppingCartIcon
+                            className="h-6 w-6"
+                            aria-hidden="true"
+                          />
+                        </Link>
                       </button>
 
                       {/* Profile dropdown */}
@@ -181,10 +184,12 @@ const Navbar = ({ children }) => {
                       className="ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                     >
                       <span className="sr-only">View notifications</span>
-                      <ShoppingCartIcon
-                        className="h-6 w-6"
-                        aria-hidden="true"
-                      />
+                      <Link to="/cart">
+                        <ShoppingCartIcon
+                          className="h-6 w-6"
+                          aria-hidden="true"
+                        />
+                      </Link>
                     </button>
                   </div>
                   <div className="mt-3 space-y-1 px-2">
