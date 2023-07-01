@@ -1,6 +1,6 @@
 import { createContext, useContext, useReducer } from "react";
 import { productReducer } from "./reducer.jsx";
-
+import { products } from "../../data.jsx";
 const productContext = createContext({});
 export const useProduct = () => {
   return useContext(productContext);
@@ -9,7 +9,7 @@ export const useProduct = () => {
 // eslint-disable-next-line react/prop-types
 export const ProductProvider = ({ children }) => {
   const [productState, productDispatch] = useReducer(productReducer, {
-    products: [],
+    products: products,
     product: {},
     sort: {
       price: "",
