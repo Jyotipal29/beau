@@ -2,7 +2,6 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
-  BellIcon,
   XMarkIcon,
   ShoppingCartIcon,
 } from "@heroicons/react/24/outline";
@@ -16,7 +15,7 @@ const user = {
 const navigation = [
   { name: "Home", href: "#", current: true },
   { name: "Products", href: "#", current: false },
-  { name: "About", href: "#", current: false },
+  { name: "login", href: "/login", current: false },
   { name: "Contacts", href: "#", current: false },
 ];
 const userNavigation = [
