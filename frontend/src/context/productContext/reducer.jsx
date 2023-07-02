@@ -54,6 +54,13 @@ export const productReducer = (productState, action) => {
         cart: updatedCart,
       };
     }
+    case "CART_REMOVE": {
+      localStorage.removeItem("cart");
+      return {
+        ...productState,
+        cart: [],
+      };
+    }
 
     default:
       return productState;

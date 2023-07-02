@@ -13,6 +13,7 @@ export const UserProvider = ({ children }) => {
   const [userState, userDispatch] = useReducer(userReducer, {
     user: user,
     order: [],
+    currentOrder: null,
   });
 
   useEffect(() => {

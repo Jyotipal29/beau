@@ -2,6 +2,8 @@ import { useProduct } from "../context/productContext/context";
 import { useForm } from "react-hook-form";
 import { useUser } from "../context/userContext/context";
 import { useState } from "react";
+import { Navigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
 const Checkout = () => {
   const [selectedAddress, setSelectedAddress] = useState(null);
@@ -15,9 +17,17 @@ const Checkout = () => {
   };
 
   const orderHandler = () => {
-    const order = { cart, totalAmount, itemCount, selectedAddress, paymentMethod, user };
-    userDispatch({type:"ADD_ORDER",payload:order})
-
+    const order = {
+      id: uuidv4(),
+      cart,
+      totalAmount,
+      itemCount,
+      selectedAddress,
+      paymentMethod,
+      user,
+      status: "pending",
+    };
+    userDispatch({ type: "ADD_ORDER", payload: order });
   };
   const {
     register,
@@ -30,9 +40,11 @@ const Checkout = () => {
   } = useProduct();
 
   const {
-    userState: { user },
+    userState: { user, currentOrder },
     userDispatch,
   } = useUser();
+
+  console.log(currentOrder, "this is curr oder");
   const totalAmount = cart.reduce(
     (amount, item) => item.price * item.qty + amount,
     0
@@ -55,6 +67,7 @@ const Checkout = () => {
   return (
     <div className="mx-auto mt-12 mb-5 max-w-7xl px-4 sm:px-6 lg:px-8 bg-white">
       {/* {!cart.length && <Navigate to="/" />} */}
+      {currentOrder && <Navigate to={`/ordersuccess/${currentOrder.id}`} />}
       <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
         <div className="lg:col-span-3">
           <form
