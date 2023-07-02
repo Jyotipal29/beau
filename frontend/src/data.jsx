@@ -25,7 +25,7 @@ export const products = [
       { name: "3XL", inStock: true },
     ],
     category: "Women's Dresses",
-    qty: 10,
+    qty: 1,
   },
   {
     id: 2,
@@ -54,7 +54,7 @@ export const products = [
       { name: "3XL", inStock: true },
     ],
     category: "Women's Dresses",
-    qty: 5,
+    qty: 1,
   },
   {
     id: 3,
@@ -83,7 +83,7 @@ export const products = [
       { name: "3XL", inStock: true },
     ],
     category: "Women's Dresses",
-    qty: 15,
+    qty: 1,
   },
 
   {
@@ -113,7 +113,7 @@ export const products = [
       { name: "3XL", inStock: true },
     ],
     category: "Women's Dresses",
-    qty: 8,
+    qty: 1,
   },
   {
     id: 5,
@@ -142,7 +142,7 @@ export const products = [
       { name: "3XL", inStock: true },
     ],
     category: "Women's Dresses",
-    qty: 12,
+    qty: 1,
   },
   {
     id: 6,
@@ -171,7 +171,7 @@ export const products = [
       { name: "3XL", inStock: true },
     ],
     category: "Women's Dresses",
-    qty: 10,
+    qty: 1,
   },
 
   {
@@ -201,7 +201,7 @@ export const products = [
       { name: "3XL", inStock: true },
     ],
     category: "Women's Dresses",
-    qty: 10,
+    qty: 1,
   },
   {
     id: 8,
@@ -230,7 +230,7 @@ export const products = [
       { name: "3XL", inStock: true },
     ],
     category: "Women's Dresses",
-    qty: 15,
+    qty: 1,
   },
   {
     id: 9,
@@ -259,7 +259,7 @@ export const products = [
       { name: "3XL", inStock: true },
     ],
     category: "Women's Dresses",
-    qty: 20,
+    qty: 1,
   },
   {
     id: 10,
@@ -288,7 +288,7 @@ export const products = [
       { name: "3XL", inStock: true },
     ],
     category: "Women's Dresses",
-    qty: 8,
+    qty: 1,
   },
   {
     id: 11,
@@ -317,7 +317,7 @@ export const products = [
       { name: "3XL", inStock: true },
     ],
     category: "Women's Dresses",
-    qty: 12,
+    qty: 1,
   },
   {
     id: 12,
@@ -346,7 +346,7 @@ export const products = [
       { name: "3XL", inStock: true },
     ],
     category: "Women's Dresses",
-    qty: 10,
+    qty: 1,
   },
   {
     id: 13,
@@ -375,7 +375,7 @@ export const products = [
       { name: "3XL", inStock: true },
     ],
     category: "Women's Dresses",
-    qty: 5,
+    qty: 1,
   },
   {
     id: 14,
@@ -404,7 +404,7 @@ export const products = [
       { name: "3XL", inStock: true },
     ],
     category: "Women's Dresses",
-    qty: 15,
+    qty: 1,
   },
   {
     id: 15,
@@ -433,7 +433,7 @@ export const products = [
       { name: "3XL", inStock: true },
     ],
     category: "Women's Dresses",
-    qty: 20,
+    qty: 1,
   },
   {
     id: 16,
@@ -462,6 +462,6 @@ export const products = [
       { name: "3XL", inStock: true },
     ],
     category: "Women's Dresses",
-    qty: 18,
+    qty: 1,
   },
 ];

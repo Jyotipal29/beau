@@ -13,6 +13,7 @@ const ProductDetails = () => {
   const { id } = useParams();
   const {
     productState: { products },
+    productDispatch,
   } = useProduct();
   const [product, setProduct] = useState({});
   const [selectedSize, setSelectedSize] = useState();
@@ -34,6 +35,11 @@ const ProductDetails = () => {
     }
   }, [id, products]);
 
+  const addToCart = (e, product) => {
+    e.preventDefault();
+    productDispatch({ type: "ADD_TO_CART", payload: product });
+    console.log(product, "add to cart ");
+  };
   return (
     <Navbar>
       <div className="bg-white">
@@ -103,7 +109,7 @@ const ProductDetails = () => {
 
               {/* Reviews */}
 
-              <form className="mt-10">
+              <form className="mt-10" onSubmit={(e) => addToCart(e, product)}>
                 {/* Sizes */}
                 <div className="mt-10">
                   <div className="flex items-center justify-between">
@@ -190,7 +196,7 @@ const ProductDetails = () => {
                   type="submit"
                   className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
-                  Add to bag
+                  Add to cart
                 </button>
               </form>
             </div>

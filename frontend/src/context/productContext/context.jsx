@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useReducer, useEffect } from "react";
 import { productReducer } from "./reducer.jsx";
 import { products } from "../../data.jsx";
 const productContext = createContext({});
@@ -11,61 +11,18 @@ export const ProductProvider = ({ children }) => {
   const [productState, productDispatch] = useReducer(productReducer, {
     products: products,
     product: {},
+    cart: [],
     sort: {
       price: "",
     },
-    filters: {
-      category: "",
-      size: "",
-      brand: "",
-      search: "",
-    },
   });
 
-  //   const filteredProducts = useMemo(() => {
-  //     const filproducts = !productState.sort.price
-  //       ? productState.products
-  //       : productState.products.sort((a, b) =>
-  //           productState.sort.price === "asc"
-  //             ? a.price - b.price
-  //             : b.price - a.price
-  //         );
-
-  //     return filproducts
-  //       .filter((product) => {
-  //         return product.description
-  //           .toLowerCase()
-  //           .includes(productState.filters.search.toLowerCase());
-  //       })
-  //       .filter((product) => {
-  //         // Filter By brand
-
-  //         return (
-  //           !productState.filters.brand ||
-  //           product.brand.toLowerCase() ===
-  //             productState.filters.brand.toLowerCase()
-  //         );
-  //       })
-  //       .filter((product) => {
-  //         // Filter By category
-
-  //         return (
-  //           !productState.filters.category ||
-  //           product.category.toLowerCase() ===
-  //             productState.filters.category.toLowerCase()
-  //         );
-  //       })
-  //       .filter((product) => {
-  //         // Filter By size
-
-  //         return (
-  //           !productState.filters.size ||
-  //           product.size.some((size) =>
-  //             size.toLowerCase().includes(productState.filters.size.toLowerCase())
-  //           )
-  //         );
-  //       });
-  //   }, [productState, productState.products]);
+  useEffect(() => {
+    const storedCart = localStorage.getItem("cart");
+    if (storedCart) {
+      productDispatch({ type: "SET_CART", payload: JSON.parse(storedCart) });
+    }
+  }, []);
 
   return (
     <productContext.Provider value={{ productState, productDispatch }}>
