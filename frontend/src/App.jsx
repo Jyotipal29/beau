@@ -9,6 +9,7 @@ import ProductDetails from "./pages/ProductDetails";
 import PrivateRoutes from "./utils/Protected";
 import PageNotFound from "./pages/404";
 import OrderSuccess from "./pages/OrderSuccess";
+import Products from "./pages/Products";
 // import Login from "./pages/Login";
 // import Register from "./pages/Register";
 // import Profile from "./pages/Profile";
@@ -18,6 +19,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/products" element={<Products />} />
           <Route element={<PrivateRoutes />}>
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />

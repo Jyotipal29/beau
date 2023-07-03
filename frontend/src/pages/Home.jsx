@@ -1,11 +1,10 @@
 import Navbar from "../components/Navbar";
-import Products from "./Products";
 
 const Home = () => {
   return (
     <div>
       <Navbar>
-        <Products />
+        <h1>this is home page</h1>
       </Navbar>
     </div>
   );

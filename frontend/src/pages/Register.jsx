@@ -34,7 +34,7 @@ const Register = () => {
                 type: "REGISTER",
                 payload: { id: uuidv4(), data },
               });
-              navigate("/");
+              navigate("/products");
             })}
           >
             <div>
