@@ -17,6 +17,14 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    color: {
+      type: String,
+      required: true,
+    },
+    material: {
+      type: String,
+      required: true,
+    },
     mainImageUrl: {
       type: String,
       required: true,
@@ -29,13 +37,13 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    size: [
+    sizes: [
       {
         type: String,
       },
     ],
-    category: {
-      type: String,
+    InStock: {
+      type: Number,
       required: true,
     },
     qty: {
