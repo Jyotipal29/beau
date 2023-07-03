@@ -33,7 +33,7 @@ const createProduct = async (req, res) => {
 
     res.status(201).json(savedProduct);
   } catch (error) {
-    res.status(500).json({ error: "Failed to create the product" });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -57,8 +57,22 @@ const getAllProduct = async (req, res) => {
   }
 };
 
+const updateProduct = async (req, res) => {
+  const { id } = req.body;
+  try {
+    const product = await Product.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+
+    res.status(200).json(product);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = {
   getProduct,
   getAllProduct,
-  createProduct
+  createProduct,
+  updateProduct,
 };
