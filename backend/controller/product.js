@@ -1,5 +1,42 @@
 const Product = require("../model/product");
 
+// create product
+const createProduct = async (req, res) => {
+  try {
+    const {
+      title,
+      description,
+      color,
+      material,
+      mainImageUrl,
+      extraImages,
+      price,
+      sizes,
+      InStock,
+      qty,
+    } = req.body;
+
+    const product = new Product({
+      title,
+      description,
+      color,
+      material,
+      mainImageUrl,
+      extraImages,
+      price,
+      sizes,
+      InStock,
+      qty,
+    });
+
+    const savedProduct = await product.save();
+
+    res.status(201).json(savedProduct);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to create the product" });
+  }
+};
+
 // get one product
 
 const getProduct = async (req, res) => {
@@ -23,4 +60,5 @@ const getAllProduct = async (req, res) => {
 module.exports = {
   getProduct,
   getAllProduct,
+  createProduct
 };
