@@ -1,12 +1,16 @@
 const mongoose = require("mongoose");
 
-const imageSchema = new mongoose.Schema({
-  url: {
+
+const sizeSchema = new mongoose.Schema({
+  name: {
     type: String,
     required: true,
   },
+  inStock: {
+    type: Boolean,
+    required: true,
+  },
 });
-
 const productSchema = new mongoose.Schema(
   {
     title: {
@@ -37,11 +41,7 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    sizes: [
-      {
-        type: String,
-      },
-    ],
+    sizes: [sizeSchema],
     InStock: {
       type: Number,
       required: true,
