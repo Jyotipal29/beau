@@ -6,13 +6,16 @@ export const useUser = () => {
   return useContext(userContext);
 };
 
+const orderFromStorage = localStorage.getItem("order");
+const order = orderFromStorage ? JSON.parse(orderFromStorage) : [];
+
 const userFromStorage = localStorage.getItem("user");
 const user = userFromStorage ? JSON.parse(userFromStorage) : null;
 // eslint-disable-next-line react/prop-types
 export const UserProvider = ({ children }) => {
   const [userState, userDispatch] = useReducer(userReducer, {
     user: user,
-    order: [],
+    order: order,
     currentOrder: null,
   });
 

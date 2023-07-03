@@ -23,7 +23,7 @@ export const userReducer = (userState, action) => {
       };
 
     case "ADD_ORDER": {
-      let updatedOrder = [...userState.order, action.payload]
+      let updatedOrder = [...userState.order, action.payload];
       localStorage.setItem("order", JSON.stringify(updatedOrder));
 
       return {
@@ -35,8 +35,17 @@ export const userReducer = (userState, action) => {
     case "RESET_CURR_ORDER":
       return {
         ...userState,
-        currentOrder:null
-      }
+        currentOrder: null,
+      };
+
+    case "REMOVE_ADDRESS":
+      return {
+        ...userState,
+        user: {
+          ...userState.user,
+          address: userState.user.address.filter((it) => it.name !== action.payload)
+        }
+      };
     default:
       return userState;
   }
