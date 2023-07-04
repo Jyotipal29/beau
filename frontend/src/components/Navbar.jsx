@@ -5,7 +5,7 @@ import {
   XMarkIcon,
   ShoppingCartIcon,
 } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import logo from "../assets/beau-logo.jpg";
 import { useUser } from "../context/userContext/context";
 
@@ -32,6 +32,7 @@ const Navbar = ({ children }) => {
   } = useUser();
   return (
     <>
+      {user === null && <Navigate to="/login" />}
       <div className="min-h-full">
         <Disclosure as="nav" className="bg-gray-800">
           {({ open }) => (
