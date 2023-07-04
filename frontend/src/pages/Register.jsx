@@ -1,7 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useUser } from "../context/userContext/context";
-import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
+import { api } from "../constants/api";
 const Register = () => {
   const navigate = useNavigate();
   const {
@@ -28,21 +29,38 @@ const Register = () => {
           <form
             noValidate
             className="space-y-6"
-            onSubmit={handleSubmit((data) => {
-              localStorage.setItem("user", JSON.stringify(data));
+            onSubmit={handleSubmit(async (data) => {
+              const res = await axios.post(`${api}auth/register`, data);
+
+              localStorage.setItem("user", JSON.stringify(res.data));
               userDispatch({
                 type: "REGISTER",
-                payload: {
-                  id: uuidv4(),
-                  email: data.email,
-                  password: data.password,
-                  address: [],
-                  role: "admin",
-                },
+                payload: res.data,
               });
               navigate("/products");
             })}
           >
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Name
+              </label>
+              <div className="mt-2">
+                <input
+                  id="name"
+                  {...register("name", {
+                    required: "name required",
+                  })}
+                  type="name"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+                />
+                {errors.name && (
+                  <p className="text-sm text-red-500">{errors.name.message}</p>
+                )}
+              </div>
+            </div>
             <div>
               <label
                 htmlFor="email"

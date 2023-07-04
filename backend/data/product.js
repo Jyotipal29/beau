@@ -16,8 +16,8 @@ const products = [
     size: ["S", "M", "L", "XL"],
     qty: 1,
     InStock: 5,
-    Color: "yellow",
-    Material: "Double georgette",
+    color: "yellow",
+    material: "Double georgette",
   },
   {
     title: "Multicolour Two Tier dress ",
@@ -36,8 +36,8 @@ const products = [
     size: ["S", "M", "L", "XL"],
     qty: 1,
     InStock: 5,
-    Color: "Multicolour",
-    Material: "Georgette",
+    color: "Multicolour",
+    material: "Georgette",
   },
   {
     title: "Maroon dress with side keyholes ",
@@ -55,8 +55,8 @@ const products = [
     size: ["S", "M", "L", "XL"],
     qty: 1,
     InStock: 5,
-    Color: "Maroon",
-    Material: "polycrepe",
+    color: "Maroon",
+    material: "polycrepe",
   },
   {
     title: "Floral printed black dress ",
@@ -75,8 +75,8 @@ const products = [
     size: ["S", "M", "L", "XL"],
     qty: 1,
     InStock: 5,
-    Color: "black",
-    Material: "Georgette",
+    color: "black",
+    material: "Georgette",
   },
   {
     title: "Brown full sleeve dress with palm leaf print ",
@@ -95,8 +95,8 @@ const products = [
     size: ["S", "M", "L", "XL"],
     qty: 1,
     InStock: 5,
-    Color: "Brown",
-    Material: "Chiffon",
+    color: "Brown",
+    material: "Chiffon",
   },
   {
     title: "Yellow Rose printed front slit dress ",
@@ -115,8 +115,8 @@ const products = [
     size: ["S", "M", "L", "XL"],
     qty: 1,
     InStock: 5,
-    Color: "Yellow",
-    Material: "Heavy Georgette",
+    color: "Yellow",
+    material: "Heavy Georgette",
   },
   {
     title: "Wine Colour Off shoulder dress",
@@ -135,8 +135,8 @@ const products = [
     size: ["S", "M", "L", "XL"],
     qty: 1,
     InStock: 5,
-    Color: "Wine",
-    Material: " polycrepe",
+    color: "Wine",
+    material: " polycrepe",
   },
   {
     title: "Front plete full sleeve maroon top",
@@ -154,8 +154,8 @@ const products = [
     size: ["S", "M", "L", "XL"],
     qty: 1,
     InStock: 5,
-    Color: " maroon",
-    Material: " polycrepe",
+    color: " maroon",
+    material: " polycrepe",
   },
   {
     title: "One shoulder frilled top",
@@ -173,8 +173,8 @@ const products = [
     size: ["S", "M", "L", "XL"],
     qty: 1,
     InStock: 5,
-    Color: "Bottle Green",
-    Material: " polycrepe",
+    color: "Bottle Green",
+    material: " polycrepe",
   },
   {
     title: "One shoulder frilled top",
@@ -192,7 +192,9 @@ const products = [
     size: ["S", "M", "L", "XL"],
     qty: 1,
     InStock: 5,
-    Color: " Polka dot",
-    Material: " polycrepe",
+    color: " Polka dot",
+    material: " polycrepe",
   },
 ];
+
+module.exports = products;
