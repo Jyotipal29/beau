@@ -70,7 +70,6 @@ const AdminProducts = () => {
 
   return (
     <Navbar>
-      <p>admin</p>
       <div>
         <div>
           <div className="bg-white">
@@ -338,7 +337,11 @@ const AdminProducts = () => {
                           <h2 className="text-2xl font-bold tracking-tight text-gray-900">
                             All Products
                           </h2>
-
+                          <div className="mt-2">
+                            <button className="bg-red-600 px-2 py-1 text-white uppercase">
+                              <Link to="/product/form">add products</Link>
+                            </button>
+                          </div>
                           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
                             {products.map((product) => (
                               <div
@@ -373,6 +376,11 @@ const AdminProducts = () => {
                                     </p>
                                   </div>
                                 </Link>
+                                <div className="flex bg-red-600 justify-center">
+                                  <button className=" text-white  ">
+                                    edit
+                                  </button>
+                                </div>
                               </div>
                             ))}
                           </div>

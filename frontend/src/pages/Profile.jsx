@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 const Profile = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const {
     register,
     handleSubmit,
@@ -204,10 +204,10 @@ const Profile = () => {
           <div className="mx-auto  max-w-7xl px-4 sm:px-6 lg:px-8 bg-white">
             <div className="border-b border-gray-900/10 pb-12">
               <h2 className="text-xl font-semibold leading-7 text-gray-900">
-                name : jyoti
+                name : admin
               </h2>
               <h2 className="text-lg font-semibold leading-7 text-gray-900">
-                email : {user.data.email}
+                email : {user.email}
               </h2>
               <button
                 className="bg-red-600 py-2 mt-4 text-sm uppercase text-white px-2"

@@ -5,7 +5,7 @@ import {
   XMarkIcon,
   ShoppingCartIcon,
 } from "@heroicons/react/24/outline";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import logo from "../assets/beau-logo.jpg";
 import { useUser } from "../context/userContext/context";
 

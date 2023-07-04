@@ -62,6 +62,12 @@ export const productReducer = (productState, action) => {
       };
     }
 
+    case "ADD_PRODUCT":
+      return {
+        ...productState,
+        products: [...productState.products, action.payload],
+      };
+
     default:
       return productState;
   }
