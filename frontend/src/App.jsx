@@ -16,6 +16,7 @@ import AdminProducts from "./pages/AdminProducts";
 import AdminProduct from "./pages/AdminProduct";
 import AdminProtected from "./utils/AdminProtected";
 import ProductForm from "./pages/ProductForm";
+import AdminOrders from "./pages/AdminOrders";
 function App() {
   return (
     <div className="App">
@@ -34,6 +35,8 @@ function App() {
             <Route path="/admin" element={<AdminProducts />} />
             <Route path="/admin/:id" element={<AdminProduct />} />
             <Route path="/product/form" element={<ProductForm />} />
+            <Route path="/product/form/edit/:id" element={<ProductForm />} />
+            <Route path="/admin/orders" element={<AdminOrders />} />
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

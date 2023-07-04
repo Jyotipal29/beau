@@ -1,16 +1,34 @@
 import { useForm } from "react-hook-form";
 import Navbar from "../components/Navbar";
 import { useProduct } from "../context/productContext/context";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 const ProductForm = () => {
-  const {
-    register,
-    handleSubmit,
-    // formState: { errors },
-  } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
+  const { id } = useParams();
+
   const {
     productState: { products },
     productDispatch,
   } = useProduct();
+  const [selectedProduct, setSelectedProduct] = useState({});
+
+  const getData = async (id) => {
+    try {
+      const prod = products.find((item) => item.id === Number(id));
+      console.log(prod, "this is prod");
+      if (prod) {
+        setSelectedProduct(prod);
+      }
+    } catch (error) {
+      console.log("there is an error");
+    }
+  };
+  useEffect(() => {
+    if (products.length > 0) {
+      getData(id);
+    }
+  }, [id, products]);
   const sizes = [
     { name: "XXS", inStock: true, id: "xxs" },
     { name: "XS", inStock: true, id: "xs" },
@@ -22,7 +40,26 @@ const ProductForm = () => {
     { name: "3XL", inStock: true, id: "3xl" },
   ];
 
-  console.log(products, "this is products");
+  useEffect(() => {
+    if (selectedProduct && id) {
+      setValue("title", selectedProduct.title);
+      setValue("description", selectedProduct.description);
+      setValue("price", selectedProduct.price);
+      setValue("thumbnail", selectedProduct.mainImageUrl);
+      setValue("stock", selectedProduct.stock);
+      setValue("image1", selectedProduct.images && selectedProduct.images[0]);
+      setValue("image2", selectedProduct.images && selectedProduct.images[1]);
+      setValue("image3", selectedProduct.images && selectedProduct.images[2]);
+      setValue("color", selectedProduct.color);
+      setValue("material", selectedProduct.material);
+
+      setValue(
+        "sizes",
+        selectedProduct.sizes && selectedProduct.sizes.map((size) => size.id)
+      );
+    }
+  }, [selectedProduct, id, setValue]);
+
   return (
     <>
       <Navbar>
@@ -46,7 +83,7 @@ const ProductForm = () => {
           <div className="space-y-12 bg-white p-12">
             <div className="border-b border-gray-900/10 pb-12">
               <h2 className="text-base font-semibold leading-7 text-gray-900">
-                Add Product
+                {selectedProduct ? "edit product" : "Add Product"}
               </h2>
 
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">

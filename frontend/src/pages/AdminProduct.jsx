@@ -51,7 +51,7 @@ const AdminProduct = () => {
               className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
             >
               <li className="text-sm">
-                <Link to="/">back</Link>
+                <Link to="/admin">back</Link>
               </li>
             </ol>
           </nav>
