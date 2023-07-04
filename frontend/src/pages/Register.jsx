@@ -37,7 +37,7 @@ const Register = () => {
                 type: "REGISTER",
                 payload: res.data,
               });
-              navigate("/products");
+              navigate("/");
             })}
           >
             <div>
