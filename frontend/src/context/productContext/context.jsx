@@ -1,6 +1,5 @@
 import { createContext, useContext, useReducer, useEffect } from "react";
 import { productReducer } from "./reducer.jsx";
-import { products } from "../../data.jsx";
 const productContext = createContext({});
 export const useProduct = () => {
   return useContext(productContext);
