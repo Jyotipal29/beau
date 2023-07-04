@@ -1,12 +1,34 @@
 import { Link, Navigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { useProduct } from "../context/productContext/context";
+import axios from "axios";
+import { api } from "../constants/api";
+import { useUser } from "../context/userContext/context";
+import { useEffect } from "react";
 
 const Cart = () => {
   const {
     productState: { cart },
     productDispatch,
   } = useProduct();
+  const {
+    userState: { user },
+  } = useUser();
+
+  const getCart = async () => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+    const { data } = await axios.get(`${api}cart/`, config);
+    console.log(data, "the data");
+    productDispatch({ type: "GET_CART", payload: data });
+  };
+
+  useEffect(() => {
+    getCart();
+  }, []);
 
   const totalAmount = cart.reduce(
     (amount, item) => item.price * item.qty + amount,
@@ -15,17 +37,42 @@ const Cart = () => {
 
   const itemCount = cart.reduce((total, item) => item.qty + total, 0);
 
-  const handleQty = (e, product) => {
-    productDispatch({
-      type: "UPDATE_CART",
-      payload: { ...product, qty: Number(e.target.value) },
-    });
-  };
-  console.log(cart, "cart to check qty");
+  const handleQty = async (e, id) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
 
-  const removeItem = (id) => {
+    const { data } = await axios.put(
+      `${api}cart/${id}`,
+      {
+        qty: Number(e.target.value),
+      },
+      config
+    );
+
+    console.log(data, "updated qty");
+    // productDispatch({
+    //   type: "UPDATE_CART",
+    //   payload: { ...product,  },
+    // });
+  };
+
+  const removeItem = async (id) => {
+    console.log(id);
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+
+    const { data } = await axios.delete(`${api}cart/${id}`, config);
+    console.log(data, "delted data");
     productDispatch({ type: "REMOVE_FROM_CART", payload: id });
   };
+
+  console.log(cart, "the cart");
   return (
     <Navbar>
       {!cart.length && <Navigate to="/products" />}
@@ -34,12 +81,12 @@ const Cart = () => {
         <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
           <div className="flow-root">
             <ul role="list" className="-my-6 divide-y divide-gray-200">
-              {cart.map((product) => (
-                <li key={product.id} className="flex py-6">
+              {cart.map(({ product }) => (
+                <li key={product._id} className="flex py-6">
                   <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                     <img
-                      src={product.mainImageUrl}
-                      alt={product.imageAlt}
+                      src={product?.mainImageUrl}
+                      alt={product?.imageAlt}
                       className="h-full w-full object-cover object-top"
                     />
                   </div>
@@ -64,7 +111,7 @@ const Cart = () => {
                         </label>
 
                         <select
-                          onChange={(e) => handleQty(e, product)}
+                          onChange={(e) => handleQty(e, product._id)}
                           value={product.qty}
                         >
                           <option value="1">1</option>
@@ -78,7 +125,7 @@ const Cart = () => {
                         <button
                           type="button"
                           className="font-medium text-red-600 hover:text-red-500"
-                          onClick={() => removeItem(product.id)}
+                          onClick={() => removeItem(product._id)}
                         >
                           Remove
                         </button>

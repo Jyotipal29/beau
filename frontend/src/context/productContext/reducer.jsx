@@ -5,6 +5,11 @@ export const productReducer = (productState, action) => {
         ...productState,
         products: action.payload,
       };
+    case "GET_PRODUCT":
+      return {
+        ...productState,
+        product: action.payload,
+      };
     case "ADD_TO_CART": {
       const item = action.payload;
       const existingItem = productState.cart.find((it) => it.id === item.id);
@@ -19,14 +24,13 @@ export const productReducer = (productState, action) => {
       } else {
         updatedCart = productState.cart.concat(action.payload);
       }
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
       return {
         ...productState,
         cart: updatedCart,
       };
     }
 
-    case "SET_CART":
+    case "GET_CART":
       return {
         ...productState,
         cart: action.payload,
@@ -41,7 +45,6 @@ export const productReducer = (productState, action) => {
       let updatedCart = productState.cart.map((it) =>
         it.id === action.payload.id ? { ...it, qty: action.payload.qty } : it
       );
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
 
       return {
         ...productState,
@@ -49,11 +52,11 @@ export const productReducer = (productState, action) => {
       };
     }
     case "REMOVE_FROM_CART": {
-      let updatedCart = productState.cart.filter(
-        (it) => it.id !== action.payload
-      );
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      console.log(action.payload, "updated cart");
 
+      let updatedCart = productState.cart.filter(
+        (it) => it._id !== action.payload
+      );
       return {
         ...productState,
         cart: updatedCart,

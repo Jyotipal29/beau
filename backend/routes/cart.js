@@ -1,14 +1,15 @@
 const express = require("express");
 const {
   addToCart,
-  fetchCartByUser,
-  updateCart,
   deleteFromCart,
+  getCart,
+  updateCart,
 } = require("../controller/cart");
+const { protect } = require("./verifytoken");
 const router = express.Router();
 
-router.post("/", addToCart);
-router.get("/", fetchCartByUser);
-router.delete("/:id", deleteFromCart);
-router.patch("/:id", updateCart);
+router.get("/", protect, getCart);
+router.post("/", protect, addToCart);
+router.delete("/:id", protect, deleteFromCart);
+router.put("/:id", protect, updateCart);
 module.exports = router;
