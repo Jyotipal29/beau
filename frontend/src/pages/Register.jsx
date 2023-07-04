@@ -32,7 +32,13 @@ const Register = () => {
               localStorage.setItem("user", JSON.stringify(data));
               userDispatch({
                 type: "REGISTER",
-                payload: { id: uuidv4(), data },
+                payload: {
+                  id: uuidv4(),
+                  email: data.email,
+                  password: data.password,
+                  address: [],
+                  role: "user",
+                },
               });
               navigate("/products");
             })}
