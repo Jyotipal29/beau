@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
@@ -11,6 +11,8 @@ import {
 import { Link } from "react-router-dom";
 import { useProduct } from "../context/productContext/context";
 import Navbar from "../components/Navbar";
+import axios from "axios";
+import { api } from "../constants/api";
 
 const sortOptions = [
   { name: "Most Popular", href: "#", current: true },
@@ -65,9 +67,19 @@ function classNames(...classes) {
 const Products = () => {
   const {
     productState: { products },
+    productDispatch,
   } = useProduct();
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
+  const getProducts = async () => {
+    const { data } = await axios.get(`${api}products/`);
+    productDispatch({ type: "GET_PRODUCTS", payload: data });
+    console.log(data, "products");
+  };
+
+  useEffect(() => {
+    getProducts();
+  }, []);
   return (
     <Navbar>
       <div>

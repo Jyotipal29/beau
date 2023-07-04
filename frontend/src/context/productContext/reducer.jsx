@@ -1,5 +1,10 @@
 export const productReducer = (productState, action) => {
   switch (action.type) {
+    case "GET_PRODUCTS":
+      return {
+        ...productState,
+        products: action.payload,
+      };
     case "ADD_TO_CART": {
       const item = action.payload;
       const existingItem = productState.cart.find((it) => it.id === item.id);

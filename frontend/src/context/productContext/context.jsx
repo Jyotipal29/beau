@@ -9,7 +9,7 @@ export const useProduct = () => {
 // eslint-disable-next-line react/prop-types
 export const ProductProvider = ({ children }) => {
   const [productState, productDispatch] = useReducer(productReducer, {
-    products: products,
+    products: [],
     product: {},
     cart: [],
     sort: {
