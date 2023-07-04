@@ -12,9 +12,9 @@ import OrderSuccess from "./pages/OrderSuccess";
 import Products from "./pages/Products";
 import Profile from "./pages/Profile";
 import Orders from "./pages/Orders";
-// import Login from "./pages/Login";
-// import Register from "./pages/Register";
-// import Profile from "./pages/Profile";
+import AdminProducts from "./pages/AdminProducts";
+import AdminProduct from "./pages/AdminProduct";
+import AdminProtected from "./utils/AdminProtected";
 function App() {
   return (
     <div className="App">
@@ -28,6 +28,10 @@ function App() {
             <Route path="/ordersuccess/:id" element={<OrderSuccess />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/orders" element={<Orders />} />
+          </Route>
+          <Route element={<AdminProtected />}>
+            <Route path="/admin" element={<AdminProducts />} />
+            <Route path="/admin/:id" element={<AdminProduct />} />
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

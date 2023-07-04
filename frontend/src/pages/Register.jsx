@@ -37,7 +37,7 @@ const Register = () => {
                   email: data.email,
                   password: data.password,
                   address: [],
-                  role: "user",
+                  role: "admin",
                 },
               });
               navigate("/products");

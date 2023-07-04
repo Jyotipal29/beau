@@ -7,16 +7,13 @@ import {
 } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import logo from "../assets/beau-logo.jpg";
-const user = {
-  name: "jyoti",
-  imageUrl:
-    "https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png",
-};
+import { useUser } from "../context/userContext/context";
+
 const navigation = [
-  { name: "Home", href: "/", current: true },
-  { name: "Products", href: "/products", current: false },
-  { name: "login", href: "/login", current: false },
-  { name: "Contacts", href: "#", current: false },
+  { name: "Home", link: "/", user: true },
+  { name: "Products", link: "/products", user: true },
+  { name: "login", link: "/login", user: true },
+  { name: "admin", link: "/admin", admin: true },
 ];
 const userNavigation = [
   { name: "Your Profile", href: "/profile" },
@@ -30,6 +27,9 @@ function classNames(...classes) {
 
 // eslint-disable-next-line react/prop-types
 const Navbar = ({ children }) => {
+  const {
+    userState: { user },
+  } = useUser();
   return (
     <>
       <div className="min-h-full">
@@ -47,17 +47,19 @@ const Navbar = ({ children }) => {
                   </div>
                   <div className="hidden md:block">
                     <div className="ml-10 flex items-baseline space-x-4">
-                      {navigation.map((item) => (
-                        <a
-                          key={item.name}
-                          href={item.href}
-                          className="text-gray-300 hover:bg-gray-700 hover:text-white
+                      {navigation.map((item) =>
+                        item[user.role] ? (
+                          <Link
+                            key={item.name}
+                            to={item.link}
+                            className="text-gray-300 hover:bg-gray-700 hover:text-white
                             rounded-md px-3 py-2 text-sm font-medium"
-                          aria-current={item.current ? "page" : undefined}
-                        >
-                          {item.name}
-                        </a>
-                      ))}
+                            aria-current={item.current ? "page" : undefined}
+                          >
+                            {item.name}
+                          </Link>
+                        ) : null
+                      )}
                     </div>
                   </div>
                   <div className="hidden md:block">
@@ -138,22 +140,24 @@ const Navbar = ({ children }) => {
 
               <Disclosure.Panel className="md:hidden">
                 <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-                  {navigation.map((item) => (
-                    <Disclosure.Button
-                      key={item.name}
-                      as="a"
-                      href={item.href}
-                      className={classNames(
-                        item.current
-                          ? "bg-gray-900 text-white"
-                          : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                        "block rounded-md px-3 py-2 text-base font-medium"
-                      )}
-                      aria-current={item.current ? "page" : undefined}
-                    >
-                      {item.name}
-                    </Disclosure.Button>
-                  ))}
+                  {navigation.map((item) =>
+                    item[user.role] ? (
+                      <Disclosure.Button
+                        key={item.name}
+                        as="a"
+                        to={item.link}
+                        className={classNames(
+                          item.current
+                            ? "bg-gray-900 text-white"
+                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                          "block rounded-md px-3 py-2 text-base font-medium"
+                        )}
+                        aria-current={item.current ? "page" : undefined}
+                      >
+                        {item.name}
+                      </Disclosure.Button>
+                    ) : null
+                  )}
                 </div>
                 <div className="border-t border-gray-700 pb-3 pt-4">
                   <div className="flex items-center px-5">
