@@ -43,7 +43,7 @@ export const productReducer = (productState, action) => {
 
     case "UPDATE_CART": {
       let updatedCart = productState.cart.map((it) =>
-        it.id === action.payload.id ? { ...it, qty: action.payload.qty } : it
+        it.id === action.payload.id ? action.payload : it
       );
 
       return {
@@ -52,8 +52,6 @@ export const productReducer = (productState, action) => {
       };
     }
     case "REMOVE_FROM_CART": {
-      console.log(action.payload, "updated cart");
-
       let updatedCart = productState.cart.filter(
         (it) => it._id !== action.payload
       );
@@ -63,7 +61,6 @@ export const productReducer = (productState, action) => {
       };
     }
     case "CART_REMOVE": {
-      localStorage.removeItem("cart");
       return {
         ...productState,
         cart: [],

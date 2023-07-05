@@ -1,8 +1,8 @@
 const express = require("express");
 const {
   addToCart,
-  deleteFromCart,
   getCart,
+  deleteFromCart,
   updateCart,
 } = require("../controller/cart");
 const { protect } = require("./verifytoken");

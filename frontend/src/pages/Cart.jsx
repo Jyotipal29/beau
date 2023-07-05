@@ -47,20 +47,20 @@ const Cart = () => {
     const { data } = await axios.put(
       `${api}cart/${id}`,
       {
-        qty: Number(e.target.value),
+        quantity: Number(e.target.value),
       },
       config
     );
 
     console.log(data, "updated qty");
-    // productDispatch({
-    //   type: "UPDATE_CART",
-    //   payload: { ...product,  },
-    // });
+    productDispatch({
+      type: "UPDATE_CART",
+      payload: data,
+    });
   };
 
   const removeItem = async (id) => {
-    console.log(id);
+    console.log(id, "remove id ");
     const config = {
       headers: {
         Authorization: `Bearer ${user.token}`,
@@ -81,7 +81,7 @@ const Cart = () => {
         <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
           <div className="flow-root">
             <ul role="list" className="-my-6 divide-y divide-gray-200">
-              {cart.map(({ product }) => (
+              {cart.map(({ _id, product, quantity }) => (
                 <li key={product._id} className="flex py-6">
                   <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                     <img
@@ -111,13 +111,14 @@ const Cart = () => {
                         </label>
 
                         <select
-                          onChange={(e) => handleQty(e, product._id)}
-                          value={product.qty}
+                          onChange={(e) => handleQty(e, _id)}
+                          value={quantity}
                         >
                           <option value="1">1</option>
                           <option value="2">2</option>
                           <option value="3">3</option>
                           <option value="4">4</option>
+                          <option value="4">5</option>
                         </select>
                       </div>
 
@@ -125,7 +126,7 @@ const Cart = () => {
                         <button
                           type="button"
                           className="font-medium text-red-600 hover:text-red-500"
-                          onClick={() => removeItem(product._id)}
+                          onClick={() => removeItem(_id)}
                         >
                           Remove
                         </button>
