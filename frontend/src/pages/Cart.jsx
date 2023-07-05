@@ -30,12 +30,16 @@ const Cart = () => {
     getCart();
   }, []);
 
-  const totalAmount = cart.reduce(
-    (amount, item) => item.price * item.qty + amount,
-    0
+  const { totalPrice, totalItems } = cart.reduce(
+    (accumulator, item) => {
+      const { product, quantity } = item;
+      const { price } = product; // Assuming `price` property exists in the `product` object
+      accumulator.totalPrice += price * quantity;
+      accumulator.totalItems += quantity;
+      return accumulator;
+    },
+    { totalPrice: 0, totalItems: 0 }
   );
-
-  const itemCount = cart.reduce((total, item) => item.qty + total, 0);
 
   const handleQty = async (e, id) => {
     const config = {
@@ -142,11 +146,11 @@ const Cart = () => {
         <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
           <div className="flex py-2 px-2 justify-between text-base font-medium text-gray-900">
             <p>total</p>
-            <p>{Math.floor(totalAmount)}</p>
+            <p>{Math.floor(totalPrice)}</p>
           </div>
           <div className="flex  py-2 px-2 justify-between text-base font-medium text-gray-900">
             <p>total item</p>
-            <p>{itemCount}</p>
+            <p>{totalItems}</p>
           </div>
 
           <div className="mt-6">

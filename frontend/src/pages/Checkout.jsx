@@ -1,33 +1,44 @@
 import { useProduct } from "../context/productContext/context";
 import { useForm } from "react-hook-form";
 import { useUser } from "../context/userContext/context";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
-
+import axios from "axios";
+import { api } from "../constants/api";
 const Checkout = () => {
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState("card");
   const handleAddress = (e) => {
-    setSelectedAddress(user.address[e.target.value]);
+    setSelectedAddress(user.addresses[e.target.value]);
   };
 
   const cardHandler = (e) => {
     setPaymentMethod(e.target.value);
   };
 
-  const orderHandler = () => {
+  const orderHandler = async () => {
     const order = {
-      id: uuidv4(),
       cart,
-      totalAmount,
-      itemCount,
+      totalPrice,
+      totalItems,
       selectedAddress,
       paymentMethod,
       user,
       status: "pending",
     };
-    userDispatch({ type: "ADD_ORDER", payload: order });
+
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      const { data } = await axios.post(`${api}order/`, order, config);
+      console.log(data, "data");
+      // userDispatch({ type: "ADD_ORDER", payload: order });
+    } catch (error) {
+      console.log(error.message);
+    }
   };
   const {
     register,
@@ -45,24 +56,65 @@ const Checkout = () => {
   } = useUser();
 
   console.log(currentOrder, "this is curr oder");
-  const totalAmount = cart.reduce(
-    (amount, item) => item.price * item.qty + amount,
-    0
+  const getCart = async () => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+    const { data } = await axios.get(`${api}cart/`, config);
+    productDispatch({ type: "GET_CART", payload: data });
+  };
+
+  useEffect(() => {
+    getCart();
+  }, []);
+
+  const { totalPrice, totalItems } = cart.reduce(
+    (accumulator, item) => {
+      const { product, quantity } = item;
+      const { price } = product; // Assuming `price` property exists in the `product` object
+      accumulator.totalPrice += price * quantity;
+      accumulator.totalItems += quantity;
+      return accumulator;
+    },
+    { totalPrice: 0, totalItems: 0 }
   );
 
-  const itemCount = cart.reduce((total, item) => item.qty + total, 0);
+  const handleQty = async (e, id) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
 
-  const handleQty = (e, product) => {
+    const { data } = await axios.put(
+      `${api}cart/${id}`,
+      {
+        quantity: Number(e.target.value),
+      },
+      config
+    );
+
+    console.log(data, "updated qty");
     productDispatch({
       type: "UPDATE_CART",
-      payload: { ...product, qty: Number(e.target.value) },
+      payload: data,
     });
   };
 
-  const removeItem = (id) => {
+  const removeItem = async (id) => {
+    console.log(id, "remove id ");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+
+    const { data } = await axios.delete(`${api}cart/${id}`, config);
+    console.log(data, "delted data");
     productDispatch({ type: "REMOVE_FROM_CART", payload: id });
   };
-
   console.log(user, "this is user with address");
   return (
     <div className="mx-auto mt-12 mb-5 max-w-7xl px-4 sm:px-6 lg:px-8 bg-white">
@@ -216,7 +268,7 @@ const Checkout = () => {
                         {...register("pinCode", {
                           required: "pinCode is required",
                         })}
-                        id="postal-code"
+                        id="pinCode"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
@@ -248,7 +300,7 @@ const Checkout = () => {
               choose from existing addresses
             </p>
             <ul role="list" className="divide-y divide-gray-100">
-              {user?.address?.map((person, index) => (
+              {user?.addresses?.map((person, index) => (
                 <li
                   key={person.name}
                   className="flex justify-between gap-x-6 py-5"
@@ -324,12 +376,12 @@ const Checkout = () => {
               <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                 <div className="flow-root">
                   <ul role="list" className="-my-6 divide-y divide-gray-200">
-                    {cart.map((product) => (
-                      <li key={product.id} className="flex py-6">
+                    {cart.map(({ _id, product, quantity }) => (
+                      <li key={product._id} className="flex py-6">
                         <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                           <img
-                            src={product.mainImageUrl}
-                            alt={product.imageAlt}
+                            src={product?.mainImageUrl}
+                            alt={product?.imageAlt}
                             className="h-full w-full object-cover object-top"
                           />
                         </div>
@@ -354,13 +406,14 @@ const Checkout = () => {
                               </label>
 
                               <select
-                                onChange={(e) => handleQty(e, product)}
-                                value={product.qty}
+                                onChange={(e) => handleQty(e, _id)}
+                                value={quantity}
                               >
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                                 <option value="4">4</option>
+                                <option value="4">5</option>
                               </select>
                             </div>
 
@@ -368,7 +421,7 @@ const Checkout = () => {
                               <button
                                 type="button"
                                 className="font-medium text-red-600 hover:text-red-500"
-                                onClick={() => removeItem(product.id)}
+                                onClick={() => removeItem(_id)}
                               >
                                 Remove
                               </button>
@@ -384,11 +437,11 @@ const Checkout = () => {
               <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                 <div className="flex py-2 px-2 justify-between text-base font-medium text-gray-900">
                   <p>total</p>
-                  <p>{Math.floor(totalAmount)}</p>
+                  <p>{Math.floor(totalPrice)}</p>
                 </div>
                 <div className="flex  py-2 px-2 justify-between text-base font-medium text-gray-900">
                   <p>total item</p>
-                  <p>{itemCount}</p>
+                  <p>{totalItems}</p>
                 </div>
 
                 <div className="mt-6">

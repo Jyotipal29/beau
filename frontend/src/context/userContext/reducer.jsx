@@ -16,8 +16,8 @@ export const userReducer = (userState, action) => {
         ...userState,
         user: {
           ...userState.user,
-          address: userState.user.address
-            ? [...userState.user.address, action.payload]
+          addresses: userState.user.addresses
+            ? [...userState.user.addresses, action.payload]
             : [action.payload],
         },
       };
