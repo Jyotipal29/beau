@@ -11,6 +11,7 @@ export const ProductProvider = ({ children }) => {
     products: [],
     product: {},
     cart: [],
+    wish: [],
     sort: {
       price: "",
     },

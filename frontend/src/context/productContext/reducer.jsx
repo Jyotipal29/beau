@@ -73,6 +73,16 @@ export const productReducer = (productState, action) => {
         products: [...productState.products, action.payload],
       };
 
+    case "ADD_WISH":
+      return {
+        ...productState,
+        wish: productState.wish.concat(action.payload),
+      };
+    case "GET_WISH":
+      return {
+        ...productState,
+        wish: action.payload,
+      };
     default:
       return productState;
   }

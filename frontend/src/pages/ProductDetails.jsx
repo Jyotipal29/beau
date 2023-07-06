@@ -59,20 +59,7 @@ const ProductDetails = () => {
       console.log(error.message);
     }
   };
-  const wishHandler = async (id) => {
-    console.log(id, "this is id");
-    try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
-      const { data } = await axios.post(`${api}wish/toggle/${id}`, {}, config);
-      console.log(data, "this is wish data");
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+ 
   return (
     <Navbar>
       <div className="bg-white">
@@ -169,7 +156,6 @@ const ProductDetails = () => {
                 </button>
                 <button
                   type="submit"
-                  onClick={() => wishHandler(product._id)}
                   className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-red-600 px-8 py-1 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
                 >
                   <HeartIcon className="w-8 h-8" />

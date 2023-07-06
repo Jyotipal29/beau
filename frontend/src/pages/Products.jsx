@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon, HeartIcon } from "@heroicons/react/24/outline";
 import {
   ChevronDownIcon,
   FunnelIcon,
@@ -13,6 +13,7 @@ import { useProduct } from "../context/productContext/context";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import { api } from "../constants/api";
+import { useUser } from "../context/userContext/context";
 const sortOptions = [
   { name: "Most Popular", href: "#", current: true },
   { name: "Best Rating", href: "#", current: false },
@@ -65,6 +66,9 @@ function classNames(...classes) {
 
 const Products = () => {
   const {
+    userState: { user },
+  } = useUser();
+  const {
     productState: { products },
     productDispatch,
   } = useProduct();
@@ -73,13 +77,25 @@ const Products = () => {
   const getProducts = async () => {
     const { data } = await axios.get(`${api}products/`);
     productDispatch({ type: "GET_PRODUCTS", payload: data });
-    console.log(data, "products");
   };
 
   useEffect(() => {
     getProducts();
   }, []);
 
+  const wishHandler = async (id) => {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      const { data } = await axios.post(`${api}wish/toggle/${id}`, {}, config);
+      console.log(data, "the data");
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
   return (
     <Navbar>
       <div>
@@ -350,14 +366,21 @@ const Products = () => {
                             All Products
                           </h2>
 
-                          <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
+                          <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8 ">
                             {products.map((product) => (
                               <div
-                                key={product.id}
-                                className="group relative border-2 p-2 shadow-sm"
+                                key={product._id}
+                                className="group relative border-2 p-2 shadow-sm "
                               >
+                                <div className="absolute top-1  right-2 z-30">
+                                  <button
+                                    onClick={() => wishHandler(product._id)}
+                                  >
+                                    <HeartIcon className="w-8 h-8" />
+                                  </button>
+                                </div>
                                 <Link to={`/product/${product._id}`}>
-                                  <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                                  <div className="aspect-h-1  aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80  px-2">
                                     <img
                                       src={product.mainImageUrl}
                                       alt={product.title}
@@ -376,9 +399,6 @@ const Products = () => {
                                           {product.title}
                                         </a>
                                       </h3>
-                                      <p className="mt-1 text-sm text-gray-500">
-                                        {product.color}
-                                      </p>
                                     </div>
                                     <p className="text-sm font-medium text-gray-900">
                                       {product.price}
