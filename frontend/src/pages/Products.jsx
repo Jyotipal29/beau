@@ -13,7 +13,6 @@ import { useProduct } from "../context/productContext/context";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import { api } from "../constants/api";
-
 const sortOptions = [
   { name: "Most Popular", href: "#", current: true },
   { name: "Best Rating", href: "#", current: false },
@@ -80,6 +79,7 @@ const Products = () => {
   useEffect(() => {
     getProducts();
   }, []);
+
   return (
     <Navbar>
       <div>
@@ -364,6 +364,7 @@ const Products = () => {
                                       className="h-full w-full object-cover object-top lg:h-full lg:w-full"
                                     />
                                   </div>
+
                                   <div className="mt-4 flex justify-between px-2">
                                     <div>
                                       <h3 className="text-sm text-gray-700">

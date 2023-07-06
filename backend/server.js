@@ -7,6 +7,7 @@ const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
 const cartRoutes = require("./routes/cart");
 const orderRoutes = require("./routes/orders");
+const wishRoutes = require("./routes/wish");
 connectDB();
 const app = express();
 app.use(cors());
@@ -19,6 +20,7 @@ app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 app.use("/cart", cartRoutes);
 app.use("/order", orderRoutes);
+app.use("/wish", wishRoutes);
 
 
 const port = process.env.PORT | 5000;

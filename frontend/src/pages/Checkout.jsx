@@ -25,6 +25,7 @@ const Checkout = () => {
       paymentMethod,
       user,
       status: "pending",
+      paymentStatus: "pending",
     };
 
     try {

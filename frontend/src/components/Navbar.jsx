@@ -4,6 +4,7 @@ import {
   Bars3Icon,
   XMarkIcon,
   ShoppingCartIcon,
+  HeartIcon,
 } from "@heroicons/react/24/outline";
 import { Link, Navigate } from "react-router-dom";
 import logo from "../assets/beau-logo.jpg";
@@ -74,6 +75,14 @@ const Navbar = ({ children }) => {
                           />
                         </Link>
                       </button>
+                      <button
+                        type="button"
+                        className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                      >
+                        <Link to="/wish">
+                          <HeartIcon className="h-6 w-6" aria-hidden="true" />
+                        </Link>
+                      </button>
 
                       {/* Profile dropdown */}
                       <Menu as="div" className="relative ml-3">
@@ -141,9 +150,8 @@ const Navbar = ({ children }) => {
                 <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
                   {navigation.map((item) =>
                     item[user.role] ? (
-                      <Disclosure.Button
+                      <Link
                         key={item.name}
-                        as="a"
                         to={item.link}
                         className={classNames(
                           item.current
@@ -153,7 +161,7 @@ const Navbar = ({ children }) => {
                         )}
                       >
                         {item.name}
-                      </Disclosure.Button>
+                      </Link>
                     ) : null
                   )}
                 </div>
@@ -186,17 +194,25 @@ const Navbar = ({ children }) => {
                         />
                       </Link>
                     </button>
+                    <button
+                      type="button"
+                      className="ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                    >
+                      <span className="sr-only">View notifications</span>
+                      <Link to="/wish">
+                        <HeartIcon className="h-6 w-6" aria-hidden="true" />
+                      </Link>
+                    </button>
                   </div>
                   <div className="mt-3 space-y-1 px-2">
                     {userNavigation.map((item) => (
-                      <Disclosure.Button
+                      <Link
                         key={item.name}
-                        as="a"
-                        href={item.href}
+                        to={item.link}
                         className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                       >
                         {item.name}
-                      </Disclosure.Button>
+                      </Link>
                     ))}
                   </div>
                 </div>
