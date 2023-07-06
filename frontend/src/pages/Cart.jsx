@@ -1,12 +1,14 @@
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { useProduct } from "../context/productContext/context";
 import axios from "axios";
 import { api } from "../constants/api";
 import { useUser } from "../context/userContext/context";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Loader from "../components/Loader";
 
 const Cart = () => {
+  const [loading, setLoading] = useState(false);
   const {
     productState: { cart },
     productDispatch,
@@ -16,14 +18,21 @@ const Cart = () => {
   } = useUser();
 
   const getCart = async () => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    };
-    const { data } = await axios.get(`${api}cart/`, config);
-    console.log(data, "the data");
-    productDispatch({ type: "GET_CART", payload: data });
+    try {
+      setLoading(true);
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      const { data } = await axios.get(`${api}cart/`, config);
+      console.log(data, "the data");
+      productDispatch({ type: "GET_CART", payload: data });
+      setLoading(false);
+    } catch (error) {
+      console.log(error.message);
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -79,103 +88,121 @@ const Cart = () => {
   console.log(cart, "the cart");
   return (
     <Navbar>
-      {!cart.length && <Navigate to="/products" />}
       <div className="mx-auto  max-w-7xl px-4 sm:px-6 lg:px-8 bg-white">
         <h1 className="text-4xl text-center font-bold py-2">Cart</h1>
-        <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-          <div className="flow-root">
-            <ul role="list" className="-my-6 divide-y divide-gray-200">
-              {cart.map(({ _id, product, quantity }) => (
-                <li key={product._id} className="flex py-6">
-                  <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                    <img
-                      src={product?.mainImageUrl}
-                      alt={product?.imageAlt}
-                      className="h-full w-full object-cover object-top"
-                    />
-                  </div>
-
-                  <div className="ml-4 flex flex-1 flex-col">
-                    <div>
-                      <div className="flex justify-between text-base font-medium text-gray-900">
-                        <h3>
-                          <a href={product.href}>{product.title}</a>
-                        </h3>
-
-                        <p className="ml-4">{product.price}</p>
-                      </div>
-                    </div>
-                    <div className="flex flex-1 items-end justify-between text-sm">
-                      <div className="text-gray-500">
-                        <label
-                          htmlFor="password"
-                          className="inline mr-5 text-sm font-medium leading-6 text-gray-900"
-                        >
-                          Qty
-                        </label>
-
-                        <select
-                          onChange={(e) => handleQty(e, _id)}
-                          value={quantity}
-                        >
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                          <option value="4">5</option>
-                        </select>
-                      </div>
-
-                      <div className="flex">
-                        <button
-                          type="button"
-                          className="font-medium text-red-600 hover:text-red-500"
-                          onClick={() => removeItem(_id)}
-                        >
-                          Remove
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-          <div className="flex py-2 px-2 justify-between text-base font-medium text-gray-900">
-            <p>total</p>
-            <p>{Math.floor(totalPrice)}</p>
-          </div>
-          <div className="flex  py-2 px-2 justify-between text-base font-medium text-gray-900">
-            <p>total item</p>
-            <p>{totalItems}</p>
-          </div>
-
-          <div className="mt-6">
-            <Link
-              to="/checkout"
-              className="flex items-center justify-center rounded-md border border-transparent bg-red-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-red-700"
-            >
-              Checkout
-            </Link>
-          </div>
-          <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
-            <p>
-              or
-              <Link to="/">
-                <button
-                  type="button"
-                  className="font-medium text-red-600 hover:text-red-500"
-                >
-                  Continue Shopping
-                  <span aria-hidden="true"> &rarr;</span>
+        {loading ? (
+          <Loader loading={loading} />
+        ) : (
+          <>
+            {cart.length === 0 && (
+              <div className="flex flex-col  items-center space-y-8 mt-4">
+                <h1 className="text-2xl uppercase font-lora font-bold">
+                  your cart is empty
+                </h1>
+                <button className="bg-red-600 w-32 py-2 mb-4 uppercase text-white text-lg font-lora ">
+                  <Link to="/products">shop here</Link>
                 </button>
-              </Link>
-            </p>
-          </div>
-        </div>
+              </div>
+            )}
+            <div className="border-t border-gray-200 px-4 mt-2 py-6 sm:px-6">
+              <div className="flow-root">
+                <ul role="list" className="-my-6 divide-y divide-gray-200">
+                  {cart.map(({ _id, product, quantity }) => (
+                    <li key={product._id} className="flex py-6">
+                      <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                        <img
+                          src={product?.mainImageUrl}
+                          alt={product?.imageAlt}
+                          className="h-full w-full object-cover object-top"
+                        />
+                      </div>
+
+                      <div className="ml-4 flex flex-1 flex-col">
+                        <div>
+                          <div className="flex justify-between text-base font-medium text-gray-900">
+                            <h3>
+                              <a href={product.href}>{product.title}</a>
+                            </h3>
+
+                            <p className="ml-4">{product.price}</p>
+                          </div>
+                        </div>
+                        <div className="flex flex-1 items-end justify-between text-sm">
+                          <div className="text-gray-500">
+                            <label
+                              htmlFor="password"
+                              className="inline mr-5 text-sm font-medium leading-6 text-gray-900"
+                            >
+                              Qty
+                            </label>
+
+                            <select
+                              onChange={(e) => handleQty(e, _id)}
+                              value={quantity}
+                              className=""
+                            >
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="4">5</option>
+                            </select>
+                          </div>
+
+                          <div className="flex">
+                            <button
+                              type="button"
+                              className="font-medium text-red-600 hover:text-red-500"
+                              onClick={() => removeItem(_id)}
+                            >
+                              Remove
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            {cart.length > 0 && (
+              <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
+                <div className="flex py-2 px-2 justify-between text-base font-medium text-gray-900">
+                  <p>total</p>
+                  <p>{Math.floor(totalPrice)}</p>
+                </div>
+                <div className="flex  py-2 px-2 justify-between text-base font-medium text-gray-900">
+                  <p>total item</p>
+                  <p>{totalItems}</p>
+                </div>
+
+                <div className="mt-6">
+                  <Link
+                    to="/checkout"
+                    className="flex items-center justify-center rounded-md border border-transparent bg-red-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-red-700"
+                  >
+                    Checkout
+                  </Link>
+                </div>
+                <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
+                  <p>
+                    or
+                    <Link to="/">
+                      <button
+                        type="button"
+                        className="font-medium text-red-600 hover:text-red-500"
+                      >
+                        Continue Shopping
+                        <span aria-hidden="true"> &rarr;</span>
+                      </button>
+                    </Link>
+                  </p>
+                </div>
+              </div>
+            )}
+          </>
+        )}
       </div>
     </Navbar>
   );

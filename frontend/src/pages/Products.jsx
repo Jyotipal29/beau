@@ -8,6 +8,7 @@ import Navbar from "../components/Navbar";
 import axios from "axios";
 import { api } from "../constants/api";
 import { useUser } from "../context/userContext/context";
+import Loader from "../components/Loader";
 const sortOptions = [
   { name: "Price: Low to High", href: "#", current: false },
   { name: "Price: High to Low", href: "#", current: false },
@@ -18,6 +19,7 @@ function classNames(...classes) {
 }
 
 const Products = () => {
+  const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState("Price: Low to High");
   const {
     userState: { user },
@@ -28,8 +30,15 @@ const Products = () => {
   } = useProduct();
 
   const getProducts = async () => {
-    const { data } = await axios.get(`${api}products/`);
-    productDispatch({ type: "GET_PRODUCTS", payload: data });
+    try {
+      setLoading(true);
+      const { data } = await axios.get(`${api}products/`);
+      productDispatch({ type: "GET_PRODUCTS", payload: data });
+      setLoading(false);
+    } catch (error) {
+      console.log(error.message);
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -121,57 +130,61 @@ const Products = () => {
                   aria-labelledby="products-heading"
                   className="pb-24 pt-6"
                 >
-                  <div className="grid grid-cols-1  gap-x-8 gap-y-10 lg:grid-cols-4">
-                    {/* Product grid */}
-                    <div className="lg:col-span-4">
-                      <div className="bg-white">
-                        <div className="mx-auto max-w-2xl px-4 py-0 sm:px-6 sm:py-4 lg:max-w-7xl lg:px-8">
-                          <div className="mt-0 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
-                            {sortedProducts.map((product) => (
-                              <div
-                                key={product.id}
-                                className="group relative border-2  shadow-sm"
-                              >
-                                <div className="absolute top-1  right-2 z-30">
-                                  <button
-                                    onClick={() => wishHandler(product._id)}
-                                  >
-                                    <HeartIcon className="w-8 h-8" />
-                                  </button>
-                                </div>
-                                <Link to={`/product/${product._id}`}>
-                                  <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
-                                    <img
-                                      src={product.mainImageUrl}
-                                      alt={product.title}
-                                      className="h-full w-full object-cover object-top lg:h-full lg:w-full"
-                                    />
+                  {loading ? (
+                    <Loader loading={loading} />
+                  ) : (
+                    <div className="grid grid-cols-1  gap-x-8 gap-y-10 lg:grid-cols-4">
+                      {/* Product grid */}
+                      <div className="lg:col-span-4">
+                        <div className="bg-white">
+                          <div className="mx-auto max-w-2xl px-4 py-0 sm:px-6 sm:py-4 lg:max-w-7xl lg:px-8">
+                            <div className="mt-0 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
+                              {sortedProducts.map((product) => (
+                                <div
+                                  key={product.id}
+                                  className="group relative border-2  shadow-sm"
+                                >
+                                  <div className="absolute top-1  right-2 z-30">
+                                    <button
+                                      onClick={() => wishHandler(product._id)}
+                                    >
+                                      <HeartIcon className="w-8 h-8" />
+                                    </button>
                                   </div>
-
-                                  <div className="mt-4 flex justify-between px-2 py-2">
-                                    <div>
-                                      <h3 className="text-sm text-gray-700">
-                                        <a href={product.href}>
-                                          <span
-                                            aria-hidden="true"
-                                            className="absolute inset-0"
-                                          />
-                                          {product.title}
-                                        </a>
-                                      </h3>
+                                  <Link to={`/product/${product._id}`}>
+                                    <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                                      <img
+                                        src={product.mainImageUrl}
+                                        alt={product.title}
+                                        className="h-full w-full object-cover object-top lg:h-full lg:w-full"
+                                      />
                                     </div>
-                                    <p className="text-sm font-medium text-gray-900">
-                                      {product.price}
-                                    </p>
-                                  </div>
-                                </Link>
-                              </div>
-                            ))}
+
+                                    <div className="mt-4 flex justify-between px-2 py-2">
+                                      <div>
+                                        <h3 className="text-sm text-gray-700">
+                                          <a href={product.href}>
+                                            <span
+                                              aria-hidden="true"
+                                              className="absolute inset-0"
+                                            />
+                                            {product.title}
+                                          </a>
+                                        </h3>
+                                      </div>
+                                      <p className="text-sm font-medium text-gray-900">
+                                        {product.price}
+                                      </p>
+                                    </div>
+                                  </Link>
+                                </div>
+                              ))}
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  )}
                 </section>
               </main>
             </div>
