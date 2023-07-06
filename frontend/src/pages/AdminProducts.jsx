@@ -120,9 +120,9 @@ const AdminProducts = () => {
                           </div>
                           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:gap-x-8">
                             {sortedProducts.map((product) => (
-                              <div key={product.id}>
+                              <div key={product._id}>
                                 <div className="group relative border-2 p-2 shadow-sm ">
-                                  <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                                  <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none  lg:h-80">
                                     <img
                                       src={product.mainImageUrl}
                                       alt={product.title}
@@ -145,15 +145,15 @@ const AdminProducts = () => {
                                       {product.price}
                                     </p>
                                   </div>
-                                  <div className="flex bg-red-600 justify-center mt-2 ">
+                                </div>
+                                <div className="flex bg-red-600 justify-center mt-2 ">
+                                  <Link
+                                    to={`/product/form/edit/${product._id}`}
+                                  >
                                     <button className=" text-white py-1 ">
-                                      <Link
-                                        to={`/product/form/edit/${product.id}`}
-                                      >
-                                        edit
-                                      </Link>
+                                      edit
                                     </button>
-                                  </div>
+                                  </Link>
                                 </div>
                               </div>
                             ))}

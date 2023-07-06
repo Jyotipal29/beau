@@ -2,11 +2,17 @@ import { useForm } from "react-hook-form";
 import Navbar from "../components/Navbar";
 import { useProduct } from "../context/productContext/context";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import { api } from "../constants/api";
+import { useUser } from "../context/userContext/context";
 const ProductForm = () => {
   const { register, handleSubmit, setValue } = useForm();
+  const navigate = useNavigate();
   const { id } = useParams();
-
+  const {
+    userState: { user },
+  } = useUser();
   const {
     productState: { products },
     productDispatch,
@@ -15,19 +21,17 @@ const ProductForm = () => {
 
   const getData = async (id) => {
     try {
-      const prod = products.find((item) => item.id === Number(id));
-      console.log(prod, "this is prod");
-      if (prod) {
-        setSelectedProduct(prod);
+      const { data } = await axios.get(`${api}products/find/${id}`);
+      console.log(data, "this is prod");
+      if (data) {
+        setSelectedProduct(data);
       }
     } catch (error) {
       console.log("there is an error");
     }
   };
   useEffect(() => {
-    if (products.length > 0) {
-      getData(id);
-    }
+    getData(id);
   }, [id, products]);
   const sizes = [
     { name: "XXS", inStock: true, id: "xxs" },
@@ -40,16 +44,27 @@ const ProductForm = () => {
     { name: "3XL", inStock: true, id: "3xl" },
   ];
 
+  console.log(selectedProduct, "selected products");
+
   useEffect(() => {
     if (selectedProduct && id) {
       setValue("title", selectedProduct.title);
       setValue("description", selectedProduct.description);
       setValue("price", selectedProduct.price);
       setValue("thumbnail", selectedProduct.mainImageUrl);
-      setValue("stock", selectedProduct.stock);
-      setValue("image1", selectedProduct.images && selectedProduct.images[0]);
-      setValue("image2", selectedProduct.images && selectedProduct.images[1]);
-      setValue("image3", selectedProduct.images && selectedProduct.images[2]);
+      setValue("stock", selectedProduct.InStock);
+      setValue(
+        "image1",
+        selectedProduct.extraImages && selectedProduct.extraImages[0]
+      );
+      setValue(
+        "image2",
+        selectedProduct.extraImages && selectedProduct.extraImages[1]
+      );
+      setValue(
+        "image3",
+        selectedProduct.extraImages && selectedProduct.extraImages[2]
+      );
       setValue("color", selectedProduct.color);
       setValue("material", selectedProduct.material);
 
@@ -65,10 +80,9 @@ const ProductForm = () => {
       <Navbar>
         <form
           noValidate
-          onSubmit={handleSubmit((data) => {
+          onSubmit={handleSubmit(async (data) => {
             const product = { ...data };
-            product.images = [
-              product.thumbnail,
+            product.extraImages = [
               product.image1,
               product.image2,
               product.image3,
@@ -76,8 +90,28 @@ const ProductForm = () => {
             delete product["image1"];
             delete product["image2"];
             delete product["image3"];
-            console.log(product);
-            productDispatch({ type: "ADD_PRODUCT", payload: product });
+            console.log(product, "this is product");
+            if (id) {
+              const config = {
+                headers: {
+                  Authorization: `Bearer ${user.token}`,
+                },
+              };
+              const res = await axios.put(`${api}products/${id}`,product, config);
+              console.log(res.data, "updated data");
+              productDispatch({ type: "UPDATE_PRODUCT", payload: res.data });
+              navigate("/admin");
+            } else {
+              const config = {
+                headers: {
+                  Authorization: `Bearer ${user.token}`,
+                },
+              };
+              const res = await axios.post(`${api}products/`, product, config);
+              console.log(res.data, "add products");
+              productDispatch({ type: "ADD_PRODUCT", payload: res.data });
+              navigate("/admin");
+            }
           })}
         >
           <div className="space-y-12 bg-white p-12">
@@ -208,7 +242,7 @@ const ProductForm = () => {
                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">
                       <input
                         type="number"
-                        {...register("stock", {
+                        {...register("InStock", {
                           required: "stock is required",
                           min: 0,
                         })}
@@ -250,7 +284,7 @@ const ProductForm = () => {
                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">
                       <input
                         type="text"
-                        {...register("thumbnail", {
+                        {...register("mainImageUrl", {
                           required: "thumbnail is required",
                         })}
                         id="thumbnail"
@@ -262,7 +296,7 @@ const ProductForm = () => {
 
                 <div className="sm:col-span-6">
                   <label
-                    htmlFor="image1"
+                    htmlFor="extraImage"
                     className="block text-sm font-medium leading-6 text-gray-900"
                   >
                     extra Image 1
@@ -283,7 +317,7 @@ const ProductForm = () => {
 
                 <div className="sm:col-span-6">
                   <label
-                    htmlFor="image2"
+                    htmlFor="extraImage"
                     className="block text-sm font-medium leading-6 text-gray-900"
                   >
                     extra Image 2

@@ -83,6 +83,14 @@ export const productReducer = (productState, action) => {
         ...productState,
         wish: action.payload,
       };
+
+    case "UPDATE_PRODUCT":
+      return {
+        ...productState,
+        products: productState.products.map((item) =>
+          item._id === action.payload._id ? action.payload : item
+        ),
+      };
     default:
       return productState;
   }

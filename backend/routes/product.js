@@ -10,5 +10,5 @@ const router = express.Router();
 router.get("/", getAllProduct);
 router.get("/find/:id", getProduct);
 router.post("/", createProduct);
-router.patch("/:id", updateProduct);
+router.put("/:id", updateProduct);
 module.exports = router;
