@@ -35,6 +35,8 @@ const register = async (req, res) => {
         email: user.email,
         addresses: user.addresses,
         role: user.role,
+        image: user.image,
+
         token: generateToken(user._id),
       });
     } else {
@@ -58,6 +60,7 @@ const login = async (req, res) => {
         email: user.email,
         addresses: user.addresses,
         role: user.role,
+        image: user.image,
         token: generateToken(user._id),
       });
     } else {

@@ -207,18 +207,26 @@ const Profile = () => {
             </>
           )}
 
-          <p className="mb-5 text-lg">my profile</p>
           <div className="mx-auto  max-w-7xl px-4 sm:px-6 lg:px-8 bg-white">
             <div className="border-b border-gray-900/10 pb-12">
-              <div className="flex justify-between py-4">
-                <div>
-                  <h2 className="text-xl font-semibold leading-7 text-gray-900">
-                    name : admin
-                  </h2>
-                  <h2 className="text-lg font-semibold leading-7 text-gray-900">
-                    email : {user.email}
-                  </h2>
+              <div className="flex  justify-between py-4">
+                <div className="flex items-center space-x-6">
+                  <div>
+                    <img src={user.image} className="w-32 h-32 rounded-full" />
+                  </div>
+                  <div className="space-y-2">
+                    <h2 className="text-2xl font-semibold leading-7 text-gray-900 uppercase">
+                      {user.name}
+                    </h2>
+                    <h2 className="text-xl font-semibold leading-7 text-gray-900">
+                      {user.email}
+                    </h2>
+                    <h2 className="text-xl font-semibold leading-7 text-red-900">
+                      {user.role}
+                    </h2>
+                  </div>
                 </div>
+
                 <div>
                   <button
                     className="bg-red-600 px-2 py-1 text-white"
