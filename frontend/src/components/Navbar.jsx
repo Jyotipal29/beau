@@ -13,7 +13,7 @@ import { useUser } from "../context/userContext/context";
 const navigation = [
   { name: "Home", link: "/", user: true },
   { name: "Products", link: "/products", user: true },
-  { name: "login", link: "/login", user: true },
+  { name: "Contact", link: "/contacts", user: true },
   { name: "admin", link: "/admin", admin: true },
 ];
 const userNavigation = [

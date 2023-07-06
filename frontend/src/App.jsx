@@ -18,6 +18,7 @@ import AdminProtected from "./utils/AdminProtected";
 import ProductForm from "./pages/ProductForm";
 import AdminOrders from "./pages/AdminOrders";
 import Wishlist from "./pages/Wishlist";
+import Contact from "./pages/Contact";
 function App() {
   return (
     <div className="App">
@@ -25,6 +26,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/contacts" element={<Contact />} />
           <Route element={<PrivateRoutes />}>
             <Route path="/cart" element={<Cart />} />
             <Route path="/wish" element={<Wishlist />} />
