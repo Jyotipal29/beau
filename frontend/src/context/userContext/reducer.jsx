@@ -17,6 +17,11 @@ export const userReducer = (userState, action) => {
         user: action.payload,
       };
 
+    case "GET_ORDER":
+      return {
+        ...userState,
+        order: action.payload,
+      };
     case "ADD_ORDER": {
       let updatedOrder = [...userState.order, action.payload];
 

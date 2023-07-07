@@ -1,9 +1,28 @@
+import axios from "axios";
 import Navbar from "../components/Navbar";
 import { useUser } from "../context/userContext/context";
+import { api } from "../constants/api";
+import { useEffect } from "react";
 const Orders = () => {
   const {
-    userState: { order },
+    userState: { order, user },
+    userDispatch,
   } = useUser();
+
+  const getOrder = async () => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+    const { data } = await axios.get(`${api}order/`, config);
+    userDispatch({ type: "GET_ORDER", payload: data });
+  };
+
+  useEffect(() => {
+    getOrder();
+  }, []);
+
   console.log(order, "this is order");
   return (
     <div>

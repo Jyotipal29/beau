@@ -3,11 +3,16 @@ const { Product } = require("../model/product");
 const { User } = require("../model/user");
 
 const fetchOrdersByUser = async (req, res) => {
-  const { id } = req.user;
   try {
-    const orders = await Order.find({ user: id });
+    const orders = await Order.find({ user: req.user._id });
+    const populatedOrders = await Promise.all(
+      orders.map(async (order) => {
+        await order.populate("cart.product");
+        return order;
+      })
+    );
 
-    res.status(200).json(orders);
+    res.status(200).json(populatedOrders);
   } catch (err) {
     res.status(400).json(err);
   }
@@ -15,9 +20,9 @@ const fetchOrdersByUser = async (req, res) => {
 
 const createOrder = async (req, res) => {
   const order = new Order(req.body);
-  console.log(order, "order ");
   try {
-    const populatedOrder = await order.populate("cart.product").execPopulate();
+    const populatedOrder = await order.populate("cart.product");
+    await populatedOrder.save();
     res.status(201).json(populatedOrder);
   } catch (err) {
     res.status(400).json(err);
