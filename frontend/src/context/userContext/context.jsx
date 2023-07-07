@@ -15,7 +15,8 @@ const user = userFromStorage ? JSON.parse(userFromStorage) : null;
 export const UserProvider = ({ children }) => {
   const [userState, userDispatch] = useReducer(userReducer, {
     user: user,
-    order:[],
+    order: [],
+    orders: [],
     currentOrder: null,
   });
 

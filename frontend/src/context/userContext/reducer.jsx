@@ -31,6 +31,18 @@ export const userReducer = (userState, action) => {
         currentOrder: action.payload,
       };
     }
+    case "UPDATE_ORDER":
+      return {
+        ...userState,
+        order: userState.order.map((item) =>
+          item._id === action.payload._id ? action.payload : item
+        ),
+      };
+    case "GET_ALL_ORDERS":
+      return {
+        ...userState,
+        orders: action.payload,
+      };
     case "RESET_CURR_ORDER":
       return {
         ...userState,

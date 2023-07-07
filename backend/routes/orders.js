@@ -10,6 +10,7 @@ const { protect } = require("./verifytoken");
 const router = express.Router();
 
 router.post("/", protect, createOrder);
+router.get("/all", protect, fetchAllOrders);
 router.get("/", protect, fetchOrdersByUser);
 router.delete("/:id", protect, deleteOrder);
 router.put("/:id", protect, updateOrder);

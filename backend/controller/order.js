@@ -51,7 +51,21 @@ const updateOrder = async (req, res) => {
   }
 };
 
-const fetchAllOrders = async (req, res) => {};
+const fetchAllOrders = async (req, res) => {
+  try {
+    const orders = await Order.find();
+    const populatedOrders = await Promise.all(
+      orders.map(async (order) => {
+        await order.populate("cart.product");
+        return order;
+      })
+    );
+
+    res.status(200).json(populatedOrders);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+};
 
 module.exports = {
   createOrder,
