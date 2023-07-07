@@ -39,7 +39,7 @@ const Navbar = ({ children }) => {
         >
           {({ open }) => (
             <>
-              <div className=" ">
+              <div className="max-md:-ml-8">
                 <div className="flex h-16 items-center lg:ml-6 md:ml-0 rounded-lg">
                   <Link href="/">
                     <img
