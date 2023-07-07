@@ -14,12 +14,7 @@ export const userReducer = (userState, action) => {
     case "ADD_ADDRESS":
       return {
         ...userState,
-        user: {
-          ...userState.user,
-          addresses: userState.user.addresses
-            ? [...userState.user.addresses, action.payload]
-            : [action.payload],
-        },
+        user: action.payload,
       };
 
     case "ADD_ORDER": {
@@ -43,7 +38,7 @@ export const userReducer = (userState, action) => {
         ...userState,
         user: {
           ...userState.user,
-          address: userState.user.address.filter((it) => it.name !== action.payload)
+          addresses: userState.user.addresses.filter((it) => it.name !== action.payload)
         }
       };
     default:

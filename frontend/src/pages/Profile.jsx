@@ -2,8 +2,9 @@ import Navbar from "../components/Navbar";
 import { useUser } from "../context/userContext/context";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-
-  import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { api } from "../constants/api";
+import { useNavigate } from "react-router-dom";
 const Profile = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
@@ -25,6 +26,8 @@ const Profile = () => {
     localStorage.removeItem("user");
     navigate("/login");
   };
+
+  console.log(user, "this is user");
   return (
     <div>
       <Navbar>
@@ -34,11 +37,26 @@ const Profile = () => {
               <form
                 noValidate
                 className="bg-white px-5 mb-5 "
-                onSubmit={handleSubmit((data) => {
+                onSubmit={handleSubmit(async (data) => {
+                  const config = {
+                    headers: {
+                      Authorization: `Bearer ${user.token}`,
+                    },
+                  };
+
+                  const res = await axios.put(
+                    `${api}user/${user._id}`,
+                    data,
+                    config
+                  );
+                  console.log(res.data, "add address data");
+                  localStorage.setItem("user", JSON.stringify(res.data));
+
                   userDispatch({
                     type: "ADD_ADDRESS",
-                    payload: data,
+                    payload: res.data,
                   });
+
                   setOpen(false);
                 })}
               >
@@ -244,9 +262,9 @@ const Profile = () => {
                 add address
               </button>
               <ul role="list" className="  py-5">
-                {user?.address?.map((person) => (
+                {user?.addresses?.map((person) => (
                   <li
-                    key={person.id}
+                    key={person.name}
                     className="flex justify-between  py-5 mt-5  px-5 border-2"
                   >
                     <div className="flex gap-x-4">

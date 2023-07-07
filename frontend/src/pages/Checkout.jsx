@@ -119,17 +119,30 @@ const Checkout = () => {
   console.log(user, "this is user with address");
   return (
     <div className="mx-auto mt-12 mb-5 max-w-7xl px-4 sm:px-6 lg:px-8 bg-white">
-      {/* {!cart.length && <Navigate to="/" />} */}
       {currentOrder && <Navigate to={`/ordersuccess/${currentOrder.id}`} />}
       <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
         <div className="lg:col-span-3">
           <form
             noValidate
             className="bg-white px-5  "
-            onSubmit={handleSubmit((data) => {
+            onSubmit={handleSubmit(async (data) => {
+              const config = {
+                headers: {
+                  Authorization: `Bearer ${user.token}`,
+                },
+              };
+
+              const res = await axios.put(
+                `${api}user/${user._id}`,
+                data,
+                config
+              );
+              console.log(res.data, "add address data");
+              localStorage.setItem("user", JSON.stringify(res.data));
+
               userDispatch({
                 type: "ADD_ADDRESS",
-                payload: data,
+                payload: res.data,
               });
             })}
           >

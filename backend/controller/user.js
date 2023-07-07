@@ -5,10 +5,12 @@ const User = require("../model/user");
 const updateUser = async (req, res) => {
   const { id } = req.params;
   try {
-    const { addresses, ...otherFields } = req.body;
+    const { name, email, street, city, state, pinCode, phone } = req.body;
+
+    const address = { name, email, street, city, state, pinCode, phone };
     const updatedUser = await User.findByIdAndUpdate(
       id,
-      { ...otherFields, addresses: [...addresses] },
+      { $push: { addresses: address } },
       { new: true }
     );
     res.status(200).json(updatedUser);
