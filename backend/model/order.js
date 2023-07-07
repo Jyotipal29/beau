@@ -8,7 +8,6 @@ const paymentMethods = {
 
 const orderSchema = new Schema(
   {
-    // cart: { type: [Schema.Types.Mixed], required: true },
     cart: [
       {
         quantity: { type: Number },
@@ -26,5 +25,5 @@ const orderSchema = new Schema(
   },
   { timestamps: true }
 );
-
-exports.Order = mongoose.model("Order", orderSchema);
+const Order = mongoose.model("Order", orderSchema);
+module.exports = Order;

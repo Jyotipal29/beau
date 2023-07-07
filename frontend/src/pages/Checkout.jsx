@@ -2,10 +2,12 @@ import { useProduct } from "../context/productContext/context";
 import { useForm } from "react-hook-form";
 import { useUser } from "../context/userContext/context";
 import { useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { api } from "../constants/api";
 const Checkout = () => {
+  const navigate = useNavigate();
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState("card");
   const handleAddress = (e) => {
@@ -35,8 +37,9 @@ const Checkout = () => {
         },
       };
       const { data } = await axios.post(`${api}order/`, order, config);
-      console.log(data, "data");
-      // userDispatch({ type: "ADD_ORDER", payload: order });
+      console.log(data, " order data");
+      userDispatch({ type: "ADD_ORDER", payload: data });
+      navigate(`/ordersuccess/${data?._id}`);
     } catch (error) {
       console.log(error.message);
     }
@@ -119,7 +122,6 @@ const Checkout = () => {
   console.log(user, "this is user with address");
   return (
     <div className="mx-auto mt-12 mb-5 max-w-7xl px-4 sm:px-6 lg:px-8 bg-white">
-      {currentOrder && <Navigate to={`/ordersuccess/${currentOrder.id}`} />}
       <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
         <div className="lg:col-span-3">
           <form
@@ -134,7 +136,7 @@ const Checkout = () => {
 
               const res = await axios.put(
                 `${api}user/${user._id}`,
-                data,
+                { ...data, _id: uuidv4() },
                 config
               );
               console.log(res.data, "add address data");

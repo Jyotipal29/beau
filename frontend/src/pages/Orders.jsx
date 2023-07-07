@@ -11,7 +11,7 @@ const Orders = () => {
         {order.map((or) => (
           <>
             <div className="mx-auto  max-w-7xl px-4 sm:px-6 lg:px-8 mt-4 bg-white ">
-              <h1 className="text-xl  font-bold py-2">Order: {or.id}</h1>
+              <h1 className="text-xl  font-bold py-2">Order: {or._id}</h1>
               <h1
                 className={`text-lg  font-bold py-2 ${
                   or.status === "pending" ? "text-red-500" : ""
@@ -22,8 +22,8 @@ const Orders = () => {
               <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                 <div className="flow-root">
                   <ul role="list" className="-my-6 divide-y divide-gray-200">
-                    {or.cart.map((product) => (
-                      <li key={product.id} className="flex py-6">
+                    {or.cart.map(({ product }) => (
+                      <li key={product._id} className="flex py-6">
                         <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                           <img
                             src={product.mainImageUrl}

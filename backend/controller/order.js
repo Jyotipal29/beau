@@ -1,4 +1,4 @@
-const { Order } = require("../model/order");
+const Order = require("../model/order");
 const { Product } = require("../model/product");
 const { User } = require("../model/user");
 
@@ -15,11 +15,10 @@ const fetchOrdersByUser = async (req, res) => {
 
 const createOrder = async (req, res) => {
   const order = new Order(req.body);
-
+  console.log(order, "order ");
   try {
-    const doc = await order.save();
-
-    res.status(201).json(doc);
+    const populatedOrder = await order.populate("cart.product").execPopulate();
+    res.status(201).json(populatedOrder);
   } catch (err) {
     res.status(400).json(err);
   }

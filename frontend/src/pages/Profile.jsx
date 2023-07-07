@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { api } from "../constants/api";
+import { v4 as uuidv4 } from "uuid";
+
 import { useNavigate } from "react-router-dom";
 const Profile = () => {
   const navigate = useNavigate();
@@ -18,8 +20,8 @@ const Profile = () => {
     userDispatch,
   } = useUser();
 
-  const removeHandler = (name) => {
-    userDispatch({ type: "REMOVE_ADDRESS", payload: name });
+  const removeHandler = (id) => {
+    userDispatch({ type: "REMOVE_ADDRESS", payload: id });
   };
 
   const logoutHandler = () => {
@@ -46,7 +48,7 @@ const Profile = () => {
 
                   const res = await axios.put(
                     `${api}user/${user._id}`,
-                    data,
+                    { ...data, _id: uuidv4() },
                     config
                   );
                   console.log(res.data, "add address data");
@@ -294,7 +296,7 @@ const Profile = () => {
                     <div className="flex flex-col items-end">
                       <button
                         className="text-red-500"
-                        onClick={() => removeHandler(person.name)}
+                        onClick={() => removeHandler(person._id)}
                       >
                         remove
                       </button>
