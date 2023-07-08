@@ -2,14 +2,26 @@ import { Link, useParams } from "react-router-dom";
 import { useProduct } from "../context/productContext/context";
 import { useEffect } from "react";
 import { useUser } from "../context/userContext/context";
+import axios from "axios";
+import { api } from "../constants/api";
 const OrderSuccess = () => {
   const { id } = useParams();
   const { productDispatch } = useProduct();
-  const { userDispatch } = useUser();
+  const {
+    userState: { user },
+  } = useUser();
 
-  useEffect(() => {
+  const removeCart = async () => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+    await axios.delete(`${api}cart/`, config);
     productDispatch({ type: "CART_REMOVE" });
-    userDispatch({ type: "RESET_CURR_ORDER" });
+  };
+  useEffect(() => {
+    removeCart();
   }, []);
   return (
     <main className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">

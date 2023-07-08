@@ -45,6 +45,7 @@ const Wishlist = () => {
         },
       };
       const { data } = await axios.post(`${api}wish/toggle/${id}`, {}, config);
+      getWish();
       console.log(data, "the data");
     } catch (error) {
       console.log(error.message);
