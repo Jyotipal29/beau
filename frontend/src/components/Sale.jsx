@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Sale = () => {
   return (
     <div>
@@ -12,12 +14,12 @@ const Sale = () => {
           <p>Sale 30% Off</p>
           <p>Your First Order</p>
         </div>
-        <a
-          href="#"
+        <Link
+          to="/products"
           className="p-4 px-8 bg-red-600 hover:bg-red-700 rounded-2xl font-extrabold text-xl"
         >
           Shop Now
-        </a>
+        </Link>
       </section>
     </div>
   );

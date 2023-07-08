@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 const Hero = () => {
   return (
     <div className="full">
@@ -15,12 +16,12 @@ const Hero = () => {
           iusto sed non error voluptate vel dignissimos consectetur
           necessitatibus ratione necessitatibus ratione
         </p>
-        <a
-          href="#"
+        <Link
+          to="/products"
           className="p-4 max-sm:self-center px-8 bg-red-600 hover:bg-red-700 rounded-xl font-extrabold text-xl"
         >
           Shop Now
-        </a>
+        </Link>
       </section>
     </div>
   );
