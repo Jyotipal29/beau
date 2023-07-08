@@ -42,7 +42,9 @@ function AdminOrders() {
       updatedOrder,
       config
     );
-    userDispatch({ type: "UPDATE_ORDER", payload: data });
+    console.log(data);
+    // userDispatch({ type: "UPDATE_ORDER", payload: data });
+    getAllOrders();
     setEditableOrderId(-1);
   };
 
