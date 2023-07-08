@@ -227,7 +227,9 @@ const Navbar = ({ children }) => {
         </Disclosure>
 
         <main>
-          <div className="mx-auto max-w-7xl">{children}</div>
+          <div className="mx-auto parent [parent:not(.full){max-width:1280px}]">
+            {children}
+          </div>
         </main>
       </div>
     </>

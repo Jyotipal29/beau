@@ -1,6 +1,6 @@
 const Hero = () => {
   return (
-    <div>
+    <div className="full">
       <section
         className={`mt-1 min-w-screen flex justify-center max-md:pl-4 items-start space-y-6 flex-col text-white md:pl-20 lg:pl-40 [background-image:url("new-hero-img.jpg")] bg-cover bg-right w-full min-h-[600px] max-md:[background-position:-550px_0] max-sm:[background-position:-650px_0] bg-no-repeat`}
       >
