@@ -5,9 +5,9 @@ import { api } from "../constants/api";
 import { useUser } from "../context/userContext/context";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { HeartIcon } from "@heroicons/react/24/outline";
 import Loader from "../components/Loader";
-
+import { HeartIcon as OutlineHeartIcon } from "@heroicons/react/24/outline";
+import { HeartIcon as SolidHeartIcon } from "@heroicons/react/20/solid";
 const Wishlist = () => {
   const [loading, setLoading] = useState(false);
   const {
@@ -84,7 +84,13 @@ const Wishlist = () => {
                     >
                       <div className="absolute top-1  right-2 z-30">
                         <button onClick={() => wishHandler(product._id)}>
-                          <HeartIcon className="w-8 h-8" />
+                          {wish.some(
+                            (item) => item.product._id === product._id
+                          ) ? (
+                            <SolidHeartIcon className="w-8 h-8 text-red-600" />
+                          ) : (
+                            <OutlineHeartIcon className="w-8 h-8" />
+                          )}
                         </button>
                       </div>
                       <Link to={`/product/${product._id}`}>

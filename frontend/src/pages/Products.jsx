@@ -1,7 +1,10 @@
 import { Fragment, useEffect, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import { HeartIcon } from "@heroicons/react/24/outline";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { HeartIcon as OutlineHeartIcon } from "@heroicons/react/24/outline";
+import {
+  ChevronDownIcon,
+  HeartIcon as SolidHeartIcon,
+} from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 import { useProduct } from "../context/productContext/context";
 import Navbar from "../components/Navbar";
@@ -25,7 +28,7 @@ const Products = () => {
     userState: { user },
   } = useUser();
   const {
-    productState: { products },
+    productState: { products, wish },
     productDispatch,
   } = useProduct();
 
@@ -53,11 +56,32 @@ const Products = () => {
         },
       };
       const { data } = await axios.post(`${api}wish/toggle/${id}`, {}, config);
+      productDispatch({ type: "ADD_WISH", payload: data });
       console.log(data, "the data");
     } catch (error) {
       console.log(error.message);
     }
   };
+
+  const getWish = async () => {
+    try {
+      setLoading(true);
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      const { data } = await axios.get(`${api}wish/`, config);
+      productDispatch({ type: "GET_WISH", payload: data });
+      setLoading(false);
+    } catch (error) {
+      console.log(error.message);
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    getWish();
+  }, []);
 
   const handleSort = (e, option) => {
     setSortVal(option.name);
@@ -66,6 +90,7 @@ const Products = () => {
   const sortedProducts = products.sort((a, b) =>
     sortVal === "Price: Low to High" ? a.price - b.price : b.price - a.price
   );
+
   return (
     <Navbar>
       <div>
@@ -148,7 +173,14 @@ const Products = () => {
                                     <button
                                       onClick={() => wishHandler(product._id)}
                                     >
-                                      <HeartIcon className="w-8 h-8" />
+                                      {wish.some(
+                                        (item) =>
+                                          item.product._id === product._id
+                                      ) ? (
+                                        <SolidHeartIcon className="w-8 h-8 text-red-600" />
+                                      ) : (
+                                        <OutlineHeartIcon className="w-8 h-8" />
+                                      )}
                                     </button>
                                   </div>
                                   <Link to={`/product/${product._id}`}>

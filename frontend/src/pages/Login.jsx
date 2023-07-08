@@ -3,7 +3,13 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { api } from "../constants/api";
 import { useUser } from "../context/userContext/context";
+import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Sloader from "../components/Sloader";
 const Login = () => {
+  const [sLoading, setSLoading] = useState(false);
+
   const navigate = useNavigate();
   const {
     register,
@@ -24,14 +30,41 @@ const Login = () => {
           <form
             className="space-y-6"
             onSubmit={handleSubmit(async (data) => {
-              const res = await axios.post(`${api}auth/login`, data);
-              console.log(res.data, "login data");
-              localStorage.setItem("user", JSON.stringify(res.data));
-              userDispatch({
-                type: "REGISTER",
-                payload: res.data,
-              });
-              navigate("/");
+              try {
+                setSLoading(true);
+                const res = await axios.post(`${api}auth/login`, data);
+                localStorage.setItem("user", JSON.stringify(res.data));
+                toast.success("User logged in", {
+                  position: "top-center",
+                  autoClose: 500,
+                  hideProgressBar: false,
+                  closeOnClick: false,
+                  pauseOnHover: false,
+                  draggable: false,
+                  progress: undefined,
+                  theme: "light",
+                });
+                userDispatch({
+                  type: "REGISTER",
+                  payload: res.data,
+                });
+                setSLoading(false);
+
+                navigate("/");
+              } catch (error) {
+                console.log(error.message);
+                toast.error("something went wrong", {
+                  position: "top-center",
+                  autoClose: 500,
+                  hideProgressBar: false,
+                  closeOnClick: false,
+                  pauseOnHover: false,
+                  draggable: false,
+                  progress: undefined,
+                  theme: "light",
+                });
+                setSLoading(false);
+              }
             })}
           >
             <div>
@@ -93,7 +126,7 @@ const Login = () => {
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
               >
-                Log in
+                {sLoading ? <Sloader sLoading={sLoading} /> : " Log In"}
               </button>
             </div>
           </form>
@@ -109,6 +142,7 @@ const Login = () => {
           </p>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };

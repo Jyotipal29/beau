@@ -3,7 +3,13 @@ import { useForm } from "react-hook-form";
 import { useUser } from "../context/userContext/context";
 import axios from "axios";
 import { api } from "../constants/api";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Sloader from "../components/Sloader";
+import { useState } from "react";
+
 const Register = () => {
+  const [sLoading, setSLoading] = useState(false);
   const navigate = useNavigate();
   const {
     register,
@@ -30,14 +36,41 @@ const Register = () => {
             noValidate
             className="space-y-6"
             onSubmit={handleSubmit(async (data) => {
-              const res = await axios.post(`${api}auth/register`, data);
+              try {
+                setSLoading(true);
+                const res = await axios.post(`${api}auth/register`, data);
 
-              localStorage.setItem("user", JSON.stringify(res.data));
-              userDispatch({
-                type: "REGISTER",
-                payload: res.data,
-              });
-              navigate("/");
+                localStorage.setItem("user", JSON.stringify(res.data));
+                userDispatch({
+                  type: "REGISTER",
+                  payload: res.data,
+                });
+                toast.success("User Registered", {
+                  position: "top-center",
+                  autoClose: 500,
+                  hideProgressBar: false,
+                  closeOnClick: false,
+                  pauseOnHover: false,
+                  draggable: false,
+                  progress: undefined,
+                  theme: "light",
+                });
+                setSLoading(false);
+                navigate("/");
+              } catch (error) {
+                console.log(error.message);
+                toast.error("something went wrong", {
+                  position: "top-center",
+                  autoClose: 500,
+                  hideProgressBar: false,
+                  closeOnClick: false,
+                  pauseOnHover: false,
+                  draggable: false,
+                  progress: undefined,
+                  theme: "light",
+                });
+                setSLoading(false);
+              }
             })}
           >
             <div>
@@ -144,7 +177,7 @@ const Register = () => {
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
               >
-                Register
+                {sLoading ? <Sloader sLoading={sLoading} /> : " Register"}
               </button>
             </div>
           </form>
@@ -160,6 +193,7 @@ const Register = () => {
           </p>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };
