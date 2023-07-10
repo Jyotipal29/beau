@@ -52,7 +52,7 @@ const Navbar = ({ children }) => {
                   <div className="hidden md:block">
                     <div className=" flex items-baseline space-x-4">
                       {navigation.map((item) =>
-                        item[user.role] ? (
+                        item[user?.role] ? (
                           <Link
                             key={item.name}
                             to={item.link}
@@ -97,7 +97,7 @@ const Navbar = ({ children }) => {
                             <span className="sr-only">Open user menu</span>
                             <img
                               className="h-8 w-8 rounded-full"
-                              src={user.image}
+                              src={user?.image}
                               alt=""
                             />
                           </Menu.Button>
@@ -155,7 +155,7 @@ const Navbar = ({ children }) => {
               <Disclosure.Panel className="md:hidden">
                 <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
                   {navigation.map((item) =>
-                    item[user.role] ? (
+                    item[user?.role] ? (
                       <Link
                         key={item.name}
                         to={item.link}
@@ -177,13 +177,13 @@ const Navbar = ({ children }) => {
                     <div className="flex-shrink-0">
                       <img
                         className="h-10 w-10 rounded-full"
-                        src={user.image}
+                        src={user?.image}
                         alt=""
                       />
                     </div>
                     <div className="ml-3">
                       <div className="text-base font-medium leading-none text-white">
-                        {user.name}
+                        {user?.name}
                       </div>
                     </div>
                     <button
