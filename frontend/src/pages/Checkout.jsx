@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { api } from "../constants/api";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+
 const Checkout = () => {
   const navigate = useNavigate();
   const [selectedAddress, setSelectedAddress] = useState(null);
@@ -154,6 +156,10 @@ const Checkout = () => {
   console.log(user, "this is user with address");
   return (
     <div className="mx-auto mt-12 mb-5 max-w-7xl px-4 sm:px-6 lg:px-8 bg-white">
+      <ArrowLeftIcon
+        className="text-gray-500 w-5 mt-4 "
+        onClick={() => navigate("/cart")}
+      />
       <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
         <div className="lg:col-span-3">
           <form
@@ -182,7 +188,7 @@ const Checkout = () => {
           >
             <div className="space-y-12">
               <div className="border-b border-gray-900/10 pb-12">
-                <h2 className="text-base font-semibold leading-7 text-gray-900">
+                <h2 className="text-base font-semibold leading-7 mt-2 text-gray-900">
                   Personal Information
                 </h2>
 

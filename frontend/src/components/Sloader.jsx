@@ -5,7 +5,7 @@ const Sloader = ({ sLoading }) => {
   return (
     <div>
       <ClipLoader
-        color="white"
+        color="#db1333"
         loading={sLoading}
         size={25}
         aria-label="Loading Spinner"

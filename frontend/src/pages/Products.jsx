@@ -5,13 +5,16 @@ import {
   ChevronDownIcon,
   HeartIcon as SolidHeartIcon,
 } from "@heroicons/react/20/solid";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useProduct } from "../context/productContext/context";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import { api } from "../constants/api";
 import { useUser } from "../context/userContext/context";
 import Loader from "../components/Loader";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Sloader from "../components/Sloader";
 const sortOptions = [
   { name: "Price: Low to High", href: "#", current: false },
   { name: "Price: High to Low", href: "#", current: false },
@@ -22,6 +25,8 @@ function classNames(...classes) {
 }
 
 const Products = () => {
+  const [sLoading, setSLoading] = useState({});
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [sortVal, setSortVal] = useState("Price: Low to High");
   const {
@@ -49,17 +54,40 @@ const Products = () => {
   }, []);
 
   const wishHandler = async (id) => {
+    setSLoading((prev) => ({ ...prev, [id]: true }));
     try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
-      const { data } = await axios.post(`${api}wish/toggle/${id}`, {}, config);
-      productDispatch({ type: "ADD_WISH", payload: data });
-      console.log(data, "the data");
+      if (user?.token) {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${user?.token}`,
+          },
+        };
+        const { data } = await axios.post(
+          `${api}wish/toggle/${id}`,
+          {},
+          config
+        );
+        productDispatch({ type: "ADD_WISH", payload: data });
+
+        getWish();
+        console.log(data, "the data");
+        setSLoading((prev) => ({ ...prev, [id]: false }));
+      } else {
+        navigate("/login");
+      }
     } catch (error) {
       console.log(error.message);
+      setSLoading((prev) => ({ ...prev, [id]: false }));
+      toast.error("something went wrong", {
+        position: "top-center",
+        autoClose: 500,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
@@ -177,7 +205,13 @@ const Products = () => {
                                         (item) =>
                                           item.product._id === product._id
                                       ) ? (
-                                        <SolidHeartIcon className="w-8 h-8 text-red-600" />
+                                        sLoading[product._id] ? (
+                                          <Sloader sLoading={sLoading} />
+                                        ) : (
+                                          <SolidHeartIcon className="w-8 h-8 text-red-600" />
+                                        )
+                                      ) : sLoading[product._id] ? (
+                                        <Sloader sLoading={sLoading} />
                                       ) : (
                                         <OutlineHeartIcon className="w-8 h-8" />
                                       )}
@@ -222,6 +256,7 @@ const Products = () => {
             </div>
           </div>
         </div>
+        <ToastContainer />
       </div>
     </Navbar>
   );

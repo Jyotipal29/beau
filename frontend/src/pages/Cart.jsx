@@ -6,9 +6,13 @@ import { api } from "../constants/api";
 import { useUser } from "../context/userContext/context";
 import { useEffect, useState } from "react";
 import Loader from "../components/Loader";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Sloader from "../components/Sloader";
 const Cart = () => {
   const [loading, setLoading] = useState(false);
+  const [sLoading, setSLoading] = useState({});
+
   const {
     productState: { cart },
     productDispatch,
@@ -73,16 +77,43 @@ const Cart = () => {
   };
 
   const removeItem = async (id) => {
-    console.log(id, "remove id ");
-    const config = {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    };
+    try {
+      setSLoading((prev) => ({ ...prev, [id]: true }));
 
-    const { data } = await axios.delete(`${api}cart/${id}`, config);
-    console.log(data, "delted data");
-    productDispatch({ type: "REMOVE_FROM_CART", payload: id });
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+
+      const { data } = await axios.delete(`${api}cart/${id}`, config);
+      console.log(data, "delted data");
+      productDispatch({ type: "REMOVE_FROM_CART", payload: id });
+      toast.success("product removed", {
+        position: "top-center",
+        autoClose: 500,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+      });
+      setSLoading((prev) => ({ ...prev, [id]: false }));
+    } catch (error) {
+      console.log(error.message);
+      setSLoading((prev) => ({ ...prev, [id]: false }));
+      toast.error("something went wrong", {
+        position: "top-center",
+        autoClose: 500,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+      });
+    }
   };
 
   console.log(cart, "the cart");
@@ -155,7 +186,11 @@ const Cart = () => {
                               className="font-medium text-red-600 hover:text-red-500"
                               onClick={() => removeItem(_id)}
                             >
-                              Remove
+                              {sLoading[_id] ? (
+                                <Sloader sLoading={sLoading} />
+                              ) : (
+                                "Remove"
+                              )}
                             </button>
                           </div>
                         </div>
@@ -203,6 +238,7 @@ const Cart = () => {
             )}
           </>
         )}
+        <ToastContainer />
       </div>
     </Navbar>
   );

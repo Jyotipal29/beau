@@ -8,9 +8,13 @@ import { api } from "../constants/api";
 import { useUser } from "../context/userContext/context";
 import { HeartIcon } from "@heroicons/react/24/outline";
 import Loader from "../components/Loader";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Sloader from "../components/Sloader";
 const ProductDetails = () => {
   const [loading, setLoading] = useState(false);
+  const [sLoading, setSLoading] = useState();
+
   const { id } = useParams();
   const navigate = useNavigate();
   const {
@@ -41,6 +45,7 @@ const ProductDetails = () => {
     e.preventDefault();
 
     try {
+      setSLoading(true);
       if (user?.token) {
         const config = {
           headers: {
@@ -57,11 +62,33 @@ const ProductDetails = () => {
           config
         );
         productDispatch({ type: "ADD_TO_CART", payload: data });
+        toast.success("added to cart", {
+          position: "top-center",
+          autoClose: 500,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+          theme: "light",
+        });
+        setSLoading(false);
       } else {
         navigate("/login");
       }
     } catch (error) {
       console.log(error.message);
+      setSLoading(false);
+      toast.error("something went wrong", {
+        position: "top-center",
+        autoClose: 500,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
@@ -161,7 +188,11 @@ const ProductDetails = () => {
                       type="submit"
                       className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-red-600 px-8 py-2 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
                     >
-                      Add to cart
+                      {sLoading ? (
+                        <Sloader sLoading={sLoading} />
+                      ) : (
+                        "Add to cart"
+                      )}
                     </button>
                     <button
                       type="submit"
@@ -175,6 +206,7 @@ const ProductDetails = () => {
             </>
           )}
         </div>
+        <ToastContainer />
       </div>
     </Navbar>
   );
