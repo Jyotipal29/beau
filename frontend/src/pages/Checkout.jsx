@@ -2,12 +2,12 @@ import { useProduct } from "../context/productContext/context";
 import { useForm } from "react-hook-form";
 import { useUser } from "../context/userContext/context";
 import { useState, useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { api } from "../constants/api";
 const Checkout = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState("card");
   const handleAddress = (e) => {
@@ -30,28 +30,20 @@ const Checkout = () => {
       paymentStatus: "pending",
     };
     try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
-      const { data } = await axios.post(`${api}order/`, order, config);
-      console.log(data, " order data");
-      userDispatch({ type: "ADD_ORDER", payload: data });
       const {
         data: { key },
       } = await axios.get(`${api}api/getkey`);
-      const res = await axios.post(`${api}payment/checkout`, {
+      const { data } = await axios.post(`${api}payment/checkout`, {
         amount: totalPrice,
       });
-      console.log(res.data, "data from  payment check out");
+      console.log(data, "orderdata");
       const options = {
         key,
-        amount: order.amount,
+        amount: totalPrice,
         currency: "INR",
         name: "jyoti",
         description: "jyoCart project",
-        order_id: order.id,
+        order_id: data.id,
         callback_url: `${api}payment/paymentVerification`,
         prefill: {
           name: user?.name,
@@ -68,7 +60,17 @@ const Checkout = () => {
       const razor = new window.Razorpay(options);
       razor.open();
 
-      // navigate(`/ordersuccess`);
+      razor.on("payment.success", async () => {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        };
+        const { data } = await axios.post(`${api}order/`, order, config);
+        console.log(data, " order data");
+        userDispatch({ type: "ADD_ORDER", payload: data });
+      });
+      navigate(`/ordersuccess`);
     } catch (error) {
       console.log(error.message);
     }
