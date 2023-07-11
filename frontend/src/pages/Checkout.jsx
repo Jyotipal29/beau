@@ -7,7 +7,8 @@ import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { api } from "../constants/api";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Checkout = () => {
   const navigate = useNavigate();
   const [selectedAddress, setSelectedAddress] = useState(null);
@@ -41,7 +42,7 @@ const Checkout = () => {
       console.log(data, "orderdata");
       const options = {
         key,
-        amount: totalPrice,
+        amount: data.amount.toString(),
         currency: "INR",
         name: "jyoti",
         description: "jyoCart project",
@@ -72,7 +73,6 @@ const Checkout = () => {
         console.log(data, " order data");
         userDispatch({ type: "ADD_ORDER", payload: data });
       });
-      navigate(`/ordersuccess`);
     } catch (error) {
       console.log(error.message);
     }
@@ -511,6 +511,7 @@ const Checkout = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
