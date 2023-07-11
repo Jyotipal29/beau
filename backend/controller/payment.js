@@ -34,7 +34,6 @@ const paymentVerification = async (req, res) => {
       .digest("hex");
 
     const isAuthentic = expectedSignature === razorpay_signature;
-    console.log(isAuthentic, "isAuthentic");
     if (isAuthentic) {
       // Database comes here
       const final_Data = await Payment.create({
