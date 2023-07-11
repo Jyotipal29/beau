@@ -22,60 +22,6 @@ const Checkout = () => {
   };
 
   const orderHandler = async () => {
-    // const order = {
-    //   cart,
-    //   totalPrice,
-    //   totalItems,
-    //   selectedAddress,
-    //   paymentMethod,
-    //   user,
-    //   status: "pending",
-    //   paymentStatus: "pending",
-    // };
-    // try {
-    //   const {
-    //     data: { key },
-    //   } = await axios.get(`${api}api/getkey`);
-    //   const { data } = await axios.post(`${api}payment/checkout`, {
-    //     amount: totalPrice,
-    //   });
-    //   console.log(data, "orderdata");
-    //   const options = {
-    //     key,
-    //     amount: data.amount.toString(),
-    //     currency: "INR",
-    //     name: "jyoti",
-    //     description: "jyoCart project",
-    //     order_id: data.id,
-    //     callback_url: `${api}payment/paymentVerification`,
-    //     prefill: {
-    //       name: user?.name,
-    //       email: user?.email,
-    //       contact: "6262626262",
-    //     },
-    //     notes: {
-    //       address: "Razorpay Corporate Office",
-    //     },
-    //     theme: {
-    //       color: "#db1333",
-    //     },
-    //   };
-    //   const razor = new window.Razorpay(options);
-    //   razor.open();
-    //   razor.on("payment.success", async () => {
-    //     const config = {
-    //       headers: {
-    //         Authorization: `Bearer ${user.token}`,
-    //       },
-    //     };
-    //     const { data } = await axios.post(`${api}order/`, order, config);
-    //     console.log(data, " order data");
-    //     userDispatch({ type: "ADD_ORDER", payload: data });
-    //   });
-    // } catch (error) {
-    //   console.log(error.message);
-    // }
-
     try {
       const {
         data: { key },
@@ -93,7 +39,68 @@ const Checkout = () => {
         name: "jyoti",
         description: "jyoCart project",
         order_id: orderData.id,
-        callback_url: `${api}payment/paymentVerification`,
+        // callback_url: `${api}payment/paymentVerification`,
+        handler: async (res) => {
+          toast.success("payment successfull", {
+            position: "top-center",
+            autoClose: 500,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+            theme: "light",
+          });
+          // verify payment status
+          let {
+            data: { isVerified },
+          } = await axios.post(`${api}payment/paymentVerification`, {
+            razorpay_order_id: res.razorpay_order_id,
+            razorpay_payment_id: res.razorpay_payment_id,
+            razorpay_signature: res.razorpay_signature,
+          });
+          console.log("success data", isVerified);
+          if (isVerified) {
+            const order = {
+              cart,
+              totalPrice,
+              totalItems,
+              selectedAddress,
+              paymentMethod,
+              user,
+              status: "pending",
+            };
+            const config = {
+              headers: {
+                Authorization: `Bearer ${user.token}`,
+              },
+            };
+            const { data } = await axios.post(`${api}order/`, order, config);
+            userDispatch({ type: "ADD_ORDER", payload: data });
+            navigate("/ordersuccess");
+            toast.success("order successfull", {
+              position: "top-center",
+              autoClose: 500,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: false,
+              draggable: false,
+              progress: undefined,
+              theme: "light",
+            });
+          } else {
+            toast.error("payment failed", {
+              position: "top-center",
+              autoClose: 500,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: false,
+              draggable: false,
+              progress: undefined,
+              theme: "light",
+            });
+          }
+        },
         prefill: {
           name: user?.name,
           email: user?.email,
@@ -124,11 +131,10 @@ const Checkout = () => {
   } = useProduct();
 
   const {
-    userState: { user, currentOrder },
+    userState: { user },
     userDispatch,
   } = useUser();
 
-  console.log(currentOrder, "this is curr oder");
   const getCart = async () => {
     const config = {
       headers: {
@@ -465,7 +471,7 @@ const Checkout = () => {
               <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                 <div className="flow-root">
                   <ul role="list" className="-my-6 divide-y divide-gray-200">
-                    {cart.map(({ _id, product, quantity }) => (
+                    {cart.map(({ _id, product, quantity, size }) => (
                       <li key={product._id} className="flex py-6">
                         <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                           <img
@@ -504,6 +510,15 @@ const Checkout = () => {
                                 <option value="4">4</option>
                                 <option value="4">5</option>
                               </select>
+                            </div>
+                            <div className="text-gray-500 flex">
+                              <label
+                                htmlFor="password"
+                                className="inline mr-5 text-sm font-medium leading-6 text-gray-900"
+                              >
+                                size :
+                              </label>
+                              {size && <p>{size}</p>}
                             </div>
 
                             <div className="flex">

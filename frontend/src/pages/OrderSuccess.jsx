@@ -10,7 +10,6 @@ const OrderSuccess = () => {
     userState: { user },
   } = useUser();
 
-  const placeOrder = async () => {};
 
 
 
