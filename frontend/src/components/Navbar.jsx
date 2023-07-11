@@ -69,6 +69,15 @@ const Navbar = ({ children }) => {
                           </Link>
                         ) : null
                       )}
+                      {!user && (
+                        <Link
+                          to="/login"
+                          className="text-white hover:bg-red-500 bg-red-600  font-bold
+                            rounded-md px-3 py-2 text-sm"
+                        >
+                          Login
+                        </Link>
+                      )}
                     </div>
                   </div>
                   <div className="hidden z-50 md:block md:ml-auto lg:mr-20 md:mr-8">
