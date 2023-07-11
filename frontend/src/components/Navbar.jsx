@@ -9,6 +9,7 @@ import {
 import { Link } from "react-router-dom";
 import logo from "../assets/beau-new-logo.jpg";
 import { useUser } from "../context/userContext/context";
+import { useProduct } from "../context/productContext/context";
 
 const navigation = [
   { name: "Home", link: "/", user: true },
@@ -31,6 +32,10 @@ const Navbar = ({ children }) => {
   const {
     userState: { user },
   } = useUser();
+  const {
+    productState: { cart, wish },
+  } = useProduct();
+
   return (
     <>
       <div className="min-h-full z-50">
@@ -67,28 +72,38 @@ const Navbar = ({ children }) => {
                     </div>
                   </div>
                   <div className="hidden z-50 md:block md:ml-auto lg:mr-20 md:mr-8">
-                    <div className="flex items-center">
-                      <button
-                        type="button"
-                        className="rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 "
-                      >
-                        <Link to="/cart">
-                          <ShoppingCartIcon
-                            className="h-[38px] w-[38px] bg-transparent p-2 rounded-full "
-                            stroke="white"
-                            aria-hidden="true"
-                          />
-                        </Link>
-                      </button>
-                      <button type="button" className="rounded-full  ">
-                        <Link to="/wish">
-                          <HeartIcon
-                            className="h-[38px] w-[38px] bg-transparent p-2 rounded-full "
-                            stroke="white"
-                            aria-hidden="true"
-                          />
-                        </Link>
-                      </button>
+                    <div className="flex items-center relative">
+                      <div className="relative">
+                        <button
+                          type="button"
+                          className="rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 "
+                        >
+                          <Link to="/cart">
+                            <ShoppingCartIcon
+                              className="h-[38px] w-[38px] bg-transparent p-2 rounded-full "
+                              stroke="white"
+                              aria-hidden="true"
+                            />
+                          </Link>
+                        </button>
+                        <span className="absolute text-red-600 left-5 top-0 bg-white w-6 h-6 text-center rounded-full">
+                          {cart?.length}
+                        </span>
+                      </div>
+                      <div className="relative">
+                        <button type="button" className="rounded-full  ">
+                          <Link to="/wish">
+                            <HeartIcon
+                              className="h-[38px] w-[38px] bg-transparent p-2 rounded-full "
+                              stroke="white"
+                              aria-hidden="true"
+                            />
+                          </Link>
+                        </button>
+                        <span className="absolute text-red-600 left-5 top-0 bg-white w-6 h-6 text-center rounded-full">
+                          {wish?.length}
+                        </span>
+                      </div>
 
                       {/* Profile dropdown */}
                       <Menu as="div" className="relative ml-3">
@@ -173,7 +188,7 @@ const Navbar = ({ children }) => {
                   )}
                 </div>
                 <div className="border-t  pb-3 pt-4">
-                  <div className="flex items-center px-5 bg-red-600">
+                  <div className="flex  items-center space-x-6  px-5 bg-red-600">
                     <div className="flex-shrink-0">
                       <img
                         className="h-10 w-10 rounded-full"
@@ -186,27 +201,39 @@ const Navbar = ({ children }) => {
                         {user?.name}
                       </div>
                     </div>
-                    <button
-                      type="button"
-                      className="ml-auto flex-shrink-0 rounded-full  p-1  text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                    >
-                      <span className="sr-only">View notifications</span>
-                      <Link to="/cart">
-                        <ShoppingCartIcon
-                          className="h-6 w-6"
-                          aria-hidden="true"
-                        />
-                      </Link>
-                    </button>
-                    <button
-                      type="button"
-                      className="ml-auto flex-shrink-0 rounded-full  p-1  text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                    >
-                      <span className="sr-only">View notifications</span>
-                      <Link to="/wish">
-                        <HeartIcon className="h-6 w-6" aria-hidden="true" />
-                      </Link>
-                    </button>
+                    <div className="flex justify-between space-x-12">
+                      <div className="relative">
+                        <button
+                          type="button"
+                          className="rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 "
+                        >
+                          <Link to="/cart">
+                            <ShoppingCartIcon
+                              className="h-[38px] w-[38px] bg-transparent p-2 rounded-full "
+                              stroke="white"
+                              aria-hidden="true"
+                            />
+                          </Link>
+                        </button>
+                        <span className="absolute text-red-600 left-5 top-0 bg-white w-6 h-6 text-center rounded-full">
+                          {cart?.length}
+                        </span>
+                      </div>
+                      <div className="relative">
+                        <button type="button" className="rounded-full  ">
+                          <Link to="/wish">
+                            <HeartIcon
+                              className="h-[38px] w-[38px] bg-transparent p-2 rounded-full "
+                              stroke="white"
+                              aria-hidden="true"
+                            />
+                          </Link>
+                        </button>
+                        <span className="absolute text-red-600 left-5 top-0 bg-white w-6 h-6 text-center rounded-full">
+                          {wish?.length}
+                        </span>
+                      </div>
+                    </div>
                   </div>
                   <div className="mt-3 space-y-1 px-2">
                     {userNavigation.map((item) => (
