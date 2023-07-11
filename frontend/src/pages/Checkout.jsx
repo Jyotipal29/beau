@@ -22,36 +22,82 @@ const Checkout = () => {
   };
 
   const orderHandler = async () => {
-    const order = {
-      cart,
-      totalPrice,
-      totalItems,
-      selectedAddress,
-      paymentMethod,
-      user,
-      status: "pending",
-      paymentStatus: "pending",
-    };
+    // const order = {
+    //   cart,
+    //   totalPrice,
+    //   totalItems,
+    //   selectedAddress,
+    //   paymentMethod,
+    //   user,
+    //   status: "pending",
+    //   paymentStatus: "pending",
+    // };
+    // try {
+    //   const {
+    //     data: { key },
+    //   } = await axios.get(`${api}api/getkey`);
+    //   const { data } = await axios.post(`${api}payment/checkout`, {
+    //     amount: totalPrice,
+    //   });
+    //   console.log(data, "orderdata");
+    //   const options = {
+    //     key,
+    //     amount: data.amount.toString(),
+    //     currency: "INR",
+    //     name: "jyoti",
+    //     description: "jyoCart project",
+    //     order_id: data.id,
+    //     callback_url: `${api}payment/paymentVerification`,
+    //     prefill: {
+    //       name: user?.name,
+    //       email: user?.email,
+    //       contact: "6262626262",
+    //     },
+    //     notes: {
+    //       address: "Razorpay Corporate Office",
+    //     },
+    //     theme: {
+    //       color: "#db1333",
+    //     },
+    //   };
+    //   const razor = new window.Razorpay(options);
+    //   razor.open();
+    //   razor.on("payment.success", async () => {
+    //     const config = {
+    //       headers: {
+    //         Authorization: `Bearer ${user.token}`,
+    //       },
+    //     };
+    //     const { data } = await axios.post(`${api}order/`, order, config);
+    //     console.log(data, " order data");
+    //     userDispatch({ type: "ADD_ORDER", payload: data });
+    //   });
+    // } catch (error) {
+    //   console.log(error.message);
+    // }
+
     try {
       const {
         data: { key },
       } = await axios.get(`${api}api/getkey`);
-      const { data } = await axios.post(`${api}payment/checkout`, {
+      const {
+        data: { order: orderData },
+      } = await axios.post(`${api}payment/checkout`, {
         amount: totalPrice,
       });
-      console.log(data, "orderdata");
+
       const options = {
         key,
-        amount: data.amount.toString(),
+        amount: orderData.amount,
         currency: "INR",
         name: "jyoti",
         description: "jyoCart project",
-        order_id: data.id,
+        order_id: orderData.id,
         callback_url: `${api}payment/paymentVerification`,
         prefill: {
           name: user?.name,
           email: user?.email,
-          contact: "6262626262",
+          contact: "8944832294",
         },
         notes: {
           address: "Razorpay Corporate Office",
@@ -62,19 +108,8 @@ const Checkout = () => {
       };
       const razor = new window.Razorpay(options);
       razor.open();
-
-      razor.on("payment.success", async () => {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        };
-        const { data } = await axios.post(`${api}order/`, order, config);
-        console.log(data, " order data");
-        userDispatch({ type: "ADD_ORDER", payload: data });
-      });
     } catch (error) {
-      console.log(error.message);
+      console.log(error), "payment error";
     }
   };
 

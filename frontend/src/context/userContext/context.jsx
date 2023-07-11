@@ -17,7 +17,6 @@ export const UserProvider = ({ children }) => {
     user: user,
     order: [],
     orders: [],
-    currentOrder: null,
   });
 
   useEffect(() => {

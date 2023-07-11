@@ -10,6 +10,10 @@ const OrderSuccess = () => {
     userState: { user },
   } = useUser();
 
+  const placeOrder = async () => {};
+
+
+
   const removeCart = async () => {
     const config = {
       headers: {

@@ -226,7 +226,7 @@ const Products = () => {
                                       />
                                     </div>
 
-                                    <div className="mt-4 flex justify-between px-2 py-2">
+                                    <div className="mt-4 flex  flex-col items-center px-2 py-2 space-y-2">
                                       <div>
                                         <h3 className="text-sm text-gray-700">
                                           <a href={product.href}>
@@ -239,7 +239,7 @@ const Products = () => {
                                         </h3>
                                       </div>
                                       <p className="text-sm font-medium text-gray-900">
-                                        {product.price}
+                                        Rs. {product.price}
                                       </p>
                                     </div>
                                   </Link>

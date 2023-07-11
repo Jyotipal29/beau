@@ -138,7 +138,7 @@ const Cart = () => {
             <div className="border-t border-gray-200 px-4 mt-2 py-6 sm:px-6">
               <div className="flow-root">
                 <ul role="list" className="-my-6 divide-y divide-gray-200">
-                  {cart.map(({ _id, product, quantity }) => (
+                  {cart.map(({ _id, product, quantity, size }) => (
                     <li key={product._id} className="flex py-6">
                       <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                         <img
@@ -178,6 +178,15 @@ const Cart = () => {
                               <option value="4">4</option>
                               <option value="4">5</option>
                             </select>
+                          </div>
+                          <div className="text-gray-500 flex">
+                            <label
+                              htmlFor="password"
+                              className="inline mr-5 text-sm font-medium leading-6 text-gray-900"
+                            >
+                              size :
+                            </label>
+                            {size && <p>{size}</p>}
                           </div>
 
                           <div className="flex">
