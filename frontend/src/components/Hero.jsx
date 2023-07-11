@@ -12,9 +12,9 @@ const Hero = () => {
           <br /> Fashion
         </h1>
         <p className="font-semibold max-w-prose text-slate-200/90">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam omnis
-          iusto sed non error voluptate vel dignissimos consectetur
-          necessitatibus ratione necessitatibus ratione
+          BEAU is a trendy and fashion-forward womens wear e-commerce clothing
+          brand, offering a wide range of stylish and affordable apparel for the
+          modern woman
         </p>
         <Link
           to="/products"

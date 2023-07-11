@@ -224,12 +224,6 @@ const ProductDetails = () => {
                           <h3 className="text-sm font-medium text-gray-900">
                             Size
                           </h3>
-                          <a
-                            href="#"
-                            className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
-                          >
-                            Size guide
-                          </a>
                         </div>
 
                         <RadioGroup

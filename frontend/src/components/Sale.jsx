@@ -10,10 +10,7 @@ const Sale = () => {
           <br className="my-2 block" />
           Affordable Price
         </h1>
-        <div className="flex flex-col space-y-2 border-l-8 border-red-400 pl-5 rounded-s-md">
-          <p>Sale 30% Off</p>
-          <p>Your First Order</p>
-        </div>
+
         <Link
           to="/products"
           className="p-4 px-8 bg-red-600 hover:bg-red-700 rounded-2xl font-extrabold text-xl"

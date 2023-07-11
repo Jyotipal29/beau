@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Favourite from "../components/Favourite";
 import Footer from "../components/Footer";
 import Hero from "../components/Hero";
@@ -6,6 +7,7 @@ import Sale from "../components/Sale";
 import Trending from "../components/Trending";
 
 const Home = () => {
+  useEffect(() => {}, []);
   return (
     <div>
       <Navbar>

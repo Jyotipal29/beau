@@ -47,7 +47,7 @@ const Navbar = ({ children }) => {
             <>
               <div className="max-md:-ml-8">
                 <div className="flex h-16 items-center lg:ml-6 md:ml-0 rounded-lg">
-                  <Link href="/">
+                  <Link to="/">
                     <img
                       className="h-12 w-52 object-contain object-center"
                       src={logo}

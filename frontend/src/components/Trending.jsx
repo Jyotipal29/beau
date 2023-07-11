@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { ArrowRightIcon } from "@heroicons/react/24/outline";
 
 const Trending = () => {
   return (
@@ -11,59 +10,31 @@ const Trending = () => {
       </h1>
       <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-5">
         <div className="">
-          <img
-            src="img-1.jpg"
-            alt=""
-            className="w-96 h-96 rounded-xl  object-cover "
-          />
-          <div className="flex justify-between items-center">
-            <div>
-              <h1 className="font-semibold font-lora">Trending on instagram</h1>
-              <h1 className="text-gray-400 font-lora">explore now</h1>
-            </div>
-
-            <div className="px-2">
-              <Link to="/products">
-                <ArrowRightIcon className="w-6 h-6 text-gray-500" />
-              </Link>
-            </div>
-          </div>
+          <Link to="/products">
+            <img
+              src="img-1.jpg"
+              alt=""
+              className="w-96 h-96 rounded-xl  object-cover "
+            />
+          </Link>
         </div>
         <div className="">
-          <img
-            src="img-2.jpg"
-            alt=""
-            className="w-96 h-96 rounded-xl object-cover"
-          />
-          <div className="flex justify-between items-center">
-            <div>
-              <h1 className="font-semibold font-lora">Trending on instagram</h1>
-              <h1 className="text-gray-400 font-lora">explore now</h1>
-            </div>
-            <div className="px-2">
-              <Link to="/products">
-                <ArrowRightIcon className="w-6 h-6 text-gray-500" />
-              </Link>
-            </div>
-          </div>
+          <Link to="/products">
+            <img
+              src="img-2.jpg"
+              alt=""
+              className="w-96 h-96 rounded-xl object-cover"
+            />
+          </Link>
         </div>
         <div className="">
-          <img
-            src="img-3.jpg"
-            alt=""
-            className="w-96 h-96 rounded-xl object-cover  object-top"
-          />
-          <div className="flex justify-between items-center">
-            <div>
-              <h1 className="font-semibold font-lora">Trending on instagram</h1>
-              <h1 className="text-gray-400 font-lora">explore now</h1>
-            </div>
-            <div className="px-2">
-              <Link to="/products">
-                <ArrowRightIcon className="w-6 h-6 text-gray-500" />
-              </Link>
-            </div>
-          </div>
+          <Link to="/products">
+            <img
+              src="img-3.jpg"
+              alt=""
+              className="w-96 h-96 rounded-xl object-cover  object-top"
+            />
+          </Link>
         </div>
       </div>
     </div>
