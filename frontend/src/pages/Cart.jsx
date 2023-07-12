@@ -185,7 +185,7 @@ const Cart = () => {
                             >
                               Size :
                             </label>
-                            {size && <p className="font-bold text-black p-2 bg-slate-300">{size}</p>}
+                            {size && <p className="font-bold text-black p-2 px-4 bg-slate-300">{size}</p>}
                           </div>
 
                           <div className="flex">
