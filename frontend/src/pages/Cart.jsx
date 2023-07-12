@@ -150,19 +150,19 @@ const Cart = () => {
 
                       <div className="ml-4 flex flex-1 flex-col">
                         <div>
-                          <div className="flex justify-between text-base font-medium text-gray-900">
+                          <div className="flex justify-between text-base font-medium text-gray-900 max-sm:flex">
                             <h3>
                               <a href={product.href}>{product.title}</a>
                             </h3>
 
-                            <p className="ml-4">{product.price}</p>
+                            <p className="ml-4">Rs: {product.price}</p>
                           </div>
                         </div>
                         <div className="flex flex-1 items-end justify-between text-sm max-sm:flex-col max-sm:space-y-2">
                           <div className="text-gray-500 max-sm:flex max-sm:space-x-2">
                             <label
                               htmlFor="password"
-                              className="inline mr-5 text-sm font-medium leading-6 text-gray-900"
+                              className="inline md:mr-5 text-sm font-medium text-gray-900"
                             >
                               Qty
                             </label>
@@ -170,8 +170,7 @@ const Cart = () => {
                             <select
                               onChange={(e) => handleQty(e, _id)}
                               value={quantity}
-                              className=""
-                            >
+                              className="max-sm:w-16 max-ms:h-8 max-sm:p-0">
                               <option value="1">1</option>
                               <option value="2">2</option>
                               <option value="3">3</option>
@@ -182,11 +181,11 @@ const Cart = () => {
                           <div className="text-gray-500 flex">
                             <label
                               htmlFor="password"
-                              className="inline mr-5 text-sm font-medium leading-6 text-gray-900"
+                              className="inline mr-5 text-sm font-bold leading-6 text-gray-900"
                             >
-                              size :
+                              Size :
                             </label>
-                            {size && <p>{size}</p>}
+                            {size && <p className="font-bold text-black">{size}</p>}
                           </div>
 
                           <div className="flex">
