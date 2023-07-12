@@ -270,7 +270,7 @@ const Profile = () => {
                     className="flex justify-between  py-5 mt-5  px-5 border-2 max-sm:flex-col max-sm:space-y-4"
                   >
                     <div className="flex gap-x-4">
-                      <div className="min-w-0 flex-auto">
+                      <div className="min-w-0 flex-auto max-sm:flex-wrap">
                         <p className="text-sm font-semibold leading-6 text-gray-900">
                           {person.name}
                         </p>
