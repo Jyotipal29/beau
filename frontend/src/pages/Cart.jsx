@@ -158,8 +158,8 @@ const Cart = () => {
                             <p className="ml-4">{product.price}</p>
                           </div>
                         </div>
-                        <div className="flex flex-1 items-end justify-between text-sm">
-                          <div className="text-gray-500">
+                        <div className="flex flex-1 items-end justify-between text-sm max-sm:flex-col max-sm:space-y-2">
+                          <div className="text-gray-500 max-sm:flex max-sm:space-x-2">
                             <label
                               htmlFor="password"
                               className="inline mr-5 text-sm font-medium leading-6 text-gray-900"
@@ -192,7 +192,7 @@ const Cart = () => {
                           <div className="flex">
                             <button
                               type="button"
-                              className="font-medium text-red-600 hover:text-red-500"
+                              className="font-medium text-red-600 hover:text-red-500 max-sm:ml-auto"
                               onClick={() => removeItem(_id)}
                             >
                               {sLoading[_id] ? (
