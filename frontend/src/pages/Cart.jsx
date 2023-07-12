@@ -149,13 +149,13 @@ const Cart = () => {
                       </div>
 
                       <div className="ml-4 flex flex-1 flex-col">
-                        <div>
+                        <div className="max-sm:flex max-sm:flex-col">
                           <div className="flex justify-between text-base font-medium text-gray-900 max-sm:flex">
                             <h3>
                               <a href={product.href}>{product.title}</a>
                             </h3>
 
-                            <p className="ml-4">Rs: {product.price}</p>
+                            <p className="md:l-4">Rs: {product.price}</p>
                           </div>
                         </div>
                         <div className="flex flex-1 md:items-end justify-between text-sm max-sm:flex-col max-sm:space-y-2">
