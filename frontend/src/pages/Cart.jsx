@@ -158,7 +158,7 @@ const Cart = () => {
                             <p className="ml-4">Rs: {product.price}</p>
                           </div>
                         </div>
-                        <div className="flex flex-1 items-end justify-between text-sm max-sm:flex-col-reverse max-sm:space-y-2">
+                        <div className="flex flex-1 md:items-end justify-between text-sm max-sm:flex-col max-sm:space-y-2">
                           <div className="text-gray-500 max-sm:flex max-sm:space-x-2">
                             <label
                               htmlFor="password"
