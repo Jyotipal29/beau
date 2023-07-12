@@ -1,15 +1,15 @@
-import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
-  XMarkIcon,
-  ShoppingCartIcon,
   HeartIcon,
+  ShoppingCartIcon,
+  XMarkIcon,
 } from "@heroicons/react/24/outline";
+import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/beau-new-logo.jpg";
-import { useUser } from "../context/userContext/context";
 import { useProduct } from "../context/productContext/context";
+import { useUser } from "../context/userContext/context";
 
 const navigation = [
   { name: "Home", link: "/", user: true },
@@ -178,93 +178,97 @@ const Navbar = ({ children }) => {
 
               <Disclosure.Panel className="md:hidden">
                 <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-                  {navigation.map((item) =>
-                    item[user?.role] ? (
-                      <Link
-                        key={item.name}
-                        to={item.link}
-                        className={classNames(
-                          item.current
-                            ? "bg-gray-900 text-white"
-                            : "text-white",
-                          "block rounded-md px-3 py-2 text-base font-medium "
-                        )}
-                        aria-current={item.current ? "page" : undefined}
-                      >
-                        {item.name}
-                      </Link>
-                    ) : null
-                  )}
+                  {!user &&
+                    navigation.map((item) =>
+                      item[user?.role] ? (
+                        <Link
+                          key={item.name}
+                          to={item.link}
+                          className={classNames(
+                            item.current
+                              ? "bg-gray-900 text-white"
+                              : "text-white",
+                            "block rounded-md px-3 py-2 text-base font-medium "
+                          )}
+                          aria-current={item.current ? "page" : undefined}
+                        >
+                          {item.name}
+                        </Link>
+                      ) : null
+                    )}
                 </div>
                 <div className="border-t  pb-3 pt-4">
-                  <div className="flex  items-center space-x-6  px-5 bg-red-600">
-                    <div className="flex-shrink-0">
-                      <img
-                        className="h-10 w-10 rounded-full"
-                        src={user?.image}
-                        alt=""
-                      />
-                    </div>
-                    <div className="ml-3">
-                      <div className="text-base font-medium leading-none text-white">
-                        {user?.name}
-                      </div>
-                    </div>
-                    <div className="flex justify-between space-x-12">
-                      <div className="relative">
-                        <button
-                          type="button"
-                          className="rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 "
-                        >
-                          <Link to="/cart">
-                            <ShoppingCartIcon
-                              className="h-[38px] w-[38px] bg-transparent p-2 rounded-full "
-                              stroke="white"
-                              aria-hidden="true"
-                            />
-                          </Link>
-                        </button>
-                        <span className="absolute text-red-600 left-5 top-0 bg-white w-6 h-6 text-center rounded-full">
-                          {cart?.length}
-                        </span>
-                      </div>
-                      <div className="relative">
-                        <button type="button" className="rounded-full  ">
-                          <Link to="/wish">
-                            <HeartIcon
-                              className="h-[38px] w-[38px] bg-transparent p-2 rounded-full "
-                              stroke="white"
-                              aria-hidden="true"
-                            />
-                          </Link>
-                        </button>
-                        <span className="absolute text-red-600 left-5 top-0 bg-white w-6 h-6 text-center rounded-full">
-                          {wish?.length}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
                   {!user ? (
-                        <Link
-                          to="/login"
-                          className="text-white hover:bg-red-500 bg-red-600  font-bold
+                    <Link
+                      to="/login"
+                      className="text-white hover:bg-red-500 bg-red-600  font-bold
                             rounded-md px-3 py-2 text-sm"
-                        >
-                          Login
-                        </Link>
-                      ):
-                  <div className="mt-3 space-y-1 px-2">
-                    {userNavigation.map((item) => (
-                      <Link
-                        key={item.name}
-                        as="a"
-                        to={item.link}
-                        className="block rounded-md px-3 py-2 text-base font-medium  hover:bg-red-600 text-white"
-                      >
-                        {item.name}
-                      </Link>
-                    ))}
-                  </div>}
+                    >
+                      Login
+                    </Link>
+                  ) : (
+                    <>
+                      <div className="flex  items-center space-x-6  px-5 bg-red-600">
+                        <div className="flex-shrink-0">
+                          <img
+                            className="h-10 w-10 rounded-full"
+                            src={user?.image}
+                            alt=""
+                          />
+                        </div>
+                        <div className="ml-3">
+                          <div className="text-base font-medium leading-none text-white">
+                            {user?.name}
+                          </div>
+                        </div>
+                        <div className="flex justify-between space-x-12">
+                          <div className="relative">
+                            <button
+                              type="button"
+                              className="rounded-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 "
+                            >
+                              <Link to="/cart">
+                                <ShoppingCartIcon
+                                  className="h-[38px] w-[38px] bg-transparent p-2 rounded-full "
+                                  stroke="white"
+                                  aria-hidden="true"
+                                />
+                              </Link>
+                            </button>
+                            <span className="absolute text-red-600 left-5 top-0 bg-white w-6 h-6 text-center rounded-full">
+                              {cart?.length}
+                            </span>
+                          </div>
+                          <div className="relative">
+                            <button type="button" className="rounded-full  ">
+                              <Link to="/wish">
+                                <HeartIcon
+                                  className="h-[38px] w-[38px] bg-transparent p-2 rounded-full "
+                                  stroke="white"
+                                  aria-hidden="true"
+                                />
+                              </Link>
+                            </button>
+                            <span className="absolute text-red-600 left-5 top-0 bg-white w-6 h-6 text-center rounded-full">
+                              {wish?.length}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="mt-3 space-y-1 px-2">
+                        {userNavigation.map((item) => (
+                          <Link
+                            key={item.name}
+                            as="a"
+                            to={item.link}
+                            className="block rounded-md px-3 py-2 text-base font-medium  hover:bg-red-600 text-white"
+                          >
+                            {item.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </>
+                  )}
                 </div>
               </Disclosure.Panel>
             </>
