@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const Sale = () => {
   return (
     <div>
-      <section className=" my-20 flex justify-center max-md:pl-4 items-start space-y-6 flex-col text-white md:pl-20 lg:pl-40 [background-image:url('new-sale-img.jpg')] bg-cover w-full min-h-[400px] max-md:[background-position:-250px_0] max-sm:[background-position:-400px_0] bg-no-repeat">
+      <section className=" my-20 flex justify-center max-md:pl-4 items-start space-y-6 flex-col text-white md:pl-20 lg:pl-40 [background-image:url('/new-sale-img.jpg')] bg-cover w-full min-h-[400px] max-md:[background-position:-250px_0] max-sm:[background-position:-400px_0] bg-no-repeat">
         <b className="text-xl font-light">Biggest Offer</b>
         <h1 className="text-4xl font-extrabold">
           Fashion Online At Most
