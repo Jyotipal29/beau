@@ -274,7 +274,7 @@ const Profile = () => {
                         <p className="text-sm font-semibold leading-6 text-gray-900">
                           {person.name}
                         </p>
-                        <p className="mt-1 truncate text-xs leading-5 text-gray-500">
+                        <p className="mt-1 text-xs leading-5 text-gray-500">
                           {person.street}
                         </p>
                         <p className="mt-1 truncate text-xs leading-5 text-gray-500">
