@@ -36,8 +36,9 @@ const Checkout = () => {
         key,
         amount: orderData.amount,
         currency: "INR",
-        name: "jyoti",
-        description: "jyoCart project",
+        name: "Beau",
+        description: "Beau Shopping",
+        image: "https://beau-ui.onrender.com/assets/beau-new-logo-c7eaf4b0.jpg",
         order_id: orderData.id,
         // callback_url: `${api}payment/paymentVerification`,
         handler: async (res) => {
@@ -104,7 +105,7 @@ const Checkout = () => {
         prefill: {
           name: user?.name,
           email: user?.email,
-          contact: "8944832294",
+          contact: "8944832296",
         },
         notes: {
           address: "Razorpay Corporate Office",
