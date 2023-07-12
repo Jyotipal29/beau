@@ -150,12 +150,12 @@ const Cart = () => {
 
                       <div className="ml-4 flex flex-1 flex-col">
                         <div className="max-sm:flex max-sm:flex-col">
-                          <div className="flex justify-between text-base font-medium text-gray-900 max-sm:flex">
+                          <div className="flex justify-between text-base font-medium text-gray-900 max-sm:flex-col">
                             <h3>
                               <a href={product.href}>{product.title}</a>
                             </h3>
 
-                            <p className="md:l-4">Rs: {product.price}</p>
+                            <span className="md:ml-4">Rs: {product.price}</span>
                           </div>
                         </div>
                         <div className="flex flex-1 md:items-end justify-between text-sm max-sm:flex-col max-sm:space-y-2">
@@ -185,7 +185,7 @@ const Cart = () => {
                             >
                               Size :
                             </label>
-                            {size && <p className="font-bold text-black">{size}</p>}
+                            {size && <p className="font-bold text-black p-2 bg-slate-300">{size}</p>}
                           </div>
 
                           <div className="flex">
