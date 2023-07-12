@@ -244,6 +244,15 @@ const Navbar = ({ children }) => {
                       </div>
                     </div>
                   </div>
+                  {!user ? (
+                        <Link
+                          to="/login"
+                          className="text-white hover:bg-red-500 bg-red-600  font-bold
+                            rounded-md px-3 py-2 text-sm"
+                        >
+                          Login
+                        </Link>
+                      ):
                   <div className="mt-3 space-y-1 px-2">
                     {userNavigation.map((item) => (
                       <Link
@@ -255,7 +264,7 @@ const Navbar = ({ children }) => {
                         {item.name}
                       </Link>
                     ))}
-                  </div>
+                  </div>}
                 </div>
               </Disclosure.Panel>
             </>
