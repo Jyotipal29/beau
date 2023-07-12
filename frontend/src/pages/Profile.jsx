@@ -267,7 +267,7 @@ const Profile = () => {
                 {user?.addresses?.map((person) => (
                   <li
                     key={person.name}
-                    className="flex justify-between  py-5 mt-5  px-5 border-2 max-sm:flex-col"
+                    className="flex justify-between  py-5 mt-5  px-5 border-2 max-sm:flex-col max-sm:space-y-4"
                   >
                     <div className="flex gap-x-4">
                       <div className="min-w-0 flex-auto">
