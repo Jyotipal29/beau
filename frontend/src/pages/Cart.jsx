@@ -149,20 +149,20 @@ const Cart = () => {
                       </div>
 
                       <div className="ml-4 flex flex-1 flex-col">
-                        <div>
-                          <div className="flex justify-between text-base font-medium text-gray-900">
+                        <div className="max-sm:flex max-sm:flex-col">
+                          <div className="flex justify-between text-base font-medium text-gray-900 max-sm:flex-col">
                             <h3>
                               <a href={product.href}>{product.title}</a>
                             </h3>
 
-                            <p className="ml-4">{product.price}</p>
+                            <span className="md:ml-4">Rs: {product.price}</span>
                           </div>
                         </div>
-                        <div className="flex flex-1 items-end justify-between text-sm">
-                          <div className="text-gray-500">
+                        <div className="flex flex-1 md:items-end justify-between text-sm max-sm:flex-col max-sm:space-y-2">
+                          <div className="text-gray-500 max-sm:flex max-sm:space-x-2">
                             <label
                               htmlFor="password"
-                              className="inline mr-5 text-sm font-medium leading-6 text-gray-900"
+                              className="inline md:mr-5 text-sm font-medium text-gray-900"
                             >
                               Qty
                             </label>
@@ -170,8 +170,7 @@ const Cart = () => {
                             <select
                               onChange={(e) => handleQty(e, _id)}
                               value={quantity}
-                              className=""
-                            >
+                              className="max-sm:w-16 max-ms:h-8 max-sm:p-0">
                               <option value="1">1</option>
                               <option value="2">2</option>
                               <option value="3">3</option>
@@ -182,17 +181,17 @@ const Cart = () => {
                           <div className="text-gray-500 flex">
                             <label
                               htmlFor="password"
-                              className="inline mr-5 text-sm font-medium leading-6 text-gray-900"
+                              className="inline mr-5 text-sm font-bold leading-6 text-gray-900"
                             >
-                              size :
+                              Size :
                             </label>
-                            {size && <p>{size}</p>}
+                            {size && <p className="font-bold text-black max-sm:p-2 max-sm:rounded-full bg-slate-200">{size}</p>}
                           </div>
 
                           <div className="flex">
                             <button
                               type="button"
-                              className="font-medium text-red-600 hover:text-red-500"
+                              className="font-medium text-red-600 hover:text-red-500 max-sm:ml-auto"
                               onClick={() => removeItem(_id)}
                             >
                               {sLoading[_id] ? (

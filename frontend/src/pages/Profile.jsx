@@ -230,8 +230,8 @@ const Profile = () => {
           <div className="mx-auto  max-w-7xl px-4 sm:px-6 lg:px-8 bg-white">
             <div className="border-b border-gray-900/10 pb-12">
               <div className="flex  justify-between py-4">
-                <div className="flex items-center space-x-6">
-                  <div>
+                <div className="flex items-center space-x-6 max-sm:flex-wrap max-sm:space-y-2">
+                  <div className="max-sm:min-w-[144px]">
                     <img src={user.image} className="w-32 h-32 rounded-full" />
                   </div>
                   <div className="space-y-2">
@@ -249,7 +249,7 @@ const Profile = () => {
 
                 <div>
                   <button
-                    className="bg-red-600 px-2 py-1 text-white"
+                    className="bg-red-600 px-2 py-1 text-white max-sm:ml-auto"
                     onClick={logoutHandler}
                   >
                     logout
@@ -267,14 +267,14 @@ const Profile = () => {
                 {user?.addresses?.map((person) => (
                   <li
                     key={person.name}
-                    className="flex justify-between  py-5 mt-5  px-5 border-2"
+                    className="flex justify-between  py-5 mt-5  px-5 border-2 max-sm:flex-col max-sm:space-y-4"
                   >
                     <div className="flex gap-x-4">
-                      <div className="min-w-0 flex-auto">
+                      <div className="min-w-0 flex-auto max-sm:flex-wrap">
                         <p className="text-sm font-semibold leading-6 text-gray-900">
                           {person.name}
                         </p>
-                        <p className="mt-1 truncate text-xs leading-5 text-gray-500">
+                        <p className="mt-1 text-xs leading-5 text-gray-500">
                           {person.street}
                         </p>
                         <p className="mt-1 truncate text-xs leading-5 text-gray-500">
