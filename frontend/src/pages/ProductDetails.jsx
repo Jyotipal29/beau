@@ -107,8 +107,13 @@ const ProductDetails = () => {
     }
   };
   const [activeImg, setActiveImg] = useState(
-    product?.mainImageUrl && product?.mainImageUrl
+    (product?.mainImageUrl && product?.mainImageUrl) || ""
   );
+
+  useEffect(() => {
+    setActiveImg(product?.mainImageUrl && product?.mainImageUrl);
+  }, [product]);
+  console.log(activeImg, "active img");
   return (
     <Navbar>
       <div className="bg-white">
@@ -187,17 +192,17 @@ const ProductDetails = () => {
                         )
                       }
                     />
-                    <img
-                      src={product?.extraImages[0] && product?.extraImages[0]}
-                      alt=""
-                      className="w-24 h-24  md:h-40 md:w-40 rounded-md cursor-pointer border "
-                      onClick={() =>
-                        setActiveImg(
-                          product?.extraImages[0] && product?.extraImages[0]
-                        )
-                      }
-                    />
-                    <img
+                    {product?.extraImages?.map((item) => (
+                      <img
+                        key={item}
+                        src={item}
+                        alt=""
+                        className="w-24 h-24  md:h-40 md:w-40 rounded-md cursor-pointer border "
+                        onClick={() => setActiveImg(item)}
+                      />
+                    ))}
+
+                    {/* <img
                       src={product?.extraImages[1] && product?.extraImages[1]}
                       alt=""
                       className="w-24 h-24 md:h-40 md:w-40 rounded-md cursor-pointer  border"
@@ -222,7 +227,7 @@ const ProductDetails = () => {
                           product?.extraImages[0] && product?.extraImages[2]
                         )
                       }
-                    />
+                    /> */}
                   </div>
                 </div>
               </div>
