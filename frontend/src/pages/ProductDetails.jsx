@@ -106,6 +106,10 @@ const ProductDetails = () => {
       });
     }
   };
+  const [activeImg, setActiveImg] = useState(
+    product?.mainImageUrl && product?.mainImageUrl
+  );
+  console.log(activeImg, "ig");
   return (
     <Navbar>
       <div className="bg-white">
@@ -126,7 +130,7 @@ const ProductDetails = () => {
               </nav>
 
               {/* Image gallery */}
-              <div className="mx-auto relative mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
+              {/* <div className="mx-auto relative mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
                 {}
 
                 <div className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
@@ -160,6 +164,51 @@ const ProductDetails = () => {
                     alt={product?.title}
                     className="h-full w-full object-cover object-center"
                   />
+                </div>
+              </div> */}
+              {/* new img galary */}
+              <div className="mx-auto relative mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-1 lg:gap-x-8 lg:px-8">
+                <div className="flex justify-center items-center flex-col gap-6">
+                  <div className="w-96 h-96 border ">
+                    <img
+                      src={activeImg}
+                      alt="img"
+                      className="w-full h-full aspect-square object-top rounded-xl"
+                    />
+                  </div>
+
+                  <div className="flex flex-row justify-between h-24 md:h-40 ">
+                    <img
+                      src={product?.mainImageUrl}
+                      alt=""
+                      className="w-24 h-24 md:h-40 md:w-40 rounded-md cursor-pointer border "
+                      onClick={() => setActiveImg(product?.mainImageUrl)}
+                    />
+                    <img
+                      src={product?.extraImages[0]}
+                      alt=""
+                      className="w-24 h-24  md:h-40 md:w-40 rounded-md cursor-pointer border "
+                      onClick={() => setActiveImg(product?.extraImages[0])}
+                    />
+                    <img
+                      src={product?.extraImages[1]}
+                      alt=""
+                      className="w-24 h-24 md:h-40 md:w-40 rounded-md cursor-pointer  border"
+                      onClick={() => setActiveImg(product?.extraImages[1])}
+                    />
+                    <img
+                      src={product?.extraImages[2]}
+                      alt=""
+                      className="w-24 h-24 md:h-40 md:w-40 rounded-md cursor-pointer border "
+                      onClick={() => setActiveImg(product?.extraImages[2])}
+                    />
+                    <img
+                      src={product?.extraImages[0]}
+                      alt=""
+                      className="w-24 h-24 md:h-40 md:w-40 rounded-md cursor-pointer  border"
+                      onClick={() => setActiveImg(product?.extraImages[0])}
+                    />
+                  </div>
                 </div>
               </div>
 
