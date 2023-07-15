@@ -4,13 +4,12 @@ const products = [
     description:
       "Yellow and pink rose print with off white primary background colour",
     mainImageUrl:
-      "https://drive.google.com/uc?id=10v2BkF4MlR6LEiX1NLUOEzlj4---VvOC",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335502183_jpttg0",
     extraImages: [
-      "https://drive.google.com/uc?id=1edWGQwcexg-MtD7txar2VTNuHmDO_hTN",
-      "https://drive.google.com/uc?id=1iqa_9-r8M6VIWLLBIqAHS4av_rEdl5tT",
-      "https://drive.google.com/uc?id=1drLAODwAHzeoM-2cqJqTdUAxFd4L85YN",
-      "https://drive.google.com/uc?id=1BVuH0qSWCDvs_S2vb7ovraCnwUnwc7XR",
-      "https://drive.google.com/uc?id=1zgeM7oJdIqa4u6VwSyCugzPu1nwcohI3",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335503426_llqetg",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335504040_eztguy",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335505330_qxucl7",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335504680_aulbcd",
     ],
     price: 1499,
     size: ["S", "M", "L", "XL"],
@@ -25,11 +24,12 @@ const products = [
     description:
       "Multicolour Multilayered Two Tier dress with Floral print with a colour combination of blue, green and off-white",
     mainImageUrl:
-      "https://drive.google.com/uc?id=14ScxrvVq6fz4rAFzp8LiyIEkSez6zIOZ",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335505956_zbzzao",
     extraImages: [
-      "https://drive.google.com/uc?id=1UyXonmyHKLwzicstuY-FPFfCsnOhTwbL",
-      "https://drive.google.com/uc?id=1ApY_cU9ez3s63UOn61ydVd-LLKCENI5p",
-      "https://drive.google.com/uc?id=1ua7JWE1-zrCneurJg1N5sCmVF3dYZ1pK",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335507180_evfos9",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335508412_a70tpj",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335507790_cw2xa2",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335509034_xexaef",
     ],
     price: 1399,
     size: ["S", "M", "L", "XL"],
@@ -42,11 +42,12 @@ const products = [
     title: "Maroon dress with side keyholes",
     description: "Maroon midi dress with side keyholes and a back zipper",
     mainImageUrl:
-      "https://drive.google.com/uc?id=1THQrbjlwI8CBOeqGDgvV9MhAewagIAl5",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335510249_wqfdmg",
     extraImages: [
-      "https://drive.google.com/uc?id=1vf1Yp69LspWL_iVugLAPumyVL6G8n7BM",
-      "https://drive.google.com/uc?id=18cbYxBXY5vCljRsNEmOSQAKqXh8amPOP",
-      "https://drive.google.com/uc?id=1fmPKwNGx95RxZJJUaIctswwRpNXkAWEH",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335510860_fmzqnv",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335511456_ncihw3",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335512045_ec4jkf",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335509653_rc8ygm",
     ],
 
     price: 1250,
@@ -61,11 +62,12 @@ const products = [
     description:
       "Black Floral printed frilled midi dress with a layer of black lining inside",
     mainImageUrl:
-      "https://drive.google.com/uc?id=1THQrbjlwI8CBOeqGDgvV9MhAewagIAl5",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335513895_z1f0pc",
     extraImages: [
-      "https://drive.google.com/uc?id=1vf1Yp69LspWL_iVugLAPumyVL6G8n7BM",
-      "https://drive.google.com/uc?id=18cbYxBXY5vCljRsNEmOSQAKqXh8amPOP",
-      "https://drive.google.com/uc?id=1fmPKwNGx95RxZJJUaIctswwRpNXkAWEH",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335513280_riepvn",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335514512_vtedlb",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335515747_nksdks",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335516384_krhzui",
     ],
 
     price: 1199,
@@ -80,11 +82,12 @@ const products = [
     description:
       "Brown full sleeve midi dress with palm leaf print and a black lining inside the dress",
     mainImageUrl:
-      "https://drive.google.com/uc?id=1Xu3ncJMHy85BArU-vH_Lx9WrpWjybqEP",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335517015_mkvaat",
     extraImages: [
-      "https://drive.google.com/uc?id=1QVYrHayFK6UtDV2G6RPRjojjB-gFUTLl",
-      "https://drive.google.com/uc?id=1VOhVujSByACzqWIqJd-4XL7zSVFzbqTx",
-      "https://drive.google.com/uc?id=1E3aoBucfA1u9DPV0c631H3kZ6ZRbniap",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335518882_lmoljx",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335518264_odab8d",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335519497_evssol",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335520135_kheeag",
     ],
 
     price: 1250,
@@ -99,11 +102,12 @@ const products = [
     description:
       " Front slit dress with lapel collar. Yellow and pink rose Printed dress with an off-white background",
     mainImageUrl:
-      "https://drive.google.com/uc?id=15WR1SvH4TtXeVRVOsumRFjCV1-dq1K8n",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335520764_spepui",
     extraImages: [
-      "https://drive.google.com/uc?id=1_8DzfXylCdLPTfqYZW_fHuRpp480CG7u",
-      "https://drive.google.com/uc?id=1VSW3vXwChWoQtoqR7rFtwlUY2wH9pcSw",
-      "https://drive.google.com/uc?id=1pVsLQkxGqABou9nqpw022evvdKTspqOI",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335522000_nwdmqk",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335522614_khzqkn",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335523217_xk0jhg",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335523852_hyyxem",
     ],
 
     price: 999,
@@ -118,11 +122,12 @@ const products = [
     description:
       " Wine Colour Off shoulder A-line dress Cross Front and Back design with a back zipper",
     mainImageUrl:
-      "https://drive.google.com/uc?id=1A19sR2sfHceAmCLtaTLTCCqbz8rB--I_",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335526260_bh5odw",
     extraImages: [
-      "https://drive.google.com/uc?id=1IZXz7ZxtqXytaau8WeiPEpZYttzaBI26",
-      "https://drive.google.com/uc?id=1BPU9wKq7N723U6_c6338OATdTyWhAYQG",
-      "https://drive.google.com/uc?id=10W7y3uCIQwxOwdgF-qjWpK-Awk7FxlY9",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335526858_eypc7q",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335525664_wqlkbz",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335527464_ojqvdw",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335524471_p2w5ym",
     ],
 
     price: 1199,
@@ -137,11 +142,12 @@ const products = [
     description:
       "Front plete full sleeve maroon top with a middle front slit  ",
     mainImageUrl:
-      "https://drive.google.com/uc?id=1JUOTVMrRupu0madWrsp5QzS1oOkctIwl",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335528678_lmix0s",
     extraImages: [
-      "https://drive.google.com/uc?id=1hVUKOOuHfLKHYu2qaSwCptAQ-h5ckdmf",
-      "https://drive.google.com/uc?id=1kXT8PnXiI8cAVImmN02L05AvfzCxh8kP",
-      "https://drive.google.com/uc?id=1RaGzitYjnsb_uXeWvyvWC5Y847cg4nZD",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335528067_crvjfe",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335530492_bk4zvt",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335529873_kb4o7v",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335531108_dm1dul",
     ],
 
     price: 699,
@@ -155,11 +161,12 @@ const products = [
     title: "One shoulder frilled top",
     description: "One Shoulder dress with a round frill at the top ",
     mainImageUrl:
-      "https://drive.google.com/uc?id=10qZRJuDzf_DpzGAvF-76S2LZKn-4aqYE",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335532732_ugb3eg",
     extraImages: [
-      "https://drive.google.com/uc?id=1pIWAvjF34tBdfZ7GyzE18RPrtQWQ1to3",
-      "https://drive.google.com/uc?id=1acZl65YW2q2T6mcga_FBqSJ48MOBFF79",
-      "https://drive.google.com/uc?id=1p6qAd_3Fo95HxofDt2bAFX8lFhp1BnlU",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335531739_b8eviw",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335533670_tdmfqs",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335534566_qqdrcd",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335536250_x4zisz",
     ],
 
     price: 599,
@@ -170,15 +177,36 @@ const products = [
     material: "polycrepe",
   },
   {
+    title: " Sleeves cotton top with eyelet",
+    description:
+      "Front slit cotton sleeveless top With metal eyelet detailing all over",
+    mainImageUrl:
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335542205_xij1en",
+    extraImages: [
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335543085_z7nyq1",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335545762_uewviy",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335537083_puwhr9",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335543916_oqf34v",
+    ],
+
+    price: 499,
+    size: ["S", "M", "L", "XL"],
+    qty: 1,
+    InStock: 5,
+    color: "V neck",
+    material: "Cotton",
+  },
+  {
     title: "One shoulder frilled top",
     description:
       "One Shoulder polka dot printed black and white dress with a round frill at the top ",
     mainImageUrl:
-      "https://drive.google.com/uc?id=1JRgumVV78BPDIb_yeh1x-q7qws_ExZiP",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335538789_xiahfc",
     extraImages: [
-      "https://drive.google.com/uc?id=1zXvsadJ9RoWnvOln7x3TFxbTXYbrWR24",
-      "https://drive.google.com/uc?id=1k6nnPInfQ1WRAgYeIxLHrR71-rpqoAK4",
-      "https://drive.google.com/uc?id=1YOcMZSm5aP_Dx61wooUrq8bluc3tDTVj",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335537083_puwhr9",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335539634_oqqzyr",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335537954_jrwtey",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335541366_tkh97e",
     ],
 
     price: 599,
@@ -193,11 +221,12 @@ const products = [
     description:
       "Front gather full sleeve top with a black and white polka dot print",
     mainImageUrl:
-      "https://drive.google.com/uc?id=1ma0KAPe81v6QTmVRbua3FPHt3eDIzp_G",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335546985_jbngis",
     extraImages: [
-      "https://drive.google.com/uc?id=1bPo0w39_-yZYGJ2dzM6jyX2xBCgCalVL",
-      "https://drive.google.com/uc?id=16SKvpRYtveIYXqN1cap7EYJH-RC5RkKY",
-      "https://drive.google.com/uc?id=1O3hXklnfbKm6SSqCykwDL1xWOURGxWEA",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335546383_posodt",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335548829_i9fxam",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335548210_iudxkk",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335549466_z4pbmx",
     ],
 
     price: 599,
@@ -212,11 +241,12 @@ const products = [
     description:
       "Front open black top with flaired sleeves and multiple button loops",
     mainImageUrl:
-      "https://drive.google.com/uc?id=1Cn5Ney-UPJ9Mfoa47--p_NymefBb_vbv",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335394845_gnwjak",
     extraImages: [
-      "https://drive.google.com/uc?id=1kVSDrRSsYI-YBCu-yN6K9yqtKYPN7Sjh",
-      "https://drive.google.com/uc?id=1GpiL4QPXlPeMxPvgrSBhnVF5wZgN3SsJ",
-      "https://drive.google.com/uc?id=1cb2eXQjygMpUty-0R43cMxlTEhNpwtn_",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335397302_igv9u2",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335395462_vtuatq",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335397912_oho3sl",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335396688_zur4sk",
     ],
 
     price: 599,
@@ -231,11 +261,12 @@ const products = [
     description:
       "Aegean Blue Top with front and back frills and full length sleeves with cuffs",
     mainImageUrl:
-      "https://drive.google.com/uc?id=1dNv0NPmXGHLPhTexFnQ3-klc69wKVjB4",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335550689_yvdekm",
     extraImages: [
-      "https://drive.google.com/uc?id=1OUhm-1QrHKgrAWH3D1u5cskNQMGpSIGV",
-      "https://drive.google.com/uc?id=13CoKZYRdwY1kYduI_zaOExAPhtVASL5R",
-      "https://drive.google.com/uc?id=1CzTf6J0icGP27WfYJF6Q2mV8kEZTujU4",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335550085_ixmmcz",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335551303_qhnfin",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335552554_dqqkyv",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335551928_k7zkpi",
     ],
 
     price: 650,
@@ -249,11 +280,12 @@ const products = [
     title: "White shirt with black laces",
     description: "White Full sleeve shirts with White lace in front and back",
     mainImageUrl:
-      "https://drive.google.com/uc?id=1GuIBJupD3vEC_8wv_PxtMb6HpXzgYLmk",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335554391_pd1tud",
     extraImages: [
-      "https://drive.google.com/uc?id=1J9gC1QrwWJZrVdpBqWaTYatKr-TzDhfL",
-      "https://drive.google.com/uc?id=1tFzKfdQnqNGjg7bWFQlU9j6ESTlpMsV-",
-      "https://drive.google.com/uc?id=1ygjcJUzzPmn1qqafT0WMetPvFU7VFZHE",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335553790_zft9md",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335555002_ofaend",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335555626_y6llhp",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335556858_siycnd",
     ],
 
     price: 599,
@@ -267,12 +299,13 @@ const products = [
     title: "Black shirt top with black laces",
     description: " Black Full sleeve shirts with Black lace in front and back",
     mainImageUrl:
-      "https://drive.google.com/uc?id=116pBMwhn7ELz15qE3Ed059Tk7AFgbRaR",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335558103_of8h0p",
 
     extraImages: [
-      "https://drive.google.com/uc?id=1amhCvxKGhKaR3bbeLFie67ZibuThWiyN",
-      "https://drive.google.com/uc?id=1M0jzUwSsED6Ykvb8o_rm9cviNFbqlYa5",
-      "https://drive.google.com/uc?id=1l5A-fI3E_KCbwS2NN3l_DtlBkcDs1Srf",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335557494_btvop7",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335558710_wbxi8q",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335559345_ibecln",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335559965_xyfqvu",
     ],
 
     price: 599,
@@ -280,6 +313,27 @@ const products = [
     qty: 1,
     InStock: 5,
     color: "Black",
+    material: "Polycrepe",
+  },
+  {
+    title: "Tangerine polka dot printed wrap top.",
+    description:
+      "Polka dot printed wrap crop top with lapel collar and full cuff sleeves",
+    mainImageUrl:
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335561839_wo1y2m",
+
+    extraImages: [
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335561209_awj58s",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335562462_ldva77",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335563078_shuqxq",
+      "https://res.cloudinary.com/dipetklsh/image/upload/f_auto,q_auto/IMG_1689335564336_hvhrxo",
+    ],
+
+    price: 599,
+    size: ["S", "M", "L", "XL"],
+    qty: 1,
+    InStock: 5,
+    color: "Tangerine",
     material: "Polycrepe",
   },
 ];
