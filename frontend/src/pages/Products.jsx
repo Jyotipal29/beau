@@ -203,7 +203,7 @@ const Products = () => {
                                     >
                                       {wish.some(
                                         (item) =>
-                                          item.product._id === product._id
+                                          item._id === product._id
                                       ) ? (
                                         sLoading[product._id] ? (
                                           <Sloader sLoading={sLoading} />
