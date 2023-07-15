@@ -109,7 +109,6 @@ const ProductDetails = () => {
   const [activeImg, setActiveImg] = useState(
     product?.mainImageUrl && product?.mainImageUrl
   );
-  console.log(activeImg, "ig");
   return (
     <Navbar>
       <div className="bg-white">
@@ -179,25 +178,37 @@ const ProductDetails = () => {
 
                   <div className="flex flex-row justify-between h-24 md:h-40 ">
                     <img
-                      src={product?.mainImageUrl}
+                      src={product?.mainImageUrl && product?.mainImageUrl}
                       alt=""
                       className="w-24 h-24 md:h-40 md:w-40 rounded-md cursor-pointer border "
-                      onClick={() => setActiveImg(product?.mainImageUrl)}
+                      onClick={() =>
+                        setActiveImg(
+                          product?.mainImageUrl && product?.mainImageUrl
+                        )
+                      }
                     />
                     <img
-                      src={product?.extraImages[0]}
+                      src={product?.extraImages[0] && product?.extraImages[0]}
                       alt=""
                       className="w-24 h-24  md:h-40 md:w-40 rounded-md cursor-pointer border "
-                      onClick={() => setActiveImg(product?.extraImages[0])}
+                      onClick={() =>
+                        setActiveImg(
+                          product?.extraImages[0] && product?.extraImages[0]
+                        )
+                      }
                     />
                     <img
-                      src={product?.extraImages[1]}
+                      src={product?.extraImages[1] && product?.extraImages[1]}
                       alt=""
                       className="w-24 h-24 md:h-40 md:w-40 rounded-md cursor-pointer  border"
-                      onClick={() => setActiveImg(product?.extraImages[1])}
+                      onClick={() =>
+                        setActiveImg(
+                          product?.extraImages[1] && product?.extraImages[1]
+                        )
+                      }
                     />
                     <img
-                      src={product?.extraImages[2]}
+                      src={product?.extraImages[2] && product?.extraImages[2]}
                       alt=""
                       className="w-24 h-24 md:h-40 md:w-40 rounded-md cursor-pointer border "
                       onClick={() => setActiveImg(product?.extraImages[2])}
@@ -206,7 +217,11 @@ const ProductDetails = () => {
                       src={product?.extraImages[0]}
                       alt=""
                       className="w-24 h-24 md:h-40 md:w-40 rounded-md cursor-pointer  border"
-                      onClick={() => setActiveImg(product?.extraImages[0])}
+                      onClick={() =>
+                        setActiveImg(
+                          product?.extraImages[0] && product?.extraImages[2]
+                        )
+                      }
                     />
                   </div>
                 </div>
