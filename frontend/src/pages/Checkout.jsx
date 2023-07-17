@@ -254,7 +254,7 @@ const Checkout = () => {
             </b>
 
             <div className="grid grid-cols-9 gap-4 justify-between border p-1">
-              {selectedAddress !== null || user?.addresses?.length !== 0 && (<div className="col-span-6 flex flex-wrap items-center md:space-x-1 max-md:flex-col max-md:items-start">
+              {user?.addresses?.length !== 0 && (<div className="col-span-6 flex flex-wrap items-center md:space-x-1 max-md:flex-col max-md:items-start">
                 <span className="md:px-3 md:pl-1 py-1 bg-gray-100 rounded-lg max-md:bg-transparent flex items-center">
                   <HomeIcon className="w-8 h-[28px] px-2 max-md:hidden" />{" "}
                   Deliver to{" "}
