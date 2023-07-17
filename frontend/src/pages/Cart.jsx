@@ -200,17 +200,6 @@ const Cart = () => {
                   Total Amount <b>RS: {totalPrice}</b>
                 </p>
 
-                {/* <div className="border flex items-center justify-between h-14 hover:border-red-600">
-                  <input
-                    type="text"
-                    placeholder="Gift Card Code"
-                    className="w-full h-full border-none outline-none"
-                  />
-                  <button className="px-6 w-auto h-10 mx-2 text-white bg-red-600 hover:bg-red-500 rounded-md focus:outline-none flex items-center justify-center">
-                    Apply
-                  </button>
-                </div> */}
-
                 <div className="flex justify-between items-stretch h-14 border bg-white">
                   <div className="w-1/2 flex flex-col items-center justify-center">
                     <b>RS: {totalPrice}</b>

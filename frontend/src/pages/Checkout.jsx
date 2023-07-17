@@ -455,12 +455,6 @@ const Checkout = () => {
                 Don{`'`}t worry, Your data secured with us
               </p>
               <div className="flex items-center justify-start h-10 space-x-2">
-                {/* <button
-                  onClick={() => toggleNewAdd(false)}
-                  className="bg-white border px-10 py-3 hover:font-bold"
-                >
-                  Close
-                </button> */}
                 <button className="bg-black text-white border px-10 py-3 hover:font-bold">
                   Save Address
                 </button>
@@ -504,27 +498,13 @@ const Checkout = () => {
           <p className="flex items-center justify-between mt-auto">
             Bag Total <b>{Math.floor(totalPrice)}</b>
           </p>
-          <p className="flex items-center justify-between">
+          <p className="flex items-center justify-between pb-4">
             Shipping <b className="text-green-600">Free</b>
           </p>
-          <p className="flex items-center justify-between pb-4">
-            Discount <b className="text-green-600">-550</b>
-          </p>
-
-          {/* <div className="border flex items-center justify-between h-14 hover:border-red-600">
-            <input
-              type="text"
-              placeholder="Gift Card Code"
-              className="w-full h-full border-none outline-none"
-            />
-            <button className="px-6 w-auto h-10 mx-2 text-white bg-red-600 hover:bg-red-500 rounded-md focus:outline-none flex items-center justify-center">
-              Apply
-            </button>
-          </div> */}
 
           <div className="flex justify-between items-stretch h-14 border sticky bottom-0 bg-white">
             <div className="w-1/2 flex flex-col items-center justify-center">
-              <b>RS: {totalPrice - 550}</b>
+              <b>RS: {totalPrice}</b>
               <span>Total Amount</span>
             </div>
             <button
