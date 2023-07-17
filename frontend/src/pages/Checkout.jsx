@@ -1,22 +1,29 @@
-import { useProduct } from "../context/productContext/context";
-import { useForm } from "react-hook-form";
-import { useUser } from "../context/userContext/context";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
+import {
+  ArrowLeftIcon,
+  EyeIcon,
+  EyeSlashIcon,
+  HomeIcon,
+  MapPinIcon,
+  PhoneIcon,
+  PlusCircleIcon,
+} from "@heroicons/react/24/outline";
 import axios from "axios";
-import { api } from "../constants/api";
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { v4 as uuidv4 } from "uuid";
+import { api } from "../constants/api";
+import { useProduct } from "../context/productContext/context";
+import { useUser } from "../context/userContext/context";
 const Checkout = () => {
   const navigate = useNavigate();
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState("card");
-  const handleAddress = (e) => {
-    setSelectedAddress(user.addresses[e.target.value]);
+  const handleAddress = (pointer) => {
+    setSelectedAddress(user.addresses[pointer]);
   };
-
   const cardHandler = (e) => {
     setPaymentMethod(e.target.value);
   };
@@ -196,372 +203,342 @@ const Checkout = () => {
     productDispatch({ type: "REMOVE_FROM_CART", payload: id });
   };
   console.log(user, "this is user with address");
+
+  const [allAdd, toggleAllAdd] = useState(false);
+  const [newAdd, toggleNewAdd] = useState(false);
+  const new_addr_form = useRef(null);
+  useEffect(() => {
+    if (user?.addresses?.length > 0) toggleNewAdd(true);
+  }, [user?.addresses?.length]);
+
   return (
     <div className="mx-auto mt-12 mb-5 max-w-7xl px-4 sm:px-6 lg:px-8 bg-white">
       <ArrowLeftIcon
         className="text-gray-500 w-5 mt-4 "
         onClick={() => navigate("/cart")}
       />
-      <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
-        <div className="lg:col-span-3">
-          <form
-            noValidate
-            className="bg-white px-5  "
-            onSubmit={handleSubmit(async (data) => {
-              const config = {
-                headers: {
-                  Authorization: `Bearer ${user.token}`,
-                },
-              };
 
-              const res = await axios.put(
-                `${api}user/${user._id}`,
-                { ...data, _id: uuidv4() },
-                config
-              );
-              console.log(res.data, "add address data");
-              localStorage.setItem("user", JSON.stringify(res.data));
+      <div className="flex flex-col md:grid grid-cols-5 lg:grid-cols-3 gap-5">
+        <div className="md:col-span-3 lg:col-span-2 border p-2">
+          <div>
+            <b className="text-lg flex justify-between items-center my-2">
+              Delivery Address{" "}
+              <button
+                onClick={() => toggleAllAdd(!allAdd)}
+                className="px-3 pl-1 py-1 bg-gray-100 hover:bg-gray-200 rounded-lg max-lg:hidden flex items-end justify-center"
+              >
+                {/* <PencilIcon className="w-8 h-[28px] px-2 max-md:hidden" /> */}
+                {allAdd ? (
+                  <>
+                    <EyeSlashIcon className="w-8 h-[28px] px-2 max-md:hidden" />
+                    {`Hide All`}
+                  </>
+                ) : (
+                  <>
+                    <EyeIcon className="w-8 h-[28px] px-2 max-md:hidden" />
+                    {`Show All`}
+                  </>
+                )}
+              </button>
+              <span
+                onClick={() => toggleAllAdd(!allAdd)}
+                className="max-md:inline hidden cursor-pointer"
+              >
+                {allAdd ? (
+                  <EyeIcon className="w-8 h-[28px] px-2 lg:hidden" />
+                ) : (
+                  <EyeSlashIcon className="w-8 h-[28px] px-2 lg:hidden" />
+                )}
+              </span>
+            </b>
 
-              userDispatch({
-                type: "ADD_ADDRESS",
-                payload: res.data,
-              });
-            })}
-          >
-            <div className="space-y-12">
-              <div className="border-b border-gray-900/10 pb-12">
-                <h2 className="text-base font-semibold leading-7 mt-2 text-gray-900">
-                  Personal Information
-                </h2>
-
-                <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                  <div className="sm:col-span-3">
-                    <label
-                      htmlFor="first-name"
-                      className="block text-sm font-medium leading-6 text-gray-900"
-                    >
-                      Full Name
-                    </label>
-                    <div className="mt-2">
-                      <input
-                        type="text"
-                        {...register("name", { required: "name is required" })}
-                        id="first-name"
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="sm:col-span-4">
-                    <label
-                      htmlFor="email"
-                      className="block text-sm font-medium leading-6 text-gray-900"
-                    >
-                      Email Address
-                    </label>
-                    <div className="mt-2">
-                      <input
-                        id="email"
-                        {...register("email", {
-                          required: "email required",
-                          pattern: {
-                            value: /^[\w.%+-]+@[\w.-]+\.[A-Za-z]{2,}$/,
-                            message: "email is not valid",
-                          },
-                        })}
-                        type="email"
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="sm:col-span-3">
-                    <label
-                      htmlFor="phone"
-                      className="block text-sm font-medium leading-6 text-gray-900"
-                    >
-                      phone
-                    </label>
-                    <div className="mt-2">
-                      <input
-                        type="tel"
-                        {...register("phone", {
-                          required: "phone is required",
-                        })}
-                        id="phone"
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="col-span-full">
-                    <label
-                      htmlFor="street-address"
-                      className="block text-sm font-medium leading-6 text-gray-900"
-                    >
-                      Street address
-                    </label>
-                    <div className="mt-2">
-                      <input
-                        type="text"
-                        {...register("street", {
-                          required: "street is required",
-                        })}
-                        id="street-address"
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="sm:col-span-2 sm:col-start-1">
-                    <label
-                      htmlFor="city"
-                      className="block text-sm font-medium leading-6 text-gray-900"
-                    >
-                      City
-                    </label>
-                    <div className="mt-2">
-                      <input
-                        type="text"
-                        {...register("city", {
-                          required: "city is required",
-                        })}
-                        id="city"
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="sm:col-span-2">
-                    <label
-                      htmlFor="region"
-                      className="block text-sm font-medium leading-6 text-gray-900"
-                    >
-                      State / Province
-                    </label>
-                    <div className="mt-2">
-                      <input
-                        type="text"
-                        {...register("state", {
-                          required: "state is required",
-                        })}
-                        id="region"
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="sm:col-span-2">
-                    <label
-                      htmlFor="postal-code"
-                      className="block text-sm font-medium leading-6 text-gray-900"
-                    >
-                      ZIP / Postal code
-                    </label>
-                    <div className="mt-2">
-                      <input
-                        type="text"
-                        {...register("pinCode", {
-                          required: "pinCode is required",
-                        })}
-                        id="pinCode"
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                      />
-                    </div>
-                  </div>
+            <div className="grid grid-cols-9 gap-4 justify-between border p-1">
+              <div className="col-span-6 flex flex-wrap items-center md:space-x-1 max-md:flex-col max-md:items-start">
+                <span className="md:px-3 md:pl-1 py-1 bg-gray-100 rounded-lg max-md:bg-transparent flex items-center">
+                  <HomeIcon className="w-8 h-[28px] px-2 max-md:hidden" />{" "}
+                  Deliver to{" "}
+                  <b className="pl-1">
+                    {selectedAddress === null
+                      ? user?.addresses[0]?.name
+                      : selectedAddress?.name.split(" ")[0]}
+                  </b>
+                </span>
+                <div className="md:mx-5 flex items-center justify-between divide-x-2 bg-transparent md:bg-gray-100 md:px-3 md:pl-1 py-1 rounded-lg max-md:py-0.5">
+                  <b className="flex items-center justify-center pr-2">
+                    <MapPinIcon className="w-8 h-[28px] px-2 max-md:hidden" />{" "}
+                    {selectedAddress === null
+                      ? user?.addresses[0]?.pinCode
+                      : selectedAddress?.pinCode}
+                  </b>
+                  <b className="pl-1 flex items-center justify-center">
+                    <PhoneIcon className="w-8 h-[28px] px-2 max-md:hidden" />
+                    {selectedAddress === null
+                      ? user?.addresses[0]?.phone
+                      : selectedAddress?.phone}
+                  </b>
                 </div>
+                <p className="md:py-1 text-gray-600">
+                  {selectedAddress === null
+                    ? user?.addresses[0]?.street
+                    : selectedAddress?.street}
+                  ,{" "}
+                  {selectedAddress === null
+                    ? user?.addresses[0]?.state
+                    : selectedAddress?.state}
+                  ,{" "}
+                  {selectedAddress === null
+                    ? user?.addresses[0]?.pinCode
+                    : selectedAddress?.pinCode}
+                </p>
               </div>
-              <div className="mt-6 flex items-center justify-end gap-x-6">
+              <div className="col-span-3 flex justify-end cursor-pointer">
                 <button
-                  type="submit"
-                  className="text-sm font-semibold leading-6 text-gray-900"
+                  onClick={() =>
+                    new_addr_form && new_addr_form.current?.click()
+                  }
+                  className="h-12 px-8 border border-black max-lg:hidden hover:border-[3px]"
                 >
-                  reset
+                  ADD NEW ADDRESS
                 </button>
-                <button
-                  type="submit"
-                  className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+                {/* <button className="p-1 border border-red-600 bg-gray-100 rounded-lg hidden max-lg:flex max-md:items-start h-8 items-center justify-center">
+                      <PlusCircleIcon className="w-8 h-[28px] px-2" />
+                    </button> */}
+                <span
+                  onClick={() => toggleNewAdd(!newAdd) || toggleAllAdd(false)}
                 >
-                  add address
-                </button>
+                  <PlusCircleIcon className="w-8 h-[28px] px-2 lg:hidden" />
+                </span>
               </div>
             </div>
-          </form>
 
-          <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-base font-semibold leading-7 text-gray-900">
-              Address
-            </h2>
-            <p className="mt-1 text-sm leading-6 text-gray-600">
-              choose from existing addresses
-            </p>
-            <ul role="list" className="divide-y divide-gray-100">
-              {user?.addresses?.map((person, index) => (
-                <li
-                  key={person.name}
-                  className="flex justify-between gap-x-6 py-5"
+            {/* list all address */}
+            <div
+              className={`grid-cols-2 gap-4 my-4 max-md:grid-cols-1 ${
+                allAdd ? "grid" : "hidden"
+              }`}
+            >
+              <h4 className="col-span-2 w-full bg-gray-100 p-1 font-bold flex items-center justify-between">
+                All Addresses{" "}
+                <button
+                  onClick={() => toggleAllAdd(!allAdd)}
+                  className="text-base bg-gray-200 p-1 px-2 hover:bg-gray-300"
                 >
-                  <div className="flex gap-x-4">
-                    <input
-                      name="address"
-                      type="radio"
-                      onChange={handleAddress}
-                      value={index}
-                      className="h-4 w-4 border-gray-300 text-red-600 focus:ring-red-600"
-                    />
-                    <div className="min-w-0 flex-auto">
-                      <p className="text-sm font-semibold leading-6 text-gray-900">
-                        {person.name}
-                      </p>
-                      <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                        {person.street}
-                      </p>
-                      <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                        {person.pinCode}
+                  Hide Addresses
+                </button>
+              </h4>
+              {user?.addresses?.map((person, index) => {
+                return (
+                  <div
+                    key={index}
+                    onClick={() => handleAddress(index) || toggleAllAdd(false)}
+                    className="grid grid-cols-8 gap-4 justify-between border p-2 col-span-1 max-lg:col-span-2 group hover:border-red-500 cursor-pointer"
+                  >
+                    <div className="col-span-6 flex flex-wrap items-center md:space-x-2 max-md:flex-col max-md:items-start">
+                      <b className="px-2 py-1 max-md:pl-0 w-full">
+                        {person?.name}
+                      </b>
+                      <div className="md:mx-5 flex items-center justify-between divide-x-2 py-1 rounded-lg space-x-2 max-md:py-0.5 text-sm">
+                        <b>{person?.pinCode}</b>
+                        <b className="pl-2">{person?.phone}</b>
+                      </div>
+                      <p className="md:py-1">
+                        {person?.street}, {person?.state}, {person?.picnode}
                       </p>
                     </div>
+                    <div className="col-span-2 justify-end hidden group-hover:flex">
+                      <button className="border border-gray-200 bg-gray-100 rounded-lg flex max-md:items-start h-8 items-center justify-center">
+                        <PlusCircleIcon className="w-8 h-[28px] px-2 max-md:hidden" />
+                      </button>
+                    </div>
                   </div>
-                  <div className="hidden sm:flex sm:flex-col sm:items-end">
-                    <p className="text-sm leading-6 text-gray-900">
-                      {person.phone}
-                    </p>
-                    <p className="text-sm leading-6 text-gray-900">
-                      {person.city}
-                    </p>
-                    <p className="text-sm leading-6 text-gray-900">
-                      {person.state}
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ul>
+                );
+              })}
+            </div>
 
-            <div className="mt-10 space-y-10">
-              <fieldset>
-                <legend className="text-sm font-semibold leading-6 text-gray-900">
-                  payment methods
-                </legend>
-                <p className="mt-1 text-sm leading-6 text-gray-600">
-                  These are delivered via SMS to your mobile phone.
-                </p>
-                <div className="mt-6 space-y-6">
-                  <div className="flex items-center gap-x-3">
-                    <input
-                      id="card"
-                      name="card"
-                      type="radio"
-                      value={paymentMethod}
-                      onChange={cardHandler}
-                      checked={paymentMethod === "card"}
-                      className="h-4 w-4 border-gray-300 text-red-600 focus:ring-red-600"
-                    />
-                    <label
-                      htmlFor="card"
-                      className="block text-sm font-medium leading-6 text-gray-900"
-                    >
-                      card
-                    </label>
-                  </div>
-                </div>
-              </fieldset>
+            {/* new address */}
+            <form
+              ref={new_addr_form}
+              onSubmit={handleSubmit(async (data) => {
+                const config = {
+                  headers: {
+                    Authorization: `Bearer ${user.token}`,
+                  },
+                };
+
+                const res = await axios.put(
+                  `${api}user/${user._id}`,
+                  { ...data, _id: uuidv4() },
+                  config
+                );
+                localStorage.setItem("user", JSON.stringify(res.data));
+
+                userDispatch({
+                  type: "ADD_ADDRESS",
+                  payload: res.data,
+                });
+
+                new_addr_form && new_addr_form.current.reset();
+              })}
+              className={`space-y-2 my-4 p-2 ${newAdd ? "inline" : "hidden"}`}
+            >
+              <h3 className="text-2xl">Add New Shipping address</h3>
+              <div className="grid grid-cols-6 gap-4 max-md:flex max-md:flex-col">
+                <input
+                  type="text"
+                  {...register("city", {
+                    required: "city is required",
+                  })}
+                  id="city"
+                  placeholder="Enter City"
+                  className="col-span-3"
+                />
+                <input
+                  type="text"
+                  {...register("state", {
+                    required: "state is required",
+                  })}
+                  id="region"
+                  placeholder="Enter Region"
+                  className="col-span-3"
+                />
+                <input
+                  type="text"
+                  {...register("street", {
+                    required: "street is required",
+                  })}
+                  id="street-address"
+                  placeholder="Enter delivery address"
+                  className="col-span-4"
+                />
+                <input
+                  type="text"
+                  {...register("pinCode", {
+                    required: "pinCode is required",
+                  })}
+                  id="pinCode"
+                  placeholder="Enter pincode"
+                  className="col-span-2"
+                />
+              </div>
+              <h3 className="text-2xl pt-4">Contact Information</h3>
+              <div className="flex items-center justify-stretch max-lg:flex-col max-lg:space-y-4 lg:space-x-2">
+                <input
+                  type="text"
+                  {...register("name", { required: "name is required" })}
+                  id="first-name"
+                  placeholder="Your Name"
+                  className="w-full"
+                />
+                <input
+                  type="email"
+                  id="email"
+                  {...register("email", {
+                    required: "email required",
+                    pattern: {
+                      value: /^[\w.%+-]+@[\w.-]+\.[A-Za-z]{2,}$/,
+                      message: "email is not valid",
+                    },
+                  })}
+                  placeholder="Email Address"
+                  className="w-full"
+                />
+                <input
+                  type="number"
+                  {...register("phone", {
+                    required: "phone is required",
+                  })}
+                  id="phone"
+                  placeholder="Phone Number"
+                  className="w-full"
+                />
+              </div>
+
+              <p className="text-sm text-gray-400 pt-5">
+                Don{`'`}t worry, Your data secured with us
+              </p>
+              <div className="flex items-center justify-start h-10 space-x-2">
+                {/* <button
+                  onClick={() => toggleNewAdd(false)}
+                  className="bg-white border px-10 py-3 hover:font-bold"
+                >
+                  Close
+                </button> */}
+                <button className="bg-black text-white border px-10 py-3 hover:font-bold">
+                  Save Address
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div className="flex flex-col md:col-span-2 lg:col-span-1 gap-1 border p-4 max-md:mt-20">
+          <div className="-mt-2 flex items-center justify-between text-gray-700">
+            <div>
+              <p className="text-sm text-gray-500">Product Overview</p>
+              <b>Items: {totalItems}</b>
+            </div>
+            <div className="text-right">
+              <p className="text-sm text-gray-500">Estimated Delivery by</p>
+              <b>20 Jul 2023</b>
             </div>
           </div>
-          <div className="lg:col-span-2">
-            <div className="mx-auto  max-w-7xl px-4 sm:px-6 lg:px-8 bg-white">
-              <h1 className="text-4xl text-center font-bold py-2">Cart</h1>
-              <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-                <div className="flow-root">
-                  <ul role="list" className="-my-6 divide-y divide-gray-200">
-                    {cart.map(({ _id, product, quantity, size }) => (
-                      <li key={product._id} className="flex py-6">
-                        <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                          <img
-                            src={product?.mainImageUrl}
-                            alt={product?.imageAlt}
-                            className="h-full w-full object-cover object-top"
-                          />
-                        </div>
+          {cart.map(({ _id, product, quantity, size }) => (
+            <div key={_id} className="flex border p-1">
+              <img
+                src={product.mainImageUrl}
+                alt={product.imageAlt}
+                width="60px"
+                height="60px"
+              />
+              <div className="flex flex-col justify-arround gap-2">
+                <h3 className="font-bold text-lg">{product.title}</h3>
 
-                        <div className="ml-4 flex flex-1 flex-col">
-                          <div>
-                            <div className="flex justify-between text-base font-medium text-gray-900">
-                              <h3>
-                                <a href={product.href}>{product.title}</a>
-                              </h3>
-
-                              <p className="ml-4">{product.price}</p>
-                            </div>
-                          </div>
-                          <div className="flex flex-1 items-end justify-between text-sm">
-                            <div className="text-gray-500">
-                              <label
-                                htmlFor="password"
-                                className="inline mr-5 text-sm font-medium leading-6 text-gray-900"
-                              >
-                                Qty
-                              </label>
-
-                              <select
-                                onChange={(e) => handleQty(e, _id)}
-                                value={quantity}
-                              >
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="4">5</option>
-                              </select>
-                            </div>
-                            <div className="text-gray-500 flex">
-                              <label
-                                htmlFor="password"
-                                className="inline mr-5 text-sm font-medium leading-6 text-gray-900"
-                              >
-                                size :
-                              </label>
-                              {size && <p>{size}</p>}
-                            </div>
-
-                            <div className="flex">
-                              <button
-                                type="button"
-                                className="font-medium text-red-600 hover:text-red-500"
-                                onClick={() => removeItem(_id)}
-                              >
-                                Remove
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-                <div className="flex py-2 px-2 justify-between text-base font-medium text-gray-900">
-                  <p>total</p>
-                  <p>{Math.floor(totalPrice)}</p>
-                </div>
-                <div className="flex  py-2 px-2 justify-between text-base font-medium text-gray-900">
-                  <p>total item</p>
-                  <p>{totalItems}</p>
-                </div>
-
-                <div className="mt-6">
-                  <div
-                    onClick={orderHandler}
-                    className="flex items-center justify-center rounded-md border border-transparent bg-red-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-red-700"
-                  >
-                    order now
-                  </div>
+                <div className="flex gap-3">
+                  <span>
+                    Size: <b>{size}</b>
+                  </span>
+                  <span>Qty: {quantity}</span>
+                  <b className="ml-auto">MRP: {product.price}</b>
                 </div>
               </div>
             </div>
+          ))}
+          <p className="flex items-center justify-between mt-20">
+            Bag Total <b>{Math.floor(totalPrice)}</b>
+          </p>
+          <p className="flex items-center justify-between">
+            Shipping <b className="text-green-600">Free</b>
+          </p>
+          <p className="flex items-center justify-between pb-4">
+            Discount <b className="text-green-600">-550</b>
+          </p>
+
+          {/* <div className="border flex items-center justify-between h-14 hover:border-red-600">
+            <input
+              type="text"
+              placeholder="Gift Card Code"
+              className="w-full h-full border-none outline-none"
+            />
+            <button className="px-6 w-auto h-10 mx-2 text-white bg-red-600 hover:bg-red-500 rounded-md focus:outline-none flex items-center justify-center">
+              Apply
+            </button>
+          </div> */}
+
+          <div className="flex justify-between items-stretch h-14 border sticky bottom-0 bg-white">
+            <div className="w-1/2 flex flex-col items-center justify-center">
+              <b>RS: {totalPrice - 550}</b>
+              <span>Total Amount</span>
+            </div>
+            <button
+              onClick={orderHandler}
+              className="w-1/2 bg-red-600 text-white flex items-center justify-center hover:font-bold"
+            >
+              Pay Now
+            </button>
           </div>
         </div>
       </div>
+
       <ToastContainer />
     </div>
   );
