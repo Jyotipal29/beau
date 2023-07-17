@@ -138,6 +138,7 @@ const Checkout = () => {
     productDispatch,
   } = useProduct();
 
+  
   const {
     userState: { user },
     userDispatch,
