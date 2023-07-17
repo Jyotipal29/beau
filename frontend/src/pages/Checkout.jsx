@@ -253,7 +253,7 @@ const Checkout = () => {
             </b>
 
             <div className="grid grid-cols-9 gap-4 justify-between border p-1">
-              <div className="col-span-6 flex flex-wrap items-center md:space-x-1 max-md:flex-col max-md:items-start">
+              {selectedAddress !== null || user?.addresses?.length !== 0 && (<div className="col-span-6 flex flex-wrap items-center md:space-x-1 max-md:flex-col max-md:items-start">
                 <span className="md:px-3 md:pl-1 py-1 bg-gray-100 rounded-lg max-md:bg-transparent flex items-center">
                   <HomeIcon className="w-8 h-[28px] px-2 max-md:hidden" />{" "}
                   Deliver to{" "}
@@ -290,7 +290,7 @@ const Checkout = () => {
                     ? user?.addresses[0]?.pinCode
                     : selectedAddress?.pinCode}
                 </p>
-              </div>
+              </div>)}
               <div className="col-span-3 flex justify-end cursor-pointer">
                 <button
                   onClick={() =>
@@ -300,16 +300,13 @@ const Checkout = () => {
                 >
                   ADD NEW ADDRESS
                 </button>
-                {/* <button className="p-1 border border-red-600 bg-gray-100 rounded-lg hidden max-lg:flex max-md:items-start h-8 items-center justify-center">
-                      <PlusCircleIcon className="w-8 h-[28px] px-2" />
-                    </button> */}
                 <span
                   onClick={() => toggleNewAdd(!newAdd) || toggleAllAdd(false)}
                 >
                   <PlusCircleIcon className="w-8 h-[28px] px-2 lg:hidden" />
                 </span>
               </div>
-            </div>
+            </div>)}
 
             {/* list all address */}
             <div
@@ -379,7 +376,7 @@ const Checkout = () => {
 
                 new_addr_form && new_addr_form.current.reset();
               })}
-              className={`space-y-2 my-4 p-2 ${newAdd ? "inline" : "hidden"}`}
+              className={`space-y-2 my-4 p-2 ${newAdd ? "max-md:inline" : "max-md:hidden"}`}
             >
               <h3 className="text-2xl">Add New Shipping address</h3>
               <div className="grid grid-cols-6 gap-4 max-md:flex max-md:flex-col">
