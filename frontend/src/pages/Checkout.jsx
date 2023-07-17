@@ -138,6 +138,7 @@ const Checkout = () => {
     productDispatch,
   } = useProduct();
 
+
   const {
     userState: { user },
     userDispatch,
@@ -252,70 +253,67 @@ const Checkout = () => {
               </span>
             </b>
 
-            <div className="grid grid-cols-9 gap-4 justify-between border p-1">
-              <div className="col-span-6 flex flex-wrap items-center md:space-x-1 max-md:flex-col max-md:items-start">
-                <span className="md:px-3 md:pl-1 py-1 bg-gray-100 rounded-lg max-md:bg-transparent flex items-center">
-                  <HomeIcon className="w-8 h-[28px] px-2 max-md:hidden" />{" "}
-                  Deliver to{" "}
-                  <b className="pl-1">
+            {user?.addresses?.length !== 0 && (
+              <div className="grid grid-cols-9 gap-4 justify-between border p-1">
+                <div className="col-span-6 flex flex-wrap items-center md:space-x-1 max-md:flex-col max-md:items-start">
+                  <span className="md:px-3 md:pl-1 py-1 bg-gray-100 rounded-lg max-md:bg-transparent flex items-center">
+                    <HomeIcon className="w-8 h-[28px] px-2 max-md:hidden" />{" "}
+                    Deliver to{" "}
+                    <b className="pl-1">
+                      {selectedAddress === null
+                        ? user?.addresses[0]?.name
+                        : selectedAddress?.name.split(" ")[0]}
+                    </b>
+                  </span>
+                  <div className="md:mx-5 flex items-center justify-between divide-x-2 bg-transparent md:bg-gray-100 md:px-3 md:pl-1 py-1 rounded-lg max-md:py-0.5">
+                    <b className="flex items-center justify-center pr-2">
+                      <MapPinIcon className="w-8 h-[28px] px-2 max-md:hidden" />{" "}
+                      {selectedAddress === null
+                        ? user?.addresses[0]?.pinCode
+                        : selectedAddress?.pinCode}
+                    </b>
+                    <b className="pl-1 flex items-center justify-center">
+                      <PhoneIcon className="w-8 h-[28px] px-2 max-md:hidden" />
+                      {selectedAddress === null
+                        ? user?.addresses[0]?.phone
+                        : selectedAddress?.phone}
+                    </b>
+                  </div>
+                  <p className="md:py-1 text-gray-600">
                     {selectedAddress === null
-                      ? user?.addresses[0]?.name
-                      : selectedAddress?.name.split(" ")[0]}
-                  </b>
-                </span>
-                <div className="md:mx-5 flex items-center justify-between divide-x-2 bg-transparent md:bg-gray-100 md:px-3 md:pl-1 py-1 rounded-lg max-md:py-0.5">
-                  <b className="flex items-center justify-center pr-2">
-                    <MapPinIcon className="w-8 h-[28px] px-2 max-md:hidden" />{" "}
+                      ? user?.addresses[0]?.street
+                      : selectedAddress?.street}
+                    ,{" "}
+                    {selectedAddress === null
+                      ? user?.addresses[0]?.state
+                      : selectedAddress?.state}
+                    ,{" "}
                     {selectedAddress === null
                       ? user?.addresses[0]?.pinCode
                       : selectedAddress?.pinCode}
-                  </b>
-                  <b className="pl-1 flex items-center justify-center">
-                    <PhoneIcon className="w-8 h-[28px] px-2 max-md:hidden" />
-                    {selectedAddress === null
-                      ? user?.addresses[0]?.phone
-                      : selectedAddress?.phone}
-                  </b>
+                  </p>
                 </div>
-                <p className="md:py-1 text-gray-600">
-                  {selectedAddress === null
-                    ? user?.addresses[0]?.street
-                    : selectedAddress?.street}
-                  ,{" "}
-                  {selectedAddress === null
-                    ? user?.addresses[0]?.state
-                    : selectedAddress?.state}
-                  ,{" "}
-                  {selectedAddress === null
-                    ? user?.addresses[0]?.pinCode
-                    : selectedAddress?.pinCode}
-                </p>
-              </div>
-              <div className="col-span-3 flex justify-end cursor-pointer">
-                <button
-                  onClick={() =>
-                    new_addr_form && new_addr_form.current?.click()
-                  }
-                  className="h-12 px-8 border border-black max-lg:hidden hover:border-[3px]"
-                >
-                  ADD NEW ADDRESS
-                </button>
-                {/* <button className="p-1 border border-red-600 bg-gray-100 rounded-lg hidden max-lg:flex max-md:items-start h-8 items-center justify-center">
-                      <PlusCircleIcon className="w-8 h-[28px] px-2" />
-                    </button> */}
-                <span
-                  onClick={() => toggleNewAdd(!newAdd) || toggleAllAdd(false)}
-                >
-                  <PlusCircleIcon className="w-8 h-[28px] px-2 lg:hidden" />
-                </span>
-              </div>
-            </div>
+                <div className="col-span-3 flex justify-end cursor-pointer">
+                  <button
+                    onClick={() =>
+                      new_addr_form && new_addr_form.current?.click()
+                    }
+                    className="h-12 px-8 border border-black max-lg:hidden hover:border-[3px]"
+                  >
+                    ADD NEW ADDRESS
+                  </button>
+                  <span
+                    onClick={() => toggleNewAdd(!newAdd) || toggleAllAdd(false)}
+                  >
+                    <PlusCircleIcon className="w-8 h-[28px] px-2 lg:hidden" />
+                  </span>
+                </div>
+              </div>)}
 
             {/* list all address */}
             <div
-              className={`grid-cols-2 gap-4 my-4 max-md:grid-cols-1 ${
-                allAdd ? "grid" : "hidden"
-              }`}
+              className={`grid-cols-2 gap-4 my-4 max-md:grid-cols-1 ${allAdd ? "grid" : "hidden"
+                }`}
             >
               <h4 className="col-span-2 w-full bg-gray-100 p-1 font-bold flex items-center justify-between">
                 All Addresses{" "}
@@ -379,7 +377,7 @@ const Checkout = () => {
 
                 new_addr_form && new_addr_form.current.reset();
               })}
-              className={`space-y-2 my-4 p-2 ${newAdd ? "inline" : "hidden"}`}
+              className={`space-y-2 my-4 p-2 ${newAdd ? "max-md:inline" : "max-md:hidden"}`}
             >
               <h3 className="text-2xl">Add New Shipping address</h3>
               <div className="grid grid-cols-6 gap-4 max-md:flex max-md:flex-col">
@@ -457,12 +455,6 @@ const Checkout = () => {
                 Don{`'`}t worry, Your data secured with us
               </p>
               <div className="flex items-center justify-start h-10 space-x-2">
-                {/* <button
-                  onClick={() => toggleNewAdd(false)}
-                  className="bg-white border px-10 py-3 hover:font-bold"
-                >
-                  Close
-                </button> */}
                 <button className="bg-black text-white border px-10 py-3 hover:font-bold">
                   Save Address
                 </button>
@@ -503,30 +495,16 @@ const Checkout = () => {
               </div>
             </div>
           ))}
-          <p className="flex items-center justify-between mt-20">
+          <p className="flex items-center justify-between mt-auto">
             Bag Total <b>{Math.floor(totalPrice)}</b>
           </p>
-          <p className="flex items-center justify-between">
+          <p className="flex items-center justify-between pb-4">
             Shipping <b className="text-green-600">Free</b>
           </p>
-          <p className="flex items-center justify-between pb-4">
-            Discount <b className="text-green-600">-550</b>
-          </p>
-
-          {/* <div className="border flex items-center justify-between h-14 hover:border-red-600">
-            <input
-              type="text"
-              placeholder="Gift Card Code"
-              className="w-full h-full border-none outline-none"
-            />
-            <button className="px-6 w-auto h-10 mx-2 text-white bg-red-600 hover:bg-red-500 rounded-md focus:outline-none flex items-center justify-center">
-              Apply
-            </button>
-          </div> */}
 
           <div className="flex justify-between items-stretch h-14 border sticky bottom-0 bg-white">
             <div className="w-1/2 flex flex-col items-center justify-center">
-              <b>RS: {totalPrice - 550}</b>
+              <b>RS: {totalPrice}</b>
               <span>Total Amount</span>
             </div>
             <button

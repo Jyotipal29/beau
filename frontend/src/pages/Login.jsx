@@ -50,7 +50,8 @@ const Login = () => {
                 });
                 setSLoading(false);
 
-                navigate("/");
+                // navigate("/");
+                window?.history?.go(-1);
               } catch (error) {
                 console.log(error.message);
                 toast.error("something went wrong", {
