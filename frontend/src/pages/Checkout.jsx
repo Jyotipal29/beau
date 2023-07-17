@@ -290,7 +290,7 @@ const Checkout = () => {
                     ? user?.addresses[0]?.pinCode
                     : selectedAddress?.pinCode}
                 </p>
-              </div>)}
+              </div>
               <div className="col-span-3 flex justify-end cursor-pointer">
                 <button
                   onClick={() =>
