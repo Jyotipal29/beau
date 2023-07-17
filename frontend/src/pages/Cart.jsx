@@ -193,14 +193,11 @@ const Cart = () => {
                 <p className="flex items-center justify-between">
                   Bag Total <b>{Math.floor(totalPrice)}</b>
                 </p>
-                <p className="flex items-center justify-between">
+                <p className="flex items-center justify-between pb-4">
                   Shipping <b className="text-green-600">Free</b>
                 </p>
-                <p className="flex items-center justify-between border-b pb-4">
-                  Discount <b className="text-green-600">-550</b>
-                </p>
                 <p className="flex items-center justify-between mb-auto">
-                  Total Amount <b>RS: {totalPrice - 550}</b>
+                  Total Amount <b>RS: {totalPrice}</b>
                 </p>
 
                 {/* <div className="border flex items-center justify-between h-14 hover:border-red-600">
@@ -216,7 +213,7 @@ const Cart = () => {
 
                 <div className="flex justify-between items-stretch h-14 border bg-white">
                   <div className="w-1/2 flex flex-col items-center justify-center">
-                    <b>RS: {totalPrice - 550}</b>
+                    <b>RS: {totalPrice}</b>
                     <span>Total Amount</span>
                   </div>
                   <Link
