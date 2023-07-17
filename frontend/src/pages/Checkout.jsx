@@ -500,7 +500,7 @@ const Checkout = () => {
               </div>
             </div>
           ))}
-          <p className="flex items-center justify-between mt-20">
+          <p className="flex items-center justify-between mt-auto">
             Bag Total <b>{Math.floor(totalPrice)}</b>
           </p>
           <p className="flex items-center justify-between">
