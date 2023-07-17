@@ -1,14 +1,13 @@
-import { Link } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import { useProduct } from "../context/productContext/context";
 import axios from "axios";
-import { api } from "../constants/api";
-import { useUser } from "../context/userContext/context";
 import { useEffect, useState } from "react";
-import Loader from "../components/Loader";
+import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Sloader from "../components/Sloader";
+import Loader from "../components/Loader";
+import Navbar from "../components/Navbar";
+import { api } from "../constants/api";
+import { useProduct } from "../context/productContext/context";
+import { useUser } from "../context/userContext/context";
 const Cart = () => {
   const [loading, setLoading] = useState(false);
   const [sLoading, setSLoading] = useState({});
@@ -76,6 +75,10 @@ const Cart = () => {
     });
   };
 
+  useEffect(() => {
+    console.log("my cart", cart);
+  });
+
   const removeItem = async (id) => {
     try {
       setSLoading((prev) => ({ ...prev, [id]: true }));
@@ -135,115 +138,96 @@ const Cart = () => {
                 </button>
               </div>
             )}
-            <div className="border-t border-gray-200 px-4 mt-2 py-6 sm:px-6">
-              <div className="flow-root">
-                <ul role="list" className="-my-6 divide-y divide-gray-200">
-                  {cart.map(({ _id, product, quantity, size }) => (
-                    <li key={product._id} className="flex py-6">
-                      <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                        <img
-                          src={product?.mainImageUrl}
-                          alt={product?.imageAlt}
-                          className="h-full w-full object-cover object-top"
-                        />
+
+            <div className="flex flex-col md:grid grid-cols-5 lg:grid-cols-3 gap-5">
+              <div className="md:col-span-3 lg:col-span-2 border">
+                <p className="p-2 m-2">
+                  Total items in your bag: <b>{cart.length}</b>
+                </p>
+                {cart.map(({ _id, product, quantity, size }) => (
+                  <div key={product._id} className="flex border p-1 m-2">
+                    <img
+                      src={product.mainImageUrl}
+                      alt={product.imageAlt}
+                      width="100px"
+                      height="60px"
+                    />
+                    <div className="flex flex-col justify-arround gap-2">
+                      <h3 className="font-bold text-lg">{product.title}</h3>
+
+                      <div className="flex gap-5">
+                        <span>
+                          Size: <b>{size}</b>
+                        </span>
+
+                        <span>
+                          Qty:{" "}
+                          <select
+                            value={quantity}
+                            onChange={(e) => handleQty(e, _id)}
+                            className="pl-3 py-0"
+                          >
+                            {[1, 2, 3, 4, 5].map((i) => (
+                              <option key={i} value={i}>
+                                {i}
+                              </option>
+                            ))}
+                          </select>
+                        </span>
                       </div>
 
-                      <div className="ml-4 flex flex-1 flex-col">
-                        <div className="max-sm:flex max-sm:flex-col">
-                          <div className="flex justify-between text-base font-medium text-gray-900 max-sm:flex-col">
-                            <h3>
-                              <a href={product.href}>{product.title}</a>
-                            </h3>
-
-                            <span className="md:ml-4">Rs: {product.price}</span>
-                          </div>
-                        </div>
-                        <div className="flex flex-1 md:items-end justify-between text-sm max-sm:flex-col max-sm:space-y-2">
-                          <div className="text-gray-500 max-sm:flex max-sm:space-x-2">
-                            <label
-                              htmlFor="password"
-                              className="inline md:mr-5 text-sm font-medium text-gray-900"
-                            >
-                              Qty
-                            </label>
-
-                            <select
-                              onChange={(e) => handleQty(e, _id)}
-                              value={quantity}
-                              className="max-sm:w-16 max-ms:h-8 max-sm:p-0">
-                              <option value="1">1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
-                              <option value="4">5</option>
-                            </select>
-                          </div>
-                          <div className="text-gray-500 flex">
-                            <label
-                              htmlFor="password"
-                              className="inline mr-5 text-sm font-bold leading-6 text-gray-900"
-                            >
-                              Size :
-                            </label>
-                            {size && <p className="font-bold text-black max-sm:p-2 max-sm:rounded-full bg-slate-200">{size}</p>}
-                          </div>
-
-                          <div className="flex">
-                            <button
-                              type="button"
-                              className="font-medium text-red-600 hover:text-red-500 max-sm:ml-auto"
-                              onClick={() => removeItem(_id)}
-                            >
-                              {sLoading[_id] ? (
-                                <Sloader sLoading={sLoading} />
-                              ) : (
-                                "Remove"
-                              )}
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
+                      <b>MRP: {product.price}</b>
+                    </div>
+                    <button
+                      onClick={() => removeItem(_id)}
+                      className="ml-auto p-2 text-red-600 self-start hover:border-red-600 hover:border"
+                    >
+                      {sLoading[_id] ? "Removing.." : "Remove"}
+                    </button>
+                  </div>
+                ))}
               </div>
-            </div>
 
-            {cart.length > 0 && (
-              <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-                <div className="flex py-2 px-2 justify-between text-base font-medium text-gray-900">
-                  <p>total</p>
-                  <p>{Math.floor(totalPrice)}</p>
-                </div>
-                <div className="flex  py-2 px-2 justify-between text-base font-medium text-gray-900">
-                  <p>total item</p>
-                  <p>{totalItems}</p>
-                </div>
+              <div className="flex flex-col md:col-span-2 lg:col-span-1 gap-5 border p-4 max-md:mt-20">
+                <b className="">Order Details</b>
+                <p className="flex items-center justify-between">
+                  Bag Total <b>{Math.floor(totalPrice)}</b>
+                </p>
+                <p className="flex items-center justify-between">
+                  Shipping <b className="text-green-600">Free</b>
+                </p>
+                <p className="flex items-center justify-between border-b pb-4">
+                  Discount <b className="text-green-600">-550</b>
+                </p>
+                <p className="flex items-center justify-between mb-auto">
+                  Total Amount <b>RS: {totalPrice - 550}</b>
+                </p>
 
-                <div className="mt-6">
+                {/* <div className="border flex items-center justify-between h-14 hover:border-red-600">
+                  <input
+                    type="text"
+                    placeholder="Gift Card Code"
+                    className="w-full h-full border-none outline-none"
+                  />
+                  <button className="px-6 w-auto h-10 mx-2 text-white bg-red-600 hover:bg-red-500 rounded-md focus:outline-none flex items-center justify-center">
+                    Apply
+                  </button>
+                </div> */}
+
+                <div className="flex justify-between items-stretch h-14 border bg-white">
+                  <div className="w-1/2 flex flex-col items-center justify-center">
+                    <b>RS: {totalPrice - 550}</b>
+                    <span>Total Amount</span>
+                  </div>
                   <Link
                     to="/checkout"
-                    className="flex items-center justify-center rounded-md border border-transparent bg-red-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-red-700"
+                    className="w-1/2 bg-red-600 text-white flex items-center justify-center hover:font-bold"
                   >
-                    Checkout
+                    Proceed
                   </Link>
                 </div>
-                <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
-                  <p>
-                    or
-                    <Link to="/">
-                      <button
-                        type="button"
-                        className="font-medium text-red-600 hover:text-red-500"
-                      >
-                        Continue Shopping
-                        <span aria-hidden="true"> &rarr;</span>
-                      </button>
-                    </Link>
-                  </p>
-                </div>
               </div>
-            )}
+            </div>
           </>
         )}
         <ToastContainer />
