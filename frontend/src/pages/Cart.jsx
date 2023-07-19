@@ -190,11 +190,8 @@ const Cart = () => {
 
               <div className="flex flex-col md:col-span-2 lg:col-span-1 gap-5 border p-4 max-md:mt-20">
                 <b className="">Order Details</b>
-                <p className="flex items-center justify-between">
-                  Bag Total <b>{Math.floor(totalPrice)}</b>
-                </p>
                 <p className="flex items-center justify-between pb-4">
-                  Shipping <b className="text-green-600">Free</b>
+                  Bag Total <b>{Math.floor(totalPrice)}</b>
                 </p>
                 <p className="flex items-center justify-between mb-auto">
                   Total Amount <b>RS: {totalPrice}</b>
