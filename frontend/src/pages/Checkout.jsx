@@ -469,10 +469,6 @@ const Checkout = () => {
               <p className="text-sm text-gray-500">Product Overview</p>
               <b>Items: {totalItems}</b>
             </div>
-            <div className="text-right">
-              <p className="text-sm text-gray-500">Estimated Delivery by</p>
-              <b>20 Jul 2023</b>
-            </div>
           </div>
           {cart.map(({ _id, product, quantity, size }) => (
             <div key={_id} className="flex border p-1">
