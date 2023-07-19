@@ -491,11 +491,8 @@ const Checkout = () => {
               </div>
             </div>
           ))}
-          <p className="flex items-center justify-between mt-auto">
+          <p className="flex items-center justify-between mt-auto pb-4">
             Bag Total <b>{Math.floor(totalPrice)}</b>
-          </p>
-          <p className="flex items-center justify-between pb-4">
-            Shipping <b className="text-green-600">Free</b>
           </p>
 
           <div className="flex justify-between items-stretch h-14 border sticky bottom-0 bg-white">
