@@ -1,16 +1,20 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
 import axios from "axios";
-import { api } from "../constants/api";
-import { useUser } from "../context/userContext/context";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Sloader from "../components/Sloader";
+import { api } from "../constants/api";
+import { useUser } from "../context/userContext/context";
 const Login = () => {
   const [sLoading, setSLoading] = useState(false);
 
   const navigate = useNavigate();
+  const location = useLocation();
+  useEffect(() => {
+    console.log("state is:-", location?.state);
+  }, [location]);
   const {
     register,
     handleSubmit,
@@ -49,9 +53,7 @@ const Login = () => {
                   payload: res.data,
                 });
                 setSLoading(false);
-
-                // navigate("/");
-                window?.history?.go(-1);
+                navigate(location?.state?.from || "/");
               } catch (error) {
                 console.log(error.message);
                 toast.error("something went wrong", {
@@ -136,6 +138,7 @@ const Login = () => {
             Dont have an account?{" "}
             <Link
               to="/register"
+              state={{ from: location?.state?.from || "/" }}
               className="font-semibold leading-6 text-red-600 hover:text-red-500"
             >
               register here
