@@ -86,7 +86,7 @@ const ProductDetails = () => {
         });
         setSLoading(false);
       } else {
-        navigate("/login");
+        navigate("/login", { state: { from: window.location.pathname } });
       }
     } catch (error) {
       console.log(error.message);
