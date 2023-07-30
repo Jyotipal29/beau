@@ -1,11 +1,17 @@
-import { Outlet, Navigate } from "react-router";
+import { useEffect } from "react";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useUser } from "../context/userContext/context";
 
 const PrivateRoutes = () => {
   const {
     userState: { user },
   } = useUser();
-  return user ? <Outlet /> : <Navigate to="/login" />;
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  useEffect(() => {
+    !user && navigate("/login", { state: { from: pathname } });
+  }, [navigate, pathname, user]);
+  return <Outlet />;
 };
 
 export default PrivateRoutes;
