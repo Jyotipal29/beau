@@ -240,7 +240,7 @@ const Checkout = () => {
                     <b className="pl-1">
                       {selectedAddress === null
                         ? user?.addresses[0]?.name
-                        : selectedAddress?.name.split(" ")[0]}
+                        : selectedAddress?.name?.includes(" ") ?.split(" ")[0] : selectedAddress?.name}
                     </b>
                   </span>
                   <div className="md:mx-5 flex items-center justify-between divide-x-2 bg-transparent md:bg-gray-100 md:px-3 md:pl-1 py-1 rounded-lg max-md:py-0.5">
