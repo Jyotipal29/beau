@@ -8,8 +8,8 @@ import {
   PlusCircleIcon,
 } from "@heroicons/react/24/outline";
 import axios from "axios";
-import { useEffect, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
+import { City, State } from "country-state-city";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,12 +20,9 @@ import { useUser } from "../context/userContext/context";
 const Checkout = () => {
   const navigate = useNavigate();
   const [selectedAddress, setSelectedAddress] = useState(null);
-  const [paymentMethod, setPaymentMethod] = useState("card");
+  const [paymentMethod] = useState("card");
   const handleAddress = (pointer) => {
     setSelectedAddress(user.addresses[pointer]);
-  };
-  const cardHandler = (e) => {
-    setPaymentMethod(e.target.value);
   };
 
   const orderHandler = async () => {
@@ -129,15 +126,9 @@ const Checkout = () => {
   };
 
   const {
-    register,
-    handleSubmit,
-    // formState: { errors },
-  } = useForm();
-  const {
     productState: { cart },
     productDispatch,
   } = useProduct();
-
 
   const {
     userState: { user },
@@ -169,48 +160,35 @@ const Checkout = () => {
     { totalPrice: 0, totalItems: 0 }
   );
 
-  const handleQty = async (e, id) => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    };
-
-    const { data } = await axios.put(
-      `${api}cart/${id}`,
-      {
-        quantity: Number(e.target.value),
-      },
-      config
-    );
-
-    console.log(data, "updated qty");
-    productDispatch({
-      type: "UPDATE_CART",
-      payload: data,
-    });
-  };
-
-  const removeItem = async (id) => {
-    console.log(id, "remove id ");
-    const config = {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    };
-
-    const { data } = await axios.delete(`${api}cart/${id}`, config);
-    console.log(data, "delted data");
-    productDispatch({ type: "REMOVE_FROM_CART", payload: id });
-  };
-  console.log(user, "this is user with address");
-
   const [allAdd, toggleAllAdd] = useState(false);
   const [newAdd, toggleNewAdd] = useState(false);
   const new_addr_form = useRef(null);
   useEffect(() => {
     if (user?.addresses?.length > 0) toggleNewAdd(true);
   }, [user?.addresses?.length]);
+
+  // state and city
+  const [myStateId, setMyStateId] = useState(false);
+  const [myState, setMyState] = useState();
+  const [myCity, setMyCity] = useState();
+  const stateSuggestions = useMemo(
+    () =>
+      State.getStatesOfCountry("IN").filter(
+        (state) =>
+          myState &&
+          state.name.toLocaleLowerCase().includes(myState.toLocaleLowerCase())
+      ),
+    [myState]
+  );
+  const citySuggestions = useMemo(
+    () =>
+      myCity
+        ? City.getCitiesOfState("IN", myStateId).filter((city) =>
+            city.name.toLocaleLowerCase().includes(myCity.toLocaleLowerCase())
+          )
+        : [],
+    [myStateId, myCity]
+  );
 
   return (
     <div className="mx-auto mt-12 mb-5 max-w-7xl px-4 sm:px-6 lg:px-8 bg-white">
@@ -226,7 +204,7 @@ const Checkout = () => {
               Delivery Address{" "}
               <button
                 onClick={() => toggleAllAdd(!allAdd)}
-                className="px-3 pl-1 py-1 bg-gray-100 hover:bg-gray-200 rounded-lg max-lg:hidden flex items-end justify-center"
+                className="px-3 pl-1 py-1 bg-gray-100 hover:bg-gray-200 rounded-lg max-md:hidden flex items-end justify-center"
               >
                 {/* <PencilIcon className="w-8 h-[28px] px-2 max-md:hidden" /> */}
                 {allAdd ? (
@@ -308,12 +286,14 @@ const Checkout = () => {
                     <PlusCircleIcon className="w-8 h-[28px] px-2 lg:hidden" />
                   </span>
                 </div>
-              </div>)}
+              </div>
+            )}
 
             {/* list all address */}
             <div
-              className={`grid-cols-2 gap-4 my-4 max-md:grid-cols-1 ${allAdd ? "grid" : "hidden"
-                }`}
+              className={`grid-cols-2 gap-4 my-4 max-md:grid-cols-1 ${
+                allAdd ? "grid" : "hidden"
+              }`}
             >
               <h4 className="col-span-2 w-full bg-gray-100 p-1 font-bold flex items-center justify-between">
                 All Addresses{" "}
@@ -356,18 +336,19 @@ const Checkout = () => {
             {/* new address */}
             <form
               ref={new_addr_form}
-              onSubmit={handleSubmit(async (data) => {
-                const config = {
-                  headers: {
-                    Authorization: `Bearer ${user.token}`,
-                  },
-                };
+              onSubmit={async (e) => {
+                e.preventDefault();
+                const formData = new FormData(new_addr_form.current);
+                formData.append("_id", uuidv4());
+
+                const formValues = Object.fromEntries(formData);
 
                 const res = await axios.put(
                   `${api}user/${user._id}`,
-                  { ...data, _id: uuidv4() },
-                  config
+                  formValues,
+                  { headers: { Authorization: `Bearer ${user.token}` } }
                 );
+
                 localStorage.setItem("user", JSON.stringify(res.data));
 
                 userDispatch({
@@ -376,76 +357,87 @@ const Checkout = () => {
                 });
 
                 new_addr_form && new_addr_form.current.reset();
-              })}
-              className={`space-y-2 my-4 p-2 ${newAdd ? "max-md:inline" : "max-md:hidden"}`}
+                setMyState("");
+                setMyStateId("");
+                setMyCity("");
+              }}
+              className={`space-y-2 my-4 p-2 ${
+                newAdd ? "max-md:inline" : "max-md:hidden"
+              }`}
             >
               <h3 className="text-2xl">Add New Shipping address</h3>
               <div className="grid grid-cols-6 gap-4 max-md:flex max-md:flex-col">
+                <div className="relative col-span-3 group">
+                  <input
+                    value={myState}
+                    onChange={(e) => setMyState(e.target.value)}
+                    name="state"
+                    type="text"
+                    placeholder="Enter Region"
+                    className="w-full peer"
+                  />
+                  <div className="absolute w-full h-auto z-[999] overflow-y-auto max-h-56 flex-col group-hover:flex peer-focus:flex hidden">
+                    {stateSuggestions.map((state) => (
+                      <span
+                        key={state.name}
+                        onClick={() => {
+                          setMyState(state.name);
+                          setMyStateId(state.isoCode);
+                        }}
+                        className="bg-gray-200 py-4 hover:bg-gray-500 px-3"
+                      >
+                        {state.name}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="relative col-span-3 group">
+                  <input
+                    value={myCity}
+                    onChange={(e) => setMyCity(e.target.value)}
+                    name="city"
+                    type="text"
+                    placeholder="Enter City"
+                    className="w-full peer"
+                  />
+                  <div className="absolute w-full z-[999] h-auto overflow-y-auto max-h-56 flex-col group-hover:flex peer-focus:flex hidden">
+                    {citySuggestions.map((city) => (
+                      <span
+                        key={city.name}
+                        onClick={() => setMyCity(city.name)}
+                        className="bg-gray-200 py-4 hover:bg-gray-500 px-3"
+                      >
+                        {city.name}
+                      </span>
+                    ))}
+                  </div>
+                </div>
                 <input
+                  name="street"
                   type="text"
-                  {...register("city", {
-                    required: "city is required",
-                  })}
-                  id="city"
-                  placeholder="Enter City"
-                  className="col-span-3"
-                />
-                <input
-                  type="text"
-                  {...register("state", {
-                    required: "state is required",
-                  })}
-                  id="region"
-                  placeholder="Enter Region"
-                  className="col-span-3"
-                />
-                <input
-                  type="text"
-                  {...register("street", {
-                    required: "street is required",
-                  })}
-                  id="street-address"
                   placeholder="Enter delivery address"
                   className="col-span-4"
                 />
                 <input
+                  name="pinCode"
                   type="text"
-                  {...register("pinCode", {
-                    required: "pinCode is required",
-                  })}
-                  id="pinCode"
                   placeholder="Enter pincode"
                   className="col-span-2"
                 />
               </div>
               <h3 className="text-2xl pt-4">Contact Information</h3>
               <div className="flex items-center justify-stretch max-lg:flex-col max-lg:space-y-4 lg:space-x-2">
+                <input type="text" placeholder="Your Name" className="w-full" />
                 <input
-                  type="text"
-                  {...register("name", { required: "name is required" })}
-                  id="first-name"
-                  placeholder="Your Name"
-                  className="w-full"
-                />
-                <input
+                  name="email"
                   type="email"
-                  id="email"
-                  {...register("email", {
-                    required: "email required",
-                    pattern: {
-                      value: /^[\w.%+-]+@[\w.-]+\.[A-Za-z]{2,}$/,
-                      message: "email is not valid",
-                    },
-                  })}
                   placeholder="Email Address"
                   className="w-full"
                 />
                 <input
+                  name="phone"
                   type="number"
-                  {...register("phone", {
-                    required: "phone is required",
-                  })}
-                  id="phone"
                   placeholder="Phone Number"
                   className="w-full"
                 />
